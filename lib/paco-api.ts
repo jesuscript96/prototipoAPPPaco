@@ -1,47 +1,46 @@
-import { expenses, notifications, payrollAdvance } from "@/mock/paco-data";
+// Capa de "API" simulada del prototipo Paco. Todas las llamadas devuelven
+// promesas con latencia breve para poder mostrar estados de carga reales.
 
-const wait = (ms = 450) => new Promise((resolve) => setTimeout(resolve, ms));
+const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
-export async function simulatePacoAction<T>(result: T, ms = 450) {
+export async function simulate<T>(result: T, ms = 600): Promise<T> {
   await wait(ms);
   return result;
 }
 
-export async function getPacoNotifications() {
-  await wait(300);
-  return notifications;
+// Login mock: falla si la contraseña es exactamente "error" para demostrar el
+// estado de credenciales incorrectas del video.
+export async function mockLogin(identifier: string, password: string) {
+  await wait(900);
+  if (!identifier.trim() || password.length < 4 || password.toLowerCase() === "error") {
+    return { ok: false as const, error: "Credenciales incorrectas. Verifica tu correo o contraseña e inténtalo de nuevo." };
+  }
+  return { ok: true as const };
 }
 
-export async function submitPayrollAdvance(amount = payrollAdvance.selected) {
-  await wait(650);
-  const commission = Math.round(amount * 0.08);
-  return {
-    ok: true,
-    advance: {
-      id: `adv-${Date.now()}`,
-      amount,
-      commission,
-      net: amount - commission,
-      status: "Confirmado",
-      chargeDate: payrollAdvance.chargeDate,
-    },
-    expense: {
-      id: `exp-${Date.now()}`,
-      type: "Adelanto de nómina",
-      amount,
-      commission,
-      period: "1Q junio",
-      date: "Hoy",
-      status: "Adeudo próximo",
-    },
-  };
+export async function mockSendActivation(phone: string) {
+  await wait(800);
+  return { ok: true as const, message: `Solicitud de activación enviada al panel de tu empresa para el ${phone}.` };
 }
 
-export async function getExpensesWithMockAdvance(includeSubmitted: boolean) {
-  await wait(350);
-  if (!includeSubmitted) return expenses;
-  return [
-    { id: "exp-live", type: "Adelanto de nómina", amount: 1200, commission: 96, period: "1Q junio", date: "Hoy", status: "Confirmado en prototipo" },
-    ...expenses,
-  ];
+export async function mockSendRecovery(email: string) {
+  await wait(800);
+  return { ok: true as const, message: `Enviamos un enlace de recuperación a ${email}.` };
+}
+
+// Proceso por fases (KYC, descargas, pasarela). Invoca onPhase con cada etapa
+// y respeta el orden con latencia para que la UI muestre el avance.
+export async function runPhases(phases: readonly string[], onPhase: (phase: string, index: number) => void, msPerPhase = 700) {
+  for (let index = 0; index < phases.length; index++) {
+    const phase = phases[index];
+    if (phase !== undefined) onPhase(phase, index);
+    await wait(msPerPhase);
+  }
+}
+
+export async function mockValidateCode(code: string) {
+  await wait(700);
+  return code.trim().length >= 4
+    ? { ok: true as const }
+    : { ok: false as const, error: "El código debe tener al menos 4 dígitos." };
 }

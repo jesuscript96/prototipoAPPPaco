@@ -1,5 +1,7 @@
 import { Redirect } from "expo-router";
+import { usePacoStore } from "@/store/paco-store";
 
 export default function PacoIndex() {
-  return <Redirect href="/(paco)/onboarding" />;
+  const loggedIn = usePacoStore((s) => s.loggedIn);
+  return loggedIn ? <Redirect href="/(paco)/home" /> : <Redirect href="/(paco)/welcome" />;
 }

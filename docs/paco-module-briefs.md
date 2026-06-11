@@ -1,5 +1,7 @@
 # Paco App Module Briefs
 
+> Actualización jun 2026: la implementación final usa rutas dedicadas por módulo en `app/(paco)/` (no la ruta dinámica `module/[id]` del primer borrador). La matriz con rutas, datos, acciones, estados y verificación por funcionalidad está en `docs/paco-coverage.md`; las decisiones de diseño (sistema Light Glass 3.0) en `docs/paco-ux-decisions.md`. Los briefs siguientes conservan el alcance funcional original por dominio.
+
 ## Acceso, Sesion Y Bloqueos
 
 - Objetivo del usuario: entrar a Paco con una cuenta corporativa, activar cuenta si aun no existe y conceder permisos relevantes.

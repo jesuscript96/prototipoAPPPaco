@@ -1,0 +1,610 @@
+import { ComponentType, ReactNode, useEffect, useRef, useState } from "react";
+import { Animated, Modal, Pressable, Text, TextInput, View } from "react-native";
+import { Check, Minus, Paperclip, Pause, Play, Plus, Send, X } from "lucide-react-native";
+import { Button } from "@/components/paco/layout";
+import { fileIconFor } from "@/components/paco/icons";
+import { colors } from "@/theme/tokens";
+import { usePacoStore } from "@/store/paco-store";
+
+type Icon = ComponentType<{ size?: number; color?: string; strokeWidth?: number }>;
+
+export const cn = (...classes: Array<string | false | null | undefined>) => classes.filter(Boolean).join(" ");
+
+export const mxn = (value: number) =>
+  `$${value.toLocaleString("es-MX", { minimumFractionDigits: value % 1 === 0 ? 0 : 2, maximumFractionDigits: 2 })}`;
+
+// ---- Toast global ----
+
+export function ToastHost() {
+  const toast = usePacoStore((s) => s.toast);
+  const toastStamp = usePacoStore((s) => s.toastStamp);
+  const clearToast = usePacoStore((s) => s.clearToast);
+  const opacity = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (!toast) return;
+    opacity.setValue(0);
+    Animated.timing(opacity, { toValue: 1, duration: 180, useNativeDriver: false }).start();
+    const timer = setTimeout(() => {
+      Animated.timing(opacity, { toValue: 0, duration: 220, useNativeDriver: false }).start(() => clearToast());
+    }, 2600);
+    return () => clearTimeout(timer);
+  }, [toast, toastStamp, clearToast, opacity]);
+
+  if (!toast) return null;
+  return (
+    <Animated.View style={{ opacity, pointerEvents: "none" }} className="absolute bottom-8 left-5 right-5 items-center">
+      <View className="max-w-full flex-row items-center gap-2 rounded-[14px] bg-ink/95 px-4 py-3 shadow-pop">
+        <Check size={15} color="#5eead4" strokeWidth={3} />
+        <Text className="shrink text-[13px] font-semibold text-white">{toast}</Text>
+      </View>
+    </Animated.View>
+  );
+}
+
+// ---- Tabs segmentadas con indicador animado ----
+
+export function Segmented({ options, value, onChange }: { options: readonly string[]; value: string; onChange: (option: string) => void }) {
+  const [width, setWidth] = useState(0);
+  const index = Math.max(0, options.indexOf(value));
+  const translate = useRef(new Animated.Value(0)).current;
+  const segment = options.length > 0 ? width / options.length : 0;
+
+  useEffect(() => {
+    Animated.spring(translate, { toValue: index * segment, useNativeDriver: false, speed: 18, bounciness: 6 }).start();
+  }, [index, segment, translate]);
+
+  return (
+    <View
+      onLayout={(event) => setWidth(event.nativeEvent.layout.width - 8)}
+      className="relative flex-row rounded-[14px] border border-white/70 bg-slate-900/5 p-1"
+    >
+      {segment > 0 ? (
+        <Animated.View
+          style={{
+            pointerEvents: "none",
+            position: "absolute",
+            top: 4,
+            bottom: 4,
+            left: 4,
+            width: segment,
+            borderRadius: 10,
+            backgroundColor: "#ffffff",
+            borderWidth: 1,
+            borderColor: "rgba(255,255,255,0.9)",
+            boxShadow: "0 4px 12px rgba(19, 18, 58, 0.10)",
+            transform: [{ translateX: translate }],
+          }}
+        />
+      ) : null}
+      {options.map((option) => (
+        <Pressable
+          key={option}
+          accessibilityRole="tab"
+          onPress={() => onChange(option)}
+          className="min-h-10 flex-1 items-center justify-center rounded-[10px] px-2"
+        >
+          <Text className={cn("text-center text-[13px] font-bold", option === value ? "text-ink" : "text-slate-500")}>{option}</Text>
+        </Pressable>
+      ))}
+    </View>
+  );
+}
+
+export function SelectChip({ label, active, onPress }: { label: string; active: boolean; onPress: () => void }) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      onPress={onPress}
+      className={cn(
+        "min-h-10 justify-center rounded-[10px] border px-3.5 py-2",
+        active ? "border-ink bg-ink" : "border-white/80 bg-white/70",
+      )}
+    >
+      <Text className={cn("text-[13px] font-semibold", active ? "text-white" : "text-slate-600")}>{label}</Text>
+    </Pressable>
+  );
+}
+
+export function RadioOption({ label, helper, selected, onPress }: { label: string; helper?: string; selected: boolean; onPress: () => void }) {
+  return (
+    <Pressable
+      accessibilityRole="radio"
+      accessibilityState={{ selected }}
+      onPress={onPress}
+      className={cn(
+        "flex-row items-start gap-3 rounded-xl border p-3.5",
+        selected ? "border-ink/80 bg-white shadow-card" : "border-white/80 bg-white/60",
+      )}
+    >
+      <View className={cn("mt-0.5 h-[22px] w-[22px] items-center justify-center rounded-full border-2", selected ? "border-ink" : "border-slate-300")}>
+        {selected ? <View className="h-2.5 w-2.5 rounded-full bg-ink" /> : null}
+      </View>
+      <View className="flex-1">
+        <Text className={cn("text-[15px] font-semibold", selected ? "text-ink" : "text-slate-700")}>{label}</Text>
+        {helper ? <Text className="mt-0.5 text-[13px] leading-5 text-slate-500">{helper}</Text> : null}
+      </View>
+    </Pressable>
+  );
+}
+
+export function OptionCard({
+  title,
+  subtitle,
+  icon: IconComponent,
+  iconColor = "#3148c8",
+  iconTint = "bg-brand-50",
+  selected,
+  badge,
+  onPress,
+}: {
+  title: string;
+  subtitle?: string;
+  icon?: Icon | undefined;
+  iconColor?: string;
+  iconTint?: string;
+  selected?: boolean;
+  badge?: ReactNode;
+  onPress: () => void;
+}) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      onPress={onPress}
+      className={cn(
+        "flex-row items-center gap-3 rounded-2xl border p-4 shadow-card active:opacity-85",
+        selected ? "border-ink/70 bg-white" : "border-white/80 bg-white/75",
+      )}
+    >
+      {IconComponent ? (
+        <View className={cn("h-11 w-11 items-center justify-center rounded-[12px]", iconTint)}>
+          <IconComponent size={20} color={iconColor} strokeWidth={2.1} />
+        </View>
+      ) : null}
+      <View className="flex-1">
+        <Text className={cn("text-[15px] font-bold", selected ? "text-ink" : "text-slate-900")}>{title}</Text>
+        {subtitle ? (
+          <Text className="mt-0.5 text-[13px] leading-5 text-slate-500" numberOfLines={2}>
+            {subtitle}
+          </Text>
+        ) : null}
+      </View>
+      {badge}
+    </Pressable>
+  );
+}
+
+export function ToggleRow({ label, helper, value, onChange }: { label: string; helper?: string; value: boolean; onChange: (value: boolean) => void }) {
+  return (
+    <Pressable
+      accessibilityRole="switch"
+      accessibilityState={{ checked: value }}
+      onPress={() => onChange(!value)}
+      className="flex-row items-center justify-between gap-3 rounded-xl border border-white/80 bg-white/70 p-3.5"
+    >
+      <View className="flex-1">
+        <Text className="text-[15px] font-semibold text-slate-800">{label}</Text>
+        {helper ? <Text className="mt-0.5 text-[13px] text-slate-500">{helper}</Text> : null}
+      </View>
+      <View className={cn("h-7 w-12 justify-center rounded-full px-1", value ? "bg-ink" : "bg-slate-300")}>
+        <View className={cn("h-5 w-5 rounded-full bg-white shadow-card", value && "self-end")} />
+      </View>
+    </Pressable>
+  );
+}
+
+// ---- Selector de monto ----
+
+export function AmountSlider({
+  min,
+  max,
+  step,
+  value,
+  onChange,
+}: {
+  min: number;
+  max: number;
+  step: number;
+  value: number;
+  onChange: (value: number) => void;
+}) {
+  const segments = 24;
+  const ratio = (value - min) / (max - min);
+  const setFromIndex = (index: number) => {
+    const raw = min + ((max - min) * index) / (segments - 1);
+    const snapped = Math.min(max, Math.max(min, Math.round(raw / step) * step));
+    onChange(snapped);
+  };
+  return (
+    <View className="gap-3">
+      <View className="flex-row items-center justify-center gap-3">
+        <Pressable
+          accessibilityLabel="Disminuir monto"
+          onPress={() => onChange(Math.max(min, value - step))}
+          className="h-11 w-11 items-center justify-center rounded-[12px] border border-white/80 bg-white/75 shadow-card active:bg-white"
+        >
+          <Minus size={18} color="#15143a" />
+        </Pressable>
+        <View className="min-w-44 items-center rounded-[16px] bg-ink px-6 py-4 shadow-card">
+          <Text className="text-3xl font-bold tracking-tight text-white">{mxn(value)}</Text>
+        </View>
+        <Pressable
+          accessibilityLabel="Aumentar monto"
+          onPress={() => onChange(Math.min(max, value + step))}
+          className="h-11 w-11 items-center justify-center rounded-[12px] border border-white/80 bg-white/75 shadow-card active:bg-white"
+        >
+          <Plus size={18} color="#15143a" />
+        </Pressable>
+      </View>
+      <View className="flex-row items-center gap-0.5">
+        {Array.from({ length: segments }).map((_, index) => (
+          <Pressable
+            key={index}
+            accessibilityLabel={`Posición ${index + 1} del monto`}
+            onPress={() => setFromIndex(index)}
+            className="h-8 flex-1 justify-center"
+          >
+            <View className={cn("h-1.5 rounded-full", index / (segments - 1) <= ratio ? "bg-ink" : "bg-slate-900/10")} />
+          </Pressable>
+        ))}
+      </View>
+      <View className="flex-row justify-between">
+        <Text className="text-xs font-semibold text-slate-400">{mxn(min)}</Text>
+        <Text className="text-xs font-semibold text-slate-400">{mxn(max)}</Text>
+      </View>
+    </View>
+  );
+}
+
+// ---- Pasos de asistente ----
+
+export function StepHeader({ step, total, title, subtitle }: { step: number; total: number; title: string; subtitle?: string }) {
+  return (
+    <View className="gap-1.5 rounded-2xl border border-white/80 bg-white/75 p-4 shadow-card">
+      <Text className="text-[11px] font-bold uppercase tracking-[1.8px] text-brand-600">
+        Paso {step} de {total}
+      </Text>
+      <Text className="text-xl font-bold leading-7 tracking-tight text-slate-950">{title}</Text>
+      {subtitle ? <Text className="text-[13px] leading-5 text-slate-500">{subtitle}</Text> : null}
+      <View className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-slate-900/10">
+        <View style={{ width: `${Math.round((step / total) * 100)}%` }} className="h-full rounded-full bg-brand-500" />
+      </View>
+    </View>
+  );
+}
+
+export function MoneyRow({ label, value, strong }: { label: string; value: string; strong?: boolean }) {
+  return (
+    <View className="flex-row items-center justify-between gap-3">
+      <Text className={cn("flex-1 text-sm", strong ? "font-bold text-slate-900" : "text-slate-500")}>{label}</Text>
+      <Text className={cn(strong ? "text-lg font-bold text-slate-950" : "text-sm font-semibold text-slate-800")}>{value}</Text>
+    </View>
+  );
+}
+
+export function SuccessCard({ title, description, children }: { title: string; description: string; children?: ReactNode }) {
+  return (
+    <View className="items-center gap-3 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-6">
+      <View className="h-14 w-14 items-center justify-center rounded-full bg-emerald-500 shadow-card">
+        <Check size={28} color="#fff" strokeWidth={3} />
+      </View>
+      <Text className="text-center text-xl font-bold tracking-tight text-slate-950">{title}</Text>
+      <Text className="text-center text-sm leading-6 text-slate-600">{description}</Text>
+      {children}
+    </View>
+  );
+}
+
+// ---- Confirmacion modal ----
+
+export function ConfirmSheet({
+  visible,
+  title,
+  message,
+  confirmLabel,
+  destructive,
+  onConfirm,
+  onCancel,
+}: {
+  visible: boolean;
+  title: string;
+  message: string;
+  confirmLabel: string;
+  destructive?: boolean;
+  onConfirm: () => void;
+  onCancel: () => void;
+}) {
+  return (
+    <Modal transparent visible={visible} animationType="fade" onRequestClose={onCancel}>
+      <View className="flex-1 items-center justify-center bg-ink/40 px-6">
+        <View className="w-full max-w-sm gap-2.5 rounded-2xl border border-white/80 bg-white/95 p-5 shadow-pop">
+          <Text className="text-lg font-bold tracking-tight text-slate-950">{title}</Text>
+          <Text className="text-sm leading-6 text-slate-600">{message}</Text>
+          <View className="mt-2 gap-2">
+            <Button variant={destructive ? "destructive" : "primary"} onPress={onConfirm}>
+              {confirmLabel}
+            </Button>
+            <Button variant="ghost" onPress={onCancel}>
+              Cancelar
+            </Button>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+}
+
+// ---- Chat ----
+
+export function ChatBubble({ from, text, mine, time, attachment }: { from: string; text: string; mine: boolean; time: string; attachment?: string }) {
+  return (
+    <View
+      className={cn(
+        "max-w-[85%] gap-1 rounded-[14px] px-3.5 py-2.5",
+        mine ? "self-end rounded-br-[4px] bg-ink" : "self-start rounded-bl-[4px] border border-white/80 bg-white/85 shadow-card",
+      )}
+    >
+      {!mine ? <Text className="text-[11px] font-bold text-brand-600">{from}</Text> : null}
+      {attachment ? (
+        <View className={cn("flex-row items-center gap-2 rounded-[10px] p-2", mine ? "bg-white/15" : "bg-slate-900/5")}>
+          <Paperclip size={13} color={mine ? "#fff" : colors.muted} />
+          <Text className={cn("text-xs font-semibold", mine ? "text-white" : "text-slate-700")}>{attachment}</Text>
+        </View>
+      ) : null}
+      <Text className={cn("text-sm leading-5", mine ? "text-white" : "text-slate-800")}>{text}</Text>
+      <Text className={cn("self-end text-[10px]", mine ? "text-white/60" : "text-slate-400")}>{time}</Text>
+    </View>
+  );
+}
+
+export function ChatComposer({
+  onSend,
+  onAttach,
+  placeholder = "Escribe un mensaje…",
+}: {
+  onSend: (text: string) => void;
+  onAttach?: () => void;
+  placeholder?: string;
+}) {
+  const [text, setText] = useState("");
+  const send = () => {
+    const trimmed = text.trim();
+    if (!trimmed) return;
+    onSend(trimmed);
+    setText("");
+  };
+  return (
+    <View className="flex-row items-center gap-2">
+      {onAttach ? (
+        <Pressable
+          accessibilityLabel="Adjuntar archivo"
+          onPress={onAttach}
+          className="h-11 w-11 items-center justify-center rounded-[12px] border border-white/80 bg-white/75"
+        >
+          <Paperclip size={17} color="#15143a" />
+        </Pressable>
+      ) : null}
+      <TextInput
+        value={text}
+        onChangeText={setText}
+        placeholder={placeholder}
+        placeholderTextColor="#94a3b8"
+        onSubmitEditing={send}
+        className="min-h-11 flex-1 rounded-[12px] border border-slate-900/10 bg-white/85 px-4 text-[15px] text-slate-950"
+      />
+      <Pressable accessibilityLabel="Enviar mensaje" onPress={send} className="h-11 w-11 items-center justify-center rounded-[12px] bg-ink active:opacity-80">
+        <Send size={16} color="#fff" />
+      </Pressable>
+    </View>
+  );
+}
+
+// ---- Graficas mock (solo Views) ----
+
+export function BarChart({ bars, maxValue = 100 }: { bars: { label: string; value: number; color?: string }[]; maxValue?: number }) {
+  return (
+    <View className="gap-2">
+      <View className="h-36 flex-row items-end gap-2">
+        {bars.map((bar, index) => (
+          <View key={`${bar.label}-${index}`} className="flex-1 items-center justify-end gap-1">
+            <View
+              style={{ height: `${Math.max(6, (bar.value / maxValue) * 100)}%`, backgroundColor: bar.color ?? colors.brand }}
+              className="w-full max-w-9 rounded-t-[6px]"
+            />
+          </View>
+        ))}
+      </View>
+      <View className="flex-row gap-2">
+        {bars.map((bar, index) => (
+          <Text key={`${bar.label}-label-${index}`} className="flex-1 text-center text-[10px] font-semibold text-slate-500" numberOfLines={1}>
+            {bar.label}
+          </Text>
+        ))}
+      </View>
+    </View>
+  );
+}
+
+export function CountBar({ label, count, max, color }: { label: string; count: number; max: number; color?: string }) {
+  return (
+    <View className="gap-1">
+      <View className="flex-row items-center justify-between">
+        <Text className="text-sm font-semibold text-slate-700">{label}</Text>
+        <Text className="text-sm font-bold text-slate-900">{count}</Text>
+      </View>
+      <View className="h-2 overflow-hidden rounded-full bg-slate-900/10">
+        <View style={{ width: `${Math.max(4, (count / Math.max(1, max)) * 100)}%`, backgroundColor: color ?? colors.brand }} className="h-full rounded-full" />
+      </View>
+    </View>
+  );
+}
+
+export function StackedBar({ slices }: { slices: { label: string; value: number; color: string }[] }) {
+  const total = slices.reduce((sum, slice) => sum + slice.value, 0) || 1;
+  return (
+    <View className="gap-3">
+      <View className="h-4 flex-row overflow-hidden rounded-[6px]">
+        {slices.map((slice) => (
+          <View key={slice.label} style={{ width: `${(slice.value / total) * 100}%`, backgroundColor: slice.color }} />
+        ))}
+      </View>
+      <View className="gap-1.5">
+        {slices.map((slice) => (
+          <View key={slice.label} className="flex-row items-center gap-2">
+            <View style={{ backgroundColor: slice.color }} className="h-2.5 w-2.5 rounded-[3px]" />
+            <Text className="flex-1 text-sm text-slate-600">{slice.label}</Text>
+            <Text className="text-sm font-bold text-slate-900">{mxn(slice.value)}</Text>
+            <Text className="w-12 text-right text-xs font-semibold text-slate-400">{Math.round((slice.value / total) * 100)}%</Text>
+          </View>
+        ))}
+      </View>
+    </View>
+  );
+}
+
+// ---- Estatus tipo semaforo ----
+
+const statusColors: Record<string, string> = {
+  Pendiente: "#eab308",
+  "En proceso": "#f97316",
+  Atendido: "#14b8a6",
+};
+
+export function StatusDot({ status }: { status: string }) {
+  return (
+    <View className="flex-row items-center gap-2">
+      <View style={{ backgroundColor: statusColors[status] ?? colors.muted }} className="h-2.5 w-2.5 rounded-full" />
+      <Text className="text-[13px] font-bold text-slate-700">{status}</Text>
+    </View>
+  );
+}
+
+// ---- Archivos ----
+
+export function FileTile({
+  name,
+  kind,
+  size,
+  downloaded,
+  onDownload,
+  actionLabel,
+}: {
+  name: string;
+  kind: string;
+  size: string;
+  downloaded: boolean;
+  onDownload: () => void;
+  actionLabel?: string;
+}) {
+  const FileIcon = fileIconFor(kind);
+  return (
+    <View className="flex-row items-center gap-3 rounded-xl border border-white/80 bg-white/75 p-3 shadow-card">
+      <View className="h-10 w-10 items-center justify-center rounded-[10px] bg-slate-900/5">
+        <FileIcon size={18} color="#475569" strokeWidth={2} />
+      </View>
+      <View className="flex-1">
+        <Text className="text-[13px] font-bold text-slate-900" numberOfLines={1}>
+          {name}
+        </Text>
+        <Text className="text-[11px] text-slate-500">
+          {kind} · {size}
+        </Text>
+      </View>
+      <Pressable
+        accessibilityRole="button"
+        onPress={onDownload}
+        className={cn("min-h-9 justify-center rounded-[10px] px-3", downloaded ? "bg-emerald-500/15" : "bg-ink")}
+      >
+        <Text className={cn("text-xs font-bold", downloaded ? "text-emerald-700" : "text-white")}>
+          {downloaded ? "Descargado" : (actionLabel ?? "Descargar")}
+        </Text>
+      </Pressable>
+    </View>
+  );
+}
+
+// ---- Firma digital mock ----
+
+export function SignatureBox({ signed, signerName, onSign }: { signed: boolean; signerName: string; onSign: () => void }) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      onPress={onSign}
+      className={cn(
+        "min-h-24 items-center justify-center rounded-xl border-2 border-dashed p-4",
+        signed ? "border-emerald-400/60 bg-emerald-500/10" : "border-slate-900/15 bg-white/50",
+      )}
+    >
+      {signed ? (
+        <View className="items-center gap-1">
+          <Text style={{ fontStyle: "italic" }} className="text-2xl font-semibold text-slate-800">
+            {signerName}
+          </Text>
+          <Text className="text-xs font-bold text-emerald-700">Firma capturada</Text>
+        </View>
+      ) : (
+        <Text className="text-sm font-semibold text-slate-500">Toca aquí para estampar tu firma digital</Text>
+      )}
+    </Pressable>
+  );
+}
+
+// ---- Widget flotante de ayuda (4 circulos) ----
+
+export function HelpFab({ onPress }: { onPress: () => void }) {
+  return (
+    <Pressable
+      accessibilityLabel="¿Necesitas ayuda?"
+      onPress={onPress}
+      className="absolute right-5 top-14 h-11 w-11 items-center justify-center rounded-[12px] border border-white/80 bg-white/75 shadow-card"
+    >
+      <View className="flex-row flex-wrap" style={{ width: 16 }}>
+        {[0, 1, 2, 3].map((index) => (
+          <View key={index} style={{ margin: 1 }} className="h-1.5 w-1.5 rounded-full bg-ink" />
+        ))}
+      </View>
+    </Pressable>
+  );
+}
+
+// ---- Audio player mock ----
+
+export function AudioPlayer({ name, duration, playing, onToggle, progress }: { name: string; duration: string; playing: boolean; onToggle: () => void; progress: number }) {
+  return (
+    <View className="gap-2 rounded-xl border border-white/80 bg-white/75 p-3 shadow-card">
+      <View className="flex-row items-center gap-3">
+        <Pressable
+          accessibilityLabel={playing ? "Pausar audio" : "Reproducir audio"}
+          onPress={onToggle}
+          className="h-10 w-10 items-center justify-center rounded-[12px] bg-ink active:opacity-80"
+        >
+          {playing ? <Pause size={16} color="#fff" /> : <Play size={16} color="#fff" />}
+        </Pressable>
+        <View className="flex-1">
+          <Text className="text-[13px] font-bold text-slate-900" numberOfLines={1}>
+            {name}
+          </Text>
+          <Text className="text-[11px] text-slate-500">{duration}</Text>
+        </View>
+      </View>
+      <View className="h-1.5 overflow-hidden rounded-full bg-slate-900/10">
+        <View style={{ width: `${progress}%` }} className="h-full rounded-full bg-brand-500" />
+      </View>
+    </View>
+  );
+}
+
+// ---- Cabecera de modal simple ----
+
+export function SheetHeader({ title, onClose }: { title: string; onClose: () => void }) {
+  return (
+    <View className="mb-3 flex-row items-center justify-between">
+      <Text className="text-xl font-bold tracking-tight text-slate-950">{title}</Text>
+      <Pressable accessibilityLabel="Cerrar" onPress={onClose} className="h-10 w-10 items-center justify-center rounded-[12px] bg-slate-900/5">
+        <X size={17} color={colors.muted} />
+      </Pressable>
+    </View>
+  );
+}
+
+export type { Icon };

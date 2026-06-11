@@ -1,146 +1,40 @@
 # Paco Mock Data Map
 
-## Entidades Principales
+Mapa de entidades mock del prototipo. Todo vive en `mock/paco/` (re-exportado por `mock/paco/index.ts`), el estado mutable en `store/paco-store.ts` y la latencia simulada en `lib/paco-api.ts`.
 
-### `EmployeeProfile`
-- Campos: nombre, correo, telefono, genero, nacimiento, numero colaborador, RFC, CURP, NSS, fecha contratacion, antiguedad, empleador, periodicidad, departamento, area, puesto, salario, foto.
-- Relaciones: adelanto, expediente, configuracion, recibos, solicitudes.
-- Acciones: editar correo, editar telefono, cargar contrato/CV mock.
+## mock/paco/core.ts
+- `employee`: expediente completo de Ricardo Jafif Pereyra (RFC, CURP, NSS, antigüedad, salario quincenal, área/puesto).
+- `company`: parámetros de empresa (antigüedad mínima 3 meses, comisión adelanto 8%, comisión servicios $12, máximos, proveedores externos: Veridoc KYC, FirmaMX, PiN, Zoho, WhatsApp).
+- `banners`: 3 banners de panel con destino (`Href`). Iconos en `bannerIcons`.
+- `directory`: 8 colaboradores para buscador de reconocimientos y chat.
+- `celebrations`: 6 eventos (cumpleaños/aniversarios) con offset de día y años de antigüedad.
+- `moduleRegistry`: 24 módulos con dominio y ruta; alimenta grid del dashboard.
+- `seedNotifications`: 7 notificaciones de 7 tipos con deep-link.
 
-### `CompanyConfig`
-- Campos: modulos habilitados, comision adelanto, comision servicios, antiguedad minima, links soporte, politicas.
-- Relaciones: dashboard, finanzas, legal, soporte.
-- Acciones: ninguna en prototipo; alimenta reglas.
+## mock/paco/finance.ts
+- `seedAccounts` + `banks`: cuentas CLABE/tarjeta y catálogo de bancos.
+- `seedMovements` + `expensePeriods`: movimientos sembrados del estado de cuenta.
+- `topupOperators`: 13 operadores con montos reales por operador.
+- `serviceCategories`: 6 categorías y 14 proveedores con etiqueta/ejemplo de referencia.
+- `kycSteps`: pasos INE frente/reverso/selfie (iconos en `kycIcons`).
+- `pinCoupons` + `pinCategories`: 5 cupones geolocalizados.
 
-### `Banner`
-- Campos: titulo, subtitulo, tipo, destino.
-- Relaciones: dashboard, comunicacion interna.
-- Acciones: navegar a modulo.
+## mock/paco/people.ts
+- `moodLevels` (5 niveles con color; caras lucide vía `moodIconFor`), `baseFeelings` + `extraFeelings`, `moodFactors` (18), `seedMoodEntries` (8 entradas con semanas para filtros S/M/6M/A).
+- `surveys`: NOM-035 obligatoria (5 preguntas de 5 tipos) y clima laboral opcional.
+- `voiceCategories` (9 con descripción) y `seedVoiceReports` (3 reportes con chat y semáforo).
+- `recognitionBadges` (7 valores) y `seedRecognitions` (recibidos/enviados, origen sistema/colaborador).
+- `requestTypes` (5 tipos con cuestionario dinámico y días de aprobación) y `seedRequests` (aprobada/rechazada con etapas).
+- `onboardingTasks`: mensaje, examen con mentor y material descargable.
 
-### `PacoModule`
-- Campos: id, titulo, descripcion, dominio, prioridad, icono, ruta, pendientes.
-- Relaciones: dashboard, menu, cobertura.
-- Acciones: navegacion.
+## mock/paco/content.ts
+- `communications`: 3 comunicados con adjuntos DOCX/PDF/PPTX/IMG/XLSX.
+- `wellnessCategories`: 4 carpetas (emocional vacía a propósito).
+- `documentFolders` + `documentTemplates`: 4 formatos generables/firmables.
+- `corporateFolders`: 4 carpetas (una vacía a propósito).
+- `seedReceipts` (4) y `seedSuaLetters` (2).
+- `courses` + `downloadPhases`: 3 cursos (offline obligatorio con 3 lecciones, evaluación y satisfacción; online en curso; finalizado) y las 6 fases de descarga.
+- `faqTopics`, `botReplies`, `seedChatRooms`, `legalDocument` (5 secciones TBM).
 
-### `Notification`
-- Campos: id, tipo, titulo, cuerpo, fecha, leida, destino.
-- Relaciones: onboarding de tareas, encuestas, capacitaciones, cumpleanos, reconocimientos, voz.
-- Acciones: marcar leida, borrar todas, navegar.
-
-### `OnboardingTask`
-- Campos: tipo, titulo, fecha programada, vencimiento, mentor, estatus, materiales.
-- Relaciones: notificaciones push, mentor, capacitaciones, encuestas/examenes.
-- Acciones: leer, responder, descargar material, completar tarea.
-
-### `MoodEntry`
-- Campos: fecha, score, etiqueta, sentimientos, factores.
-- Relaciones: mood tracker, perfil.
-- Acciones: registrar mood, consultar historico.
-
-### `Celebration`
-- Campos: colaborador, fecha, tipo, anos, area, foto.
-- Relaciones: cumpleanos/aniversarios, notificaciones.
-- Acciones: felicitar mock.
-
-### `PayrollAdvance`
-- Campos: minimo, maximo, monto, comision, neto, fecha solicitud, fecha cobro, cuenta, estatus.
-- Relaciones: gastos, cuenta bancaria, legal, KYC, tercero pasarela.
-- Acciones: validar INE/selfie primer uso, seleccionar monto, aceptar terminos, confirmar, crear gasto.
-
-### `DiscountCoupon`
-- Campos: marca, oferta, distancia, categoria, vencimiento.
-- Relaciones: ubicacion, Club PiN, dashboard.
-- Acciones: abrir cupon externo mock.
-
-### `Expense`
-- Campos: tipo, monto, comision, periodo, fecha, estatus.
-- Relaciones: adelanto, recarga, servicios.
-- Acciones: filtrar, consultar detalle, soporte WhatsApp mock.
-
-### `TopupOperator`
-- Campos: nombre, tipos, montos, logo textual.
-- Relaciones: recargas, gastos.
-- Acciones: seleccionar operador/tipo/monto, confirmar telefono, validar codigo.
-
-### `ServiceProvider`
-- Campos: categoria, proveedor, referencia, comision, monto sugerido.
-- Relaciones: servicios, KYC, gastos.
-- Acciones: escaneo mock, pagar, completar KYC.
-
-### `Survey`
-- Campos: titulo, obligatoria, preguntas, fecha limite, estatus, progreso.
-- Relaciones: bloqueo, notificaciones.
-- Acciones: responder, enviar, desbloquear app.
-
-### `FeedbackReport`
-- Campos: categoria, descripcion, comentario, anonimo, adjuntos, estatus, mensajes.
-- Relaciones: voz, estatus, chat RH, notificaciones.
-- Acciones: crear reporte, filtrar estatus, enviar mensaje.
-
-### `Recognition`
-- Campos: medalla, descripcion, emisor, receptor, motivo, fecha, direccion.
-- Relaciones: reconocimientos, notificaciones, capacitacion.
-- Acciones: enviar, consultar recibidos/enviados.
-
-### `EmployeeRequest`
-- Campos: tipo, categoria, fechas, preguntas, respuestas, comentarios, estatus, timeline.
-- Relaciones: solicitudes, RH.
-- Acciones: crear, editar, eliminar, consultar timeline.
-
-### `ContentResource`
-- Campos: titulo, tipo, categoria, tamano, descargable, estado.
-- Relaciones: comunicacion, bienestar, documentos, capacitaciones.
-- Acciones: abrir, descargar.
-
-### `DocumentItem`
-- Campos: carpeta, nombre, tipo, requiereFirma, firmado, generado, tamano.
-- Relaciones: documentos corporativos, solicitud documentos, recibos, SUA.
-- Acciones: generar, firmar, descargar, subir.
-
-### `TrainingCourse`
-- Campos: titulo, modalidad, obligatorio, progreso, descargado, lecciones.
-- Relaciones: capacitacion, notificaciones, reconocimientos.
-- Acciones: descargar, comenzar, enviar actividad, responder evaluacion/satisfaccion, completar leccion.
-
-### `EmployeeDigitalCard`
-- Campos: titular, numero colaborador, puesto, area, empleador, vigencia, QR mock.
-- Relaciones: expediente, identidad corporativa.
-- Acciones: mostrar credencial digital.
-
-### `BankAccount`
-- Campos: alias, banco, tipo, clabe/tarjeta, estatus.
-- Relaciones: adelanto, configuracion.
-- Acciones: agregar, eliminar.
-
-### `SupportTicket`
-- Campos: nombre, correo, telefono, consulta, estatus, mensajes.
-- Relaciones: soporte, FAQ, WhatsApp, Zoho, bot.
-- Acciones: abrir bot, enviar ticket, recibir respuesta mock.
-
-### `ChatRoom`
-- Campos: nombre, participantes, mensajes, adjuntos.
-- Relaciones: chat interno, directorio.
-- Acciones: crear sala, enviar mensaje, adjuntar archivo mock.
-
-### `LegalAcceptance`
-- Campos: documento, version, aceptado, firmante, fecha, rol.
-- Relaciones: terminos, adelanto.
-- Acciones: aceptar y firmar.
-
-## Acciones Con Cambio De Estado
-
-- `completeMandatorySurvey`: encuesta obligatoria pasa a completada y dashboard queda desbloqueado.
-- `markAllNotificationsRead`: notificaciones quedan leidas.
-- `submitPayrollAdvance`: crea adeudo/gasto mock.
-- `submitMood`: agrega registro del dia.
-- `submitFeedbackReport`: crea reporte pendiente/en proceso.
-- `sendRecognition`: agrega reconocimiento enviado.
-- `submitRequest`: agrega solicitud pendiente con timeline.
-- `downloadCourse`: curso offline pasa a descargado.
-- `completeLesson`: incrementa progreso de curso.
-- `signDocument`: documento/recibo/carta pasa a firmado.
-- `createSupportTicket`: ticket queda abierto con mensaje inicial.
-- `createChatRoom`: nueva sala visible.
-- `sendChatMessage`: mensaje aparece en conversacion.
-- `addBankAccount`: nueva cuenta aparece en configuracion.
-- `acceptLegal`: terminos quedan firmados con fecha.
+## Estado mutable (store/paco-store.ts)
+Sesión y permisos; encuestas completadas; notificaciones (leer/borrar/push); entradas de ánimo; felicitaciones; cuentas (alta/baja); KYC; movimientos generados por adelanto/recarga/servicio; tareas de onboarding; reportes de voz con chat y respuesta automática de RH; reconocimientos; solicitudes (crear/editar/eliminar); lecturas y descargas; documentos generados/firmados/subidos; recibos y SUA firmados; progreso de cursos, descargas offline y sincronización; perfil editable; seguridad (contraseña/NIP); ticket de soporte con bot y escalamiento; salas de chat; aceptación legal; toast global.
