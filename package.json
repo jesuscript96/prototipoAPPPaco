@@ -2,6 +2,9 @@
   "name": "prototipoapppaco",
   "version": "1.0.0",
   "main": "expo-router/entry",
+  "engines": {
+    "node": ">=22.13.0"
+  },
   "dependencies": {
     "@expo/metro-runtime": "~56.0.14",
     "@hookform/resolvers": "^5.4.0",
@@ -33,6 +36,7 @@
   },
   "scripts": {
     "start": "expo start",
+    "build": "expo export -p web",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
