@@ -1,9 +1,16 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
-import { CalendarCheck, CalendarRange, ChevronRight } from "lucide-react-native";
+import { CalendarCheck, CalendarRange, ChevronRight } from "@/components/paco/glyphs";
+
+const statusColors: Record<string, string> = {
+  Aprobada: "#6AA84F",
+  Rechazada: "#CC0000",
+  "En evaluación": "#B8860B",
+  "No iniciada": "#64748b",
+};
 import { Pressable, Text, View } from "react-native";
-import { Badge, Card, EmptyState, Screen, Section } from "@/components/paco/layout";
-import { Segmented, StatusDot } from "@/components/paco/ui";
+import { EmptyState, Screen, Section } from "@/components/paco/layout";
+import { ListGroup, Row, Segmented } from "@/components/paco/ui";
 import { requestTypes } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
 
@@ -43,7 +50,7 @@ export default function RequestsScreen() {
                       className="flex-row items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 active:bg-brand-50"
                     >
                       <View className="h-11 w-11 items-center justify-center rounded-[12px] bg-violet-50">
-                        <CalendarRange size={20} color="#7c3aed" strokeWidth={2} />
+                        <CalendarRange size={20} color="#674EA7" strokeWidth={2} />
                       </View>
                       <View className="flex-1">
                         <Text className="text-base font-bold text-slate-900">{type.name}</Text>
@@ -65,29 +72,22 @@ export default function RequestsScreen() {
             {pending.length === 0 ? (
               <EmptyState title="Sin solicitudes pendientes" description="Crea una nueva solicitud desde la otra pestaña." icon={CalendarCheck} />
             ) : (
-              <View className="gap-2.5">
+              <ListGroup>
                 {pending.map((request) => (
-                  <Pressable
+                  <Row
                     key={request.id}
-                    accessibilityRole="button"
+                    icon={CalendarRange}
+                    iconColor="#674EA7"
+                    iconTint="bg-violet-50"
+                    title={request.typeName}
+                    subtitle={`${request.startDate}${request.endDate !== request.startDate ? ` → ${request.endDate}` : ""} · creada el ${request.createdAt}`}
+                    metaSub={request.status}
+                    metaSubColor={statusColors[request.status] ?? "#64748b"}
+                    chevron
                     onPress={() => router.push({ pathname: "/(paco)/requests/[id]", params: { id: request.id } })}
-                  >
-                    <Card className="gap-2">
-                      <View className="flex-row items-center justify-between">
-                        <Text className="flex-1 text-base font-bold text-slate-950">{request.typeName}</Text>
-                        <Badge tone={statusTone(request.status)}>{request.status}</Badge>
-                      </View>
-                      <Text className="text-sm text-slate-500">
-                        {request.startDate}
-                        {request.endDate !== request.startDate ? ` → ${request.endDate}` : ""} · creada el {request.createdAt}
-                      </Text>
-                      <Text className="text-xs font-bold text-brand-700">
-                        {request.status === "No iniciada" ? "Editable hasta iniciar evaluación · toca para ver" : "En evaluación · toca para ver timeline"}
-                      </Text>
-                    </Card>
-                  </Pressable>
+                  />
                 ))}
-              </View>
+              </ListGroup>
             )}
           </Section>
 
@@ -95,25 +95,22 @@ export default function RequestsScreen() {
             {finished.length === 0 ? (
               <EmptyState title="Sin historial" description="Aquí verás tus solicitudes aprobadas o rechazadas." icon={CalendarCheck} />
             ) : (
-              <View className="gap-2.5">
+              <ListGroup>
                 {finished.map((request) => (
-                  <Pressable
+                  <Row
                     key={request.id}
-                    accessibilityRole="button"
+                    icon={CalendarRange}
+                    iconColor="#64748b"
+                    iconTint="bg-slate-100"
+                    title={request.typeName}
+                    subtitle={`${request.startDate} · resuelta por ${request.stages[request.stages.length - 1]?.replace(/Etapa \d+ · /, "")}`}
+                    metaSub={request.status}
+                    metaSubColor={statusColors[request.status] ?? "#64748b"}
+                    chevron
                     onPress={() => router.push({ pathname: "/(paco)/requests/[id]", params: { id: request.id } })}
-                  >
-                    <Card className="gap-2">
-                      <View className="flex-row items-center justify-between">
-                        <Text className="flex-1 text-base font-bold text-slate-950">{request.typeName}</Text>
-                        <Badge tone={statusTone(request.status)}>{request.status}</Badge>
-                      </View>
-                      <Text className="text-sm text-slate-500">
-                        {request.startDate} · resuelta por {request.stages[request.stages.length - 1]?.replace(/Etapa \d+ · /, "")}
-                      </Text>
-                    </Card>
-                  </Pressable>
+                  />
                 ))}
-              </View>
+              </ListGroup>
             )}
           </Section>
         </>

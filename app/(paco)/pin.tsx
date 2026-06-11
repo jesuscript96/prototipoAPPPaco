@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { ExternalLink, MapPin, Tags } from "lucide-react-native";
+import { ExternalLink, MapPin, Tags } from "@/components/paco/glyphs";
 import { ScrollView, Text, View } from "react-native";
 import { Badge, Button, Card, EmptyState, Screen, Section } from "@/components/paco/layout";
 import { SelectChip } from "@/components/paco/ui";
@@ -22,7 +22,7 @@ export default function PinScreen() {
       <Screen title="Club de Descuentos PiN" description="Promociones y cupones de comercios cercanos, operados por nuestro aliado PiN.">
         <Card className="items-center gap-3 py-8">
           <View className="h-16 w-16 items-center justify-center rounded-2xl bg-amber-100">
-            <MapPin size={28} color="#d97706" />
+            <MapPin size={28} color="#B8860B" />
           </View>
           <Text className="text-center text-lg font-bold text-slate-950">Activa tu ubicación</Text>
           <Text className="text-center text-sm leading-5 text-slate-600">
@@ -67,7 +67,7 @@ export default function PinScreen() {
                       const CouponIcon = couponIcons[coupon.category] ?? Tags;
                       return (
                         <View className="h-11 w-11 items-center justify-center rounded-[12px] bg-brand-50">
-                          <CouponIcon size={20} color="#3148c8" strokeWidth={2.1} />
+                          <CouponIcon size={20} color="#2F42CB" strokeWidth={2.1} />
                         </View>
                       );
                     })()}

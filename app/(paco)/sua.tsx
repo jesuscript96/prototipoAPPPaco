@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FileCheck2, FileDown, Mail } from "lucide-react-native";
+import { FileCheck2, FileDown, Mail } from "@/components/paco/glyphs";
 import { Text, View } from "react-native";
 import { Badge, Button, Card, EmptyState, InlineAlert, Screen } from "@/components/paco/layout";
 import { SignatureBox, cn } from "@/components/paco/ui";

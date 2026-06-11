@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "expo-router";
-import { CheckCircle2, Download, GraduationCap, Search, WifiOff } from "lucide-react-native";
+import { CheckCircle2, Download, GraduationCap, Search, WifiOff } from "@/components/paco/glyphs";
 import { Modal, Pressable, Text, TextInput, View } from "react-native";
 import { Badge, Button, Card, EmptyState, Progress, Screen } from "@/components/paco/layout";
 import { Segmented } from "@/components/paco/ui";
@@ -62,7 +62,7 @@ export default function TrainingScreen() {
       {store.pendingSync.length > 0 ? (
         <Card className="gap-2 border-amber-200 bg-amber-50">
           <View className="flex-row items-center gap-2">
-            <WifiOff size={16} color="#d97706" />
+            <WifiOff size={16} color="#B8860B" />
             <Text className="flex-1 text-sm font-bold text-amber-800">Avance offline sin sincronizar</Text>
           </View>
           <Text className="text-xs text-amber-700">Tu progreso se guardó en el dispositivo. Al recuperar conexión se enviará al panel.</Text>
@@ -90,7 +90,7 @@ export default function TrainingScreen() {
                     const CourseIcon = courseIcons[course.id] ?? GraduationCap;
                     return (
                       <View className="h-12 w-12 items-center justify-center rounded-[12px] bg-brand-50">
-                        <CourseIcon size={22} color="#3148c8" strokeWidth={2} />
+                        <CourseIcon size={22} color="#2F42CB" strokeWidth={2} />
                       </View>
                     );
                   })()}
@@ -138,7 +138,7 @@ export default function TrainingScreen() {
               <>
                 <View className="items-center">
                   <View className="h-14 w-14 items-center justify-center rounded-2xl bg-brand-50">
-                    <WifiOff size={26} color="#3148c8" />
+                    <WifiOff size={26} color="#2F42CB" />
                   </View>
                 </View>
                 <Text className="text-center text-lg font-bold text-slate-950">Contenido disponible sin conexión</Text>

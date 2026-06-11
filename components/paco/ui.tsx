@@ -1,8 +1,9 @@
-import { ComponentType, ReactNode, useEffect, useRef, useState } from "react";
+import { Children, ComponentType, ReactNode, useEffect, useRef, useState } from "react";
 import { Animated, Modal, Pressable, Text, TextInput, View } from "react-native";
-import { Check, Minus, Paperclip, Pause, Play, Plus, Send, X } from "lucide-react-native";
+import { Check, ChevronRight, Minus, Paperclip, Pause, Play, Plus, Send, X } from "@/components/paco/glyphs";
 import { Button } from "@/components/paco/layout";
 import { fileIconFor } from "@/components/paco/icons";
+import { ConfettiBurst, PopIn, PressableScale, Pulse, easeOut } from "@/components/paco/motion";
 import { colors } from "@/theme/tokens";
 import { usePacoStore } from "@/store/paco-store";
 
@@ -20,25 +21,130 @@ export function ToastHost() {
   const toastStamp = usePacoStore((s) => s.toastStamp);
   const clearToast = usePacoStore((s) => s.clearToast);
   const opacity = useRef(new Animated.Value(0)).current;
+  const lift = useRef(new Animated.Value(18)).current;
 
   useEffect(() => {
     if (!toast) return;
     opacity.setValue(0);
-    Animated.timing(opacity, { toValue: 1, duration: 180, useNativeDriver: false }).start();
+    lift.setValue(18);
+    Animated.parallel([
+      Animated.timing(opacity, { toValue: 1, duration: 180, easing: easeOut, useNativeDriver: false }),
+      Animated.spring(lift, { toValue: 0, speed: 24, bounciness: 8, useNativeDriver: false }),
+    ]).start();
     const timer = setTimeout(() => {
-      Animated.timing(opacity, { toValue: 0, duration: 220, useNativeDriver: false }).start(() => clearToast());
+      Animated.parallel([
+        Animated.timing(opacity, { toValue: 0, duration: 200, useNativeDriver: false }),
+        Animated.timing(lift, { toValue: 10, duration: 200, useNativeDriver: false }),
+      ]).start(() => clearToast());
     }, 2600);
     return () => clearTimeout(timer);
-  }, [toast, toastStamp, clearToast, opacity]);
+  }, [toast, toastStamp, clearToast, opacity, lift]);
 
   if (!toast) return null;
   return (
-    <Animated.View style={{ opacity, pointerEvents: "none" }} className="absolute bottom-8 left-5 right-5 items-center">
+    <Animated.View
+      style={{ opacity, pointerEvents: "none", transform: [{ translateY: lift }] }}
+      className="absolute bottom-6 left-5 right-5 items-center"
+    >
       <View className="max-w-full flex-row items-center gap-2 rounded-[14px] bg-ink/95 px-4 py-3 shadow-pop">
-        <Check size={15} color="#5eead4" strokeWidth={3} />
+        <Check size={15} color="#6AA84F" strokeWidth={3} />
         <Text className="shrink text-[13px] font-semibold text-white">{toast}</Text>
       </View>
     </Animated.View>
+  );
+}
+
+// ---- Listas compactas (densidad Revolut) ----
+
+// Grupo: contenedor glass unico; los hijos quedan separados por hairlines en
+// lugar de tarjetas independientes con borde.
+export function ListGroup({ children, className = "" }: { children: ReactNode; className?: string }) {
+  const items = Children.toArray(children).filter(Boolean);
+  return (
+    <View className={cn("overflow-hidden rounded-2xl border border-white/80 bg-white/75 shadow-card", className)}>
+      {items.map((child, index) => (
+        <View key={index} className={cn(index > 0 && "border-t border-slate-900/5")}>
+          {child}
+        </View>
+      ))}
+    </View>
+  );
+}
+
+// Fila compacta: icono tintado, titulo + subtitulo de una linea y columna
+// derecha para meta (monto, hora) + estado. 56-64 px de alto total.
+export function Row({
+  icon: IconComponent,
+  iconColor = "#2F42CB",
+  iconTint = "bg-brand-100",
+  leading,
+  title,
+  subtitle,
+  meta,
+  metaBold,
+  metaSub,
+  metaSubColor = "#64748b",
+  unread,
+  chevron,
+  onPress,
+  trailing,
+}: {
+  icon?: Icon | undefined;
+  iconColor?: string;
+  iconTint?: string;
+  leading?: ReactNode;
+  title: string;
+  subtitle?: string | undefined;
+  meta?: string | undefined;
+  metaBold?: boolean | undefined;
+  metaSub?: string | undefined;
+  metaSubColor?: string;
+  unread?: boolean | undefined;
+  chevron?: boolean | undefined;
+  onPress?: (() => void) | undefined;
+  trailing?: ReactNode;
+}) {
+  const content = (
+    <View className="flex-row items-center gap-3 px-4 py-3">
+      {leading ??
+        (IconComponent ? (
+          <View className={cn("h-9 w-9 items-center justify-center rounded-[10px]", iconTint)}>
+            <IconComponent size={17} color={iconColor} />
+          </View>
+        ) : null)}
+      <View className="flex-1">
+        <View className="flex-row items-center gap-1.5">
+          {unread ? <View className="h-1.5 w-1.5 rounded-full bg-accent-400" /> : null}
+          <Text className={cn("flex-1 text-[14px] text-slate-900", unread ? "font-bold" : "font-semibold")} numberOfLines={1}>
+            {title}
+          </Text>
+        </View>
+        {subtitle ? (
+          <Text className="mt-0.5 text-[12px] leading-4 text-slate-500" numberOfLines={1}>
+            {subtitle}
+          </Text>
+        ) : null}
+      </View>
+      {meta || metaSub ? (
+        <View className="items-end">
+          {meta ? <Text className={cn(metaBold ? "text-[13px] font-bold text-slate-900" : "text-[12px] font-semibold text-slate-500")}>{meta}</Text> : null}
+          {metaSub ? (
+            <Text style={{ color: metaSubColor }} className="mt-0.5 text-[11px] font-semibold">
+              {metaSub}
+            </Text>
+          ) : null}
+        </View>
+      ) : null}
+      {trailing}
+      {chevron ? <ChevronRight size={15} color="#cbd5e1" /> : null}
+    </View>
+  );
+
+  if (!onPress) return content;
+  return (
+    <PressableScale onPress={onPress} className="transition-colors active:bg-white hover:bg-white/90">
+      {content}
+    </PressableScale>
   );
 }
 
@@ -132,7 +238,7 @@ export function OptionCard({
   title,
   subtitle,
   icon: IconComponent,
-  iconColor = "#3148c8",
+  iconColor = "#2F42CB",
   iconTint = "bg-brand-50",
   selected,
   badge,
@@ -148,11 +254,10 @@ export function OptionCard({
   onPress: () => void;
 }) {
   return (
-    <Pressable
-      accessibilityRole="button"
+    <PressableScale
       onPress={onPress}
       className={cn(
-        "flex-row items-center gap-3 rounded-2xl border p-4 shadow-card active:opacity-85",
+        "flex-row items-center gap-3 rounded-2xl border p-4 shadow-card",
         selected ? "border-ink/70 bg-white" : "border-white/80 bg-white/75",
       )}
     >
@@ -170,11 +275,17 @@ export function OptionCard({
         ) : null}
       </View>
       {badge}
-    </Pressable>
+    </PressableScale>
   );
 }
 
 export function ToggleRow({ label, helper, value, onChange }: { label: string; helper?: string; value: boolean; onChange: (value: boolean) => void }) {
+  const slide = useRef(new Animated.Value(value ? 1 : 0)).current;
+
+  useEffect(() => {
+    Animated.spring(slide, { toValue: value ? 1 : 0, speed: 26, bounciness: 7, useNativeDriver: true }).start();
+  }, [value, slide]);
+
   return (
     <Pressable
       accessibilityRole="switch"
@@ -187,7 +298,10 @@ export function ToggleRow({ label, helper, value, onChange }: { label: string; h
         {helper ? <Text className="mt-0.5 text-[13px] text-slate-500">{helper}</Text> : null}
       </View>
       <View className={cn("h-7 w-12 justify-center rounded-full px-1", value ? "bg-ink" : "bg-slate-300")}>
-        <View className={cn("h-5 w-5 rounded-full bg-white shadow-card", value && "self-end")} />
+        <Animated.View
+          style={{ transform: [{ translateX: slide.interpolate({ inputRange: [0, 1], outputRange: [0, 20] }) }] }}
+          className="h-5 w-5 rounded-full bg-white shadow-card"
+        />
       </View>
     </Pressable>
   );
@@ -223,7 +337,7 @@ export function AmountSlider({
           onPress={() => onChange(Math.max(min, value - step))}
           className="h-11 w-11 items-center justify-center rounded-[12px] border border-white/80 bg-white/75 shadow-card active:bg-white"
         >
-          <Minus size={18} color="#15143a" />
+          <Minus size={18} color="#1E1E1E" />
         </Pressable>
         <View className="min-w-44 items-center rounded-[16px] bg-ink px-6 py-4 shadow-card">
           <Text className="text-3xl font-bold tracking-tight text-white">{mxn(value)}</Text>
@@ -233,7 +347,7 @@ export function AmountSlider({
           onPress={() => onChange(Math.min(max, value + step))}
           className="h-11 w-11 items-center justify-center rounded-[12px] border border-white/80 bg-white/75 shadow-card active:bg-white"
         >
-          <Plus size={18} color="#15143a" />
+          <Plus size={18} color="#1E1E1E" />
         </Pressable>
       </View>
       <View className="flex-row items-center gap-0.5">
@@ -284,10 +398,13 @@ export function MoneyRow({ label, value, strong }: { label: string; value: strin
 
 export function SuccessCard({ title, description, children }: { title: string; description: string; children?: ReactNode }) {
   return (
-    <View className="items-center gap-3 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-6">
-      <View className="h-14 w-14 items-center justify-center rounded-full bg-emerald-500 shadow-card">
-        <Check size={28} color="#fff" strokeWidth={3} />
-      </View>
+    <View className="items-center gap-3 overflow-hidden rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-6">
+      <ConfettiBurst />
+      <PopIn>
+        <View className="h-14 w-14 items-center justify-center rounded-full bg-emerald-500 shadow-card">
+          <Check size={28} color="#fff" strokeWidth={3} />
+        </View>
+      </PopIn>
       <Text className="text-center text-xl font-bold tracking-tight text-slate-950">{title}</Text>
       <Text className="text-center text-sm leading-6 text-slate-600">{description}</Text>
       {children}
@@ -317,7 +434,8 @@ export function ConfirmSheet({
   return (
     <Modal transparent visible={visible} animationType="fade" onRequestClose={onCancel}>
       <View className="flex-1 items-center justify-center bg-ink/40 px-6">
-        <View className="w-full max-w-sm gap-2.5 rounded-2xl border border-white/80 bg-white/95 p-5 shadow-pop">
+        <PopIn>
+          <View className="w-full max-w-sm gap-2.5 rounded-2xl border border-white/80 bg-white/95 p-5 shadow-pop">
           <Text className="text-lg font-bold tracking-tight text-slate-950">{title}</Text>
           <Text className="text-sm leading-6 text-slate-600">{message}</Text>
           <View className="mt-2 gap-2">
@@ -328,7 +446,8 @@ export function ConfirmSheet({
               Cancelar
             </Button>
           </View>
-        </View>
+          </View>
+        </PopIn>
       </View>
     </Modal>
   );
@@ -381,7 +500,7 @@ export function ChatComposer({
           onPress={onAttach}
           className="h-11 w-11 items-center justify-center rounded-[12px] border border-white/80 bg-white/75"
         >
-          <Paperclip size={17} color="#15143a" />
+          <Paperclip size={17} color="#1E1E1E" />
         </Pressable>
       ) : null}
       <TextInput
@@ -465,9 +584,9 @@ export function StackedBar({ slices }: { slices: { label: string; value: number;
 // ---- Estatus tipo semaforo ----
 
 const statusColors: Record<string, string> = {
-  Pendiente: "#eab308",
-  "En proceso": "#f97316",
-  Atendido: "#14b8a6",
+  Pendiente: "#F1C232",
+  "En proceso": "#FB4F33",
+  Atendido: "#6AA84F",
 };
 
 export function StatusDot({ status }: { status: string }) {
@@ -576,9 +695,12 @@ export function AudioPlayer({ name, duration, playing, onToggle, progress }: { n
         <Pressable
           accessibilityLabel={playing ? "Pausar audio" : "Reproducir audio"}
           onPress={onToggle}
-          className="h-10 w-10 items-center justify-center rounded-[12px] bg-ink active:opacity-80"
         >
-          {playing ? <Pause size={16} color="#fff" /> : <Play size={16} color="#fff" />}
+          <Pulse active={playing}>
+            <View className="h-10 w-10 items-center justify-center rounded-[12px] bg-ink">
+              {playing ? <Pause size={16} color="#fff" /> : <Play size={16} color="#fff" />}
+            </View>
+          </Pulse>
         </Pressable>
         <View className="flex-1">
           <Text className="text-[13px] font-bold text-slate-900" numberOfLines={1}>

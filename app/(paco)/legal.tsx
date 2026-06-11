@@ -1,4 +1,4 @@
-import { ShieldCheck } from "lucide-react-native";
+import { ShieldCheck } from "@/components/paco/glyphs";
 import { Text, View } from "react-native";
 import { Badge, Button, Card, Checkbox, Screen, Section } from "@/components/paco/layout";
 import { SignatureBox } from "@/components/paco/ui";

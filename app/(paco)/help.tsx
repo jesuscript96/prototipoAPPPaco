@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
-import { ChevronDown, ChevronUp, ExternalLink, MessageCircle, Ticket } from "lucide-react-native";
+import { ChevronDown, ChevronUp, ExternalLink, MessageCircle, Ticket } from "@/components/paco/glyphs";
 import { Pressable, Text, View } from "react-native";
 import { Button, Card, Screen, Section } from "@/components/paco/layout";
 import { usePacoStore } from "@/store/paco-store";

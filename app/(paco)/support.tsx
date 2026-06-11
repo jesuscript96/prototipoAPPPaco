@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useRouter } from "expo-router";
-import { ArrowUpRight, HelpCircle, LifeBuoy, MessageCircle, Send, UserRound } from "lucide-react-native";
+import { ArrowUpRight, HelpCircle, LifeBuoy, MessageCircle, Send, UserRound } from "@/components/paco/glyphs";
 import { Text, View } from "react-native";
 import { Badge, Button, Card, Field, InlineAlert, Screen, Section } from "@/components/paco/layout";
 import { ChatBubble, ChatComposer } from "@/components/paco/ui";
@@ -65,8 +65,8 @@ export default function SupportScreen() {
       {!store.ticketCreated ? (
         <Section title="Chatea con nosotros ahora" description="Sin conversaciones activas. Completa el formulario para abrir un ticket.">
           <Card className="items-center gap-2 py-5">
-            <View className="h-14 w-14 items-center justify-center rounded-[14px] bg-sky-50">
-              <LifeBuoy size={26} color="#0284c7" strokeWidth={2} />
+            <View className="h-14 w-14 items-center justify-center rounded-[14px] bg-brand-100">
+              <LifeBuoy size={26} color="#5176F3" strokeWidth={2} />
             </View>
             <Text className="text-center text-sm leading-5 text-slate-600">
               Las herramientas tecnológicas a tu lado: nuestro bot te atiende de inmediato y puede escalar tu caso a un agente
@@ -117,7 +117,7 @@ export default function SupportScreen() {
       )}
 
       <Card className="flex-row items-center gap-3">
-        <ArrowUpRight size={18} color="#3148c8" />
+        <ArrowUpRight size={18} color="#2F42CB" />
         <Text className="flex-1 text-xs leading-4 text-slate-500">
           ¿Tu duda es del estado de cuenta? Usa el botón de WhatsApp dentro de Reporte de gastos para una atención más rápida.
         </Text>

@@ -3,10 +3,11 @@
 // corporativa de uso diario: superficies bg-white/70 con borde claro, radios
 // contenidos (12-16 px), tipografia densa y acentos por dominio.
 
-import { ComponentType, ReactNode } from "react";
-import { ActivityIndicator, Platform, Pressable, ScrollView, Text, TextInput, TextInputProps, View } from "react-native";
+import { ComponentType, ReactNode, useEffect, useRef } from "react";
+import { ActivityIndicator, Animated, Platform, Pressable, ScrollView, Text, TextInput, TextInputProps, View } from "react-native";
 import { useRouter } from "expo-router";
-import { ArrowLeft, Check } from "lucide-react-native";
+import { ArrowLeft, Check } from "@/components/paco/glyphs";
+import { FadeSlideIn, PopIn, easeOut } from "@/components/paco/motion";
 
 type Icon = ComponentType<{ size?: number; color?: string; strokeWidth?: number }>;
 
@@ -20,7 +21,7 @@ export function Ambient() {
   return (
     <View style={{ pointerEvents: "none" }} className="absolute inset-0 overflow-hidden">
       <View style={blur(70)} className="absolute -right-24 -top-28 h-80 w-80 rounded-full bg-brand-300/40" />
-      <View style={blur(70)} className="absolute -left-28 top-44 h-72 w-72 rounded-full bg-mint-300/30" />
+      <View style={blur(70)} className="absolute -left-28 top-44 h-72 w-72 rounded-full bg-brand-200/60" />
       <View style={blur(80)} className="absolute right-[-70px] top-[420px] h-64 w-64 rounded-full bg-violet-300/30" />
     </View>
   );
@@ -33,7 +34,7 @@ export function GlassNavButton({ icon: IconComponent, label, onPress }: { icon: 
       onPress={onPress}
       className="h-11 w-11 items-center justify-center rounded-full border border-white/80 bg-white/70 shadow-card active:bg-white"
     >
-      <IconComponent size={19} color="#15143a" strokeWidth={2.2} />
+      <IconComponent size={19} color="#1E1E1E" strokeWidth={2.2} />
     </Pressable>
   );
 }
@@ -73,7 +74,9 @@ export function Screen({
             {description ? <Text className="text-sm leading-6 text-slate-500">{description}</Text> : null}
           </View>
         ) : null}
-        <View className="flex-1 gap-4 px-5 pb-20 pt-2">{children}</View>
+        <FadeSlideIn className="flex-1">
+          <View className="flex-1 gap-4 px-5 pb-20 pt-2">{children}</View>
+        </FadeSlideIn>
       </ScrollView>
     </View>
   );
@@ -134,11 +137,11 @@ export function Button({
   onPress?: () => void;
 }) {
   const variants = {
-    primary: "bg-ink shadow-card",
-    secondary: "border border-white/80 bg-white/75 shadow-card",
-    outline: "border border-slate-900/15 bg-white/50",
-    ghost: "bg-transparent",
-    destructive: "bg-red-500 shadow-card",
+    primary: "bg-ink shadow-card hover:bg-ink-soft",
+    secondary: "border border-white/80 bg-white/75 shadow-card hover:bg-white",
+    outline: "border border-slate-900/15 bg-white/50 hover:bg-white/80",
+    ghost: "bg-transparent hover:bg-slate-900/5",
+    destructive: "bg-red-500 shadow-card hover:bg-red-600",
   };
   const text = {
     primary: "text-white",
@@ -147,21 +150,28 @@ export function Button({
     ghost: "text-slate-500",
     destructive: "text-white",
   };
-  const iconColor = variant === "primary" || variant === "destructive" ? "#fff" : "#15143a";
+  const iconColor = variant === "primary" || variant === "destructive" ? "#fff" : "#1E1E1E";
+  const scale = useRef(new Animated.Value(1)).current;
 
   return (
     <Pressable
       accessibilityRole="button"
       disabled={disabled || loading}
       onPress={onPress}
-      className={cn(
-        "min-h-[50px] flex-row items-center justify-center gap-2 rounded-[14px] px-5 active:opacity-80",
-        variants[variant],
-        (disabled || loading) && "opacity-40",
-      )}
+      onPressIn={() => Animated.timing(scale, { toValue: 0.97, duration: 110, easing: easeOut, useNativeDriver: true }).start()}
+      onPressOut={() => Animated.spring(scale, { toValue: 1, speed: 30, bounciness: 7, useNativeDriver: true }).start()}
     >
-      {loading ? <ActivityIndicator color={iconColor} /> : IconComponent ? <IconComponent size={18} color={iconColor} strokeWidth={2.3} /> : null}
-      {children ? <Text className={cn("text-center text-[15px] font-bold", text[variant])}>{children}</Text> : null}
+      <Animated.View
+        style={{ transform: [{ scale }] }}
+        className={cn(
+          "min-h-[50px] flex-row items-center justify-center gap-2 rounded-[14px] px-5",
+          variants[variant],
+          (disabled || loading) && "opacity-40",
+        )}
+      >
+        {loading ? <ActivityIndicator color={iconColor} /> : IconComponent ? <IconComponent size={18} color={iconColor} strokeWidth={2.3} /> : null}
+        {children ? <Text className={cn("text-center text-[15px] font-bold", text[variant])}>{children}</Text> : null}
+      </Animated.View>
     </Pressable>
   );
 }
@@ -175,7 +185,11 @@ export function Checkbox({ label, checked, onPress }: { label: string; checked: 
           checked ? "border-ink bg-ink" : "border-slate-300 bg-white/80",
         )}
       >
-        {checked ? <Check size={14} color="#fff" strokeWidth={3.2} /> : null}
+        {checked ? (
+          <PopIn>
+            <Check size={14} color="#fff" strokeWidth={3.2} />
+          </PopIn>
+        ) : null}
       </View>
       <Text className="flex-1 text-sm leading-6 text-slate-700">{label}</Text>
     </Pressable>
@@ -199,7 +213,7 @@ export function Field({
         editable={!readOnly && props.editable !== false}
         placeholderTextColor="#94a3b8"
         className={cn(
-          "min-h-[50px] rounded-xl border bg-white/80 px-4 text-base text-slate-950",
+          "min-h-[50px] rounded-xl border bg-white/80 px-4 text-base text-slate-950 focus:border-brand-400",
           props.multiline && "min-h-28 py-3",
           error ? "border-red-300" : "border-slate-900/10",
           (readOnly || props.editable === false) && "bg-slate-100/70 text-slate-500",
@@ -217,10 +231,10 @@ export function Field({
 // ---- Estado y feedback ----
 
 const tones = {
-  success: { bg: "bg-emerald-500/10", border: "border-emerald-500/20", text: "text-emerald-900", sub: "text-emerald-700", dot: "#10b981" },
-  warning: { bg: "bg-amber-500/10", border: "border-amber-500/25", text: "text-amber-900", sub: "text-amber-700", dot: "#f59e0b" },
-  danger: { bg: "bg-red-500/10", border: "border-red-500/20", text: "text-red-900", sub: "text-red-700", dot: "#ef4444" },
-  info: { bg: "bg-sky-500/10", border: "border-sky-500/20", text: "text-sky-900", sub: "text-sky-700", dot: "#0ea5e9" },
+  success: { bg: "bg-emerald-500/10", border: "border-emerald-500/20", text: "text-emerald-900", sub: "text-emerald-700", dot: "#6AA84F" },
+  warning: { bg: "bg-amber-400/15", border: "border-amber-400/30", text: "text-amber-900", sub: "text-amber-700", dot: "#F1C232" },
+  danger: { bg: "bg-red-500/10", border: "border-red-500/20", text: "text-red-900", sub: "text-red-700", dot: "#CC0000" },
+  info: { bg: "bg-brand-400/10", border: "border-brand-400/25", text: "text-brand-700", sub: "text-brand-600", dot: "#5176F3" },
   neutral: { bg: "bg-slate-500/10", border: "border-slate-500/20", text: "text-slate-800", sub: "text-slate-600", dot: "#64748b" },
 } as const;
 
@@ -252,9 +266,11 @@ export function InlineAlert({ title, description, tone = "info" }: { title: stri
 export function EmptyState({ title, description, icon: IconComponent }: { title: string; description: string; icon: Icon }) {
   return (
     <View className="items-center gap-3 rounded-2xl border border-dashed border-slate-900/15 bg-white/40 px-6 py-10">
-      <View className="h-14 w-14 items-center justify-center rounded-[14px] border border-white/80 bg-white/70">
-        <IconComponent size={24} color="#94a3b8" />
-      </View>
+      <PopIn>
+        <View className="h-14 w-14 items-center justify-center rounded-[14px] border border-white/80 bg-white/70">
+          <IconComponent size={24} color="#94a3b8" />
+        </View>
+      </PopIn>
       <Text className="text-center text-base font-bold text-slate-800">{title}</Text>
       <Text className="text-center text-[13px] leading-5 text-slate-500">{description}</Text>
     </View>
@@ -263,10 +279,19 @@ export function EmptyState({ title, description, icon: IconComponent }: { title:
 
 export function Progress({ value }: { value: number }) {
   const clamped = Math.min(100, Math.max(0, value));
+  const width = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(width, { toValue: clamped, duration: 500, easing: easeOut, useNativeDriver: false }).start();
+  }, [clamped, width]);
+
   return (
     <View className="gap-1.5">
       <View className="h-1.5 overflow-hidden rounded-full bg-slate-900/10">
-        <View style={{ width: `${clamped}%` }} className="h-full rounded-full bg-brand-500" />
+        <Animated.View
+          style={{ width: width.interpolate({ inputRange: [0, 100], outputRange: ["0%", "100%"] }) }}
+          className="h-full rounded-full bg-brand-500"
+        />
       </View>
       <Text className="text-[11px] font-bold text-slate-400">{clamped}% completado</Text>
     </View>

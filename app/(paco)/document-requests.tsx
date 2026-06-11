@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FileSignature, Save } from "lucide-react-native";
+import { FileSignature, Save } from "@/components/paco/glyphs";
 import { ActivityIndicator, Text, View } from "react-native";
 import { Badge, Button, Card, InlineAlert, Screen, Section } from "@/components/paco/layout";
 import { ConfirmSheet, SignatureBox, cn } from "@/components/paco/ui";
@@ -102,7 +102,7 @@ export default function DocumentRequestsScreen() {
     >
       {phase === "generating" ? (
         <Card className="items-center gap-3 py-8">
-          <ActivityIndicator color="#3148c8" size="large" />
+          <ActivityIndicator color="#2F42CB" size="large" />
           <Text className="text-sm font-semibold text-slate-600">Generando documento autocompletado…</Text>
         </Card>
       ) : null}

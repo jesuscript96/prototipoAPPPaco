@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { FileQuestion } from "lucide-react-native";
+import { FileQuestion } from "@/components/paco/glyphs";
 import { Text, View } from "react-native";
 import { Button, Card, EmptyState, Screen, Section } from "@/components/paco/layout";
 import { FileTile } from "@/components/paco/ui";

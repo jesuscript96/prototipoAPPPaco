@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "expo-router";
-import { ChevronRight, MessagesSquare, Plus, Search } from "lucide-react-native";
-import { Pressable, Text, TextInput, View } from "react-native";
-import { Button, Card, EmptyState, Screen } from "@/components/paco/layout";
-import { Segmented, StatusDot, cn } from "@/components/paco/ui";
+import { Megaphone, MessagesSquare, Plus, Search } from "@/components/paco/glyphs";
+import { TextInput, View } from "react-native";
+import { Button, EmptyState, Screen } from "@/components/paco/layout";
+import { ListGroup, Row, Segmented, StatusDot } from "@/components/paco/ui";
 import { usePacoStore } from "@/store/paco-store";
 
 const filters = ["Recientes", "Antiguos", "No leídos"] as const;
@@ -56,42 +56,26 @@ export default function VoiceStatusScreen() {
           icon={MessagesSquare}
         />
       ) : (
-        <View className="gap-2.5">
+        <ListGroup>
           {filtered.map((report) => {
-            const lastMessage = report.messages[report.messages.length - 1];
+            const statusColor = report.status === "Atendido" ? "#6AA84F" : report.status === "En proceso" ? "#FB4F33" : "#B8860B";
             return (
-              <Pressable
+              <Row
                 key={report.id}
-                accessibilityRole="button"
+                icon={Megaphone}
+                iconColor="#CC0000"
+                iconTint="bg-red-50"
+                title={report.title}
+                subtitle={`(${report.categoryName}) · ${report.folio} · ${report.createdAt}${report.anonymous ? " · anónimo" : ""}`}
+                metaSub={report.status}
+                metaSubColor={statusColor}
+                unread={report.unread}
+                chevron
                 onPress={() => router.push({ pathname: "/(paco)/voice/[id]", params: { id: report.id } })}
-              >
-                <Card className={cn("gap-2", report.unread && "border-brand-200 bg-brand-50/60")}>
-                  <View className="flex-row items-center justify-between gap-2">
-                    <Text className="text-xs font-bold text-slate-500">
-                      ({report.categoryName}) · {report.folio}
-                    </Text>
-                    <StatusDot status={report.status} />
-                  </View>
-                  <View className="flex-row items-center justify-between gap-2">
-                    <Text className="flex-1 text-base font-bold text-slate-950">{report.title}</Text>
-                    <ChevronRight size={18} color="#94a3b8" />
-                  </View>
-                  {lastMessage ? (
-                    <Text className="text-sm text-slate-500" numberOfLines={1}>
-                      {lastMessage.mine ? "Tú: " : "RH: "}
-                      {lastMessage.text}
-                    </Text>
-                  ) : null}
-                  <Text className="text-xs text-slate-400">
-                    Creado el {report.createdAt}
-                    {report.anonymous ? " · anónimo" : ""}
-                    {report.unread ? " · respuesta sin leer" : ""}
-                  </Text>
-                </Card>
-              </Pressable>
+              />
             );
           })}
-        </View>
+        </ListGroup>
       )}
 
       <Button icon={Plus} variant="outline" onPress={() => router.push("/(paco)/voice")}>

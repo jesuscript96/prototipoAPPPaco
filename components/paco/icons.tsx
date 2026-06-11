@@ -72,7 +72,7 @@ import {
   UtensilsCrossed,
   Wallet,
   Wifi,
-} from "lucide-react-native";
+} from "@/components/paco/glyphs";
 
 export type Icon = ComponentType<{ size?: number; color?: string; strokeWidth?: number }>;
 
@@ -104,10 +104,10 @@ export function IconBubble({
 // ---- Dominios ----
 
 export const domainStyles: Record<string, { tint: string; color: string }> = {
-  Finanzas: { tint: "bg-brand-50", color: "#3148c8" },
-  "Personas y cultura": { tint: "bg-violet-50", color: "#7c3aed" },
-  Documentos: { tint: "bg-amber-50", color: "#b45309" },
-  Soporte: { tint: "bg-teal-50", color: "#0d9488" },
+  Finanzas: { tint: "bg-brand-50", color: "#2F42CB" },
+  "Personas y cultura": { tint: "bg-violet-50", color: "#674EA7" },
+  Documentos: { tint: "bg-amber-50", color: "#B8860B" },
+  Soporte: { tint: "bg-brand-100", color: "#5176F3" },
 };
 
 export const moduleIcons: Record<string, Icon> = {

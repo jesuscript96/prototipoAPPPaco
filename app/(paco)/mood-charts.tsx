@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { LineChart } from "lucide-react-native";
+import { LineChart } from "@/components/paco/glyphs";
 import { Text, View } from "react-native";
 import { Card, EmptyState, Screen, Section } from "@/components/paco/layout";
 import { BarChart, CountBar, Segmented } from "@/components/paco/ui";

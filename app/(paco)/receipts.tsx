@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Award, FileCheck2, FileDown, FileText } from "lucide-react-native";
-import { Modal, Text, View } from "react-native";
-import { Badge, Button, Card, InlineAlert, Screen } from "@/components/paco/layout";
-import { SignatureBox, cn } from "@/components/paco/ui";
+import { Award, FileCheck2, FileDown, FileText } from "@/components/paco/glyphs";
+import { Modal, Pressable, Text, View } from "react-native";
+import { Button, Card, InlineAlert, Screen } from "@/components/paco/layout";
+import { ListGroup, Row, SignatureBox } from "@/components/paco/ui";
 import { runPhases } from "@/lib/paco-api";
 import { company, employee, seedReceipts } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
@@ -46,56 +46,52 @@ export default function ReceiptsScreen() {
         <InlineAlert title="Todo firmado" description="No tienes recibos pendientes de firma." tone="success" />
       )}
 
-      <View className="gap-2.5">
+      <ListGroup>
         {seedReceipts.map((receipt) => {
           const signed = signedReceiptIds.includes(receipt.id);
           const pdfName = `Recibo-${receipt.period.replace(/ /g, "-")}.pdf`;
           const xmlName = `CFDI-${receipt.period.replace(/ /g, "-")}.xml`;
           return (
-            <Card key={receipt.id} className={cn("gap-3", !signed && "border-amber-200")}>
-              <View className="flex-row items-center justify-between gap-2">
-                <View className="flex-1">
-                  <Text className="text-base font-bold text-slate-950">{receipt.period}</Text>
-                  <Text className="text-xs text-slate-500">Pagado el {receipt.paidOn}</Text>
-                </View>
-                <Text className="text-lg font-bold text-slate-950">{receipt.net}</Text>
-              </View>
-              <View className="flex-row items-center gap-2">
-                <Badge tone={signed ? "success" : "warning"}>{signed ? "Firmado" : "Pendiente de firma"}</Badge>
-              </View>
-              <View className="flex-row gap-2">
-                <View className="flex-1">
-                  <Button icon={FileText} variant="outline" onPress={() => setViewing(receipt.id)}>
-                    Ver PDF
-                  </Button>
-                </View>
-                <View className="flex-1">
-                  <Button
-                    icon={FileDown}
-                    variant="outline"
+            <Row
+              key={receipt.id}
+              icon={FileText}
+              iconColor={signed ? "#6AA84F" : "#B8860B"}
+              iconTint={signed ? "bg-emerald-50" : "bg-amber-50"}
+              title={receipt.period}
+              subtitle={`Pagado el ${receipt.paidOn}`}
+              meta={receipt.net} metaBold
+              metaSub={signed ? "Firmado" : "Pendiente de firma"}
+              metaSubColor={signed ? "#6AA84F" : "#B8860B"}
+              onPress={() => setViewing(receipt.id)}
+              trailing={
+                <View className="flex-row items-center gap-1">
+                  <Pressable
+                    accessibilityLabel={`Descargar ${receipt.period}`}
                     onPress={() => downloadFile(downloadedFiles.includes(pdfName) ? xmlName : pdfName)}
+                    className="h-9 w-9 items-center justify-center rounded-[10px] active:bg-slate-100"
                   >
-                    {downloadedFiles.includes(pdfName) ? "Descargar XML" : "Descargar PDF"}
-                  </Button>
+                    <FileDown size={16} color="#2F42CB" />
+                  </Pressable>
+                  {!signed ? (
+                    <Pressable
+                      accessibilityLabel={`Firmar ${receipt.period}`}
+                      onPress={() => sign(receipt.id)}
+                      className="h-9 w-9 items-center justify-center rounded-[10px] active:bg-amber-50"
+                    >
+                      <FileCheck2 size={16} color="#B8860B" />
+                    </Pressable>
+                  ) : null}
                 </View>
-              </View>
-              {!signed ? (
-                <>
-                  <Button icon={FileCheck2} loading={signing === receipt.id} onPress={() => sign(receipt.id)}>
-                    Firmar recibo
-                  </Button>
-                  {signing === receipt.id && phase ? <Text className="text-center text-xs font-semibold text-slate-500">{phase}</Text> : null}
-                </>
-              ) : null}
-            </Card>
+              }
+            />
           );
         })}
-      </View>
+      </ListGroup>
 
       <Card className="gap-3">
         <View className="flex-row items-center gap-3">
           <View className="h-12 w-12 items-center justify-center rounded-2xl bg-amber-50">
-            <Award size={22} color="#d97706" />
+            <Award size={22} color="#B8860B" />
           </View>
           <View className="flex-1">
             <Text className="text-base font-bold text-slate-950">Certificado de firma digital</Text>

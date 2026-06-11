@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
-import { KeyRound } from "lucide-react-native";
+import { KeyRound } from "@/components/paco/glyphs";
 import { Text, TextInput, View } from "react-native";
 import { Button, Card, InlineAlert, Screen } from "@/components/paco/layout";
 import { StepHeader, SuccessCard, cn } from "@/components/paco/ui";
+import { ShakeView } from "@/components/paco/motion";
 import { simulate } from "@/lib/paco-api";
 import { usePacoStore } from "@/store/paco-store";
 
@@ -95,14 +96,16 @@ export default function NipScreen() {
   return (
     <Screen title="NIP de transacciones" description="El NIP autoriza tus movimientos financieros dentro de Paco.">
       <StepHeader step={step + 1} total={3} title={active.title} />
+      <ShakeView trigger={error}>
       <Card className="gap-4 py-8">
         <View className="items-center">
           <View className="h-12 w-12 items-center justify-center rounded-2xl bg-brand-50">
-            <KeyRound size={22} color="#3148c8" />
+            <KeyRound size={22} color="#2F42CB" />
           </View>
         </View>
         <NipInput value={active.value} onChangeText={active.set} autoFocus />
       </Card>
+      </ShakeView>
       {error ? <InlineAlert title="Verifica tu NIP" description={error} tone="danger" /> : null}
       <Button disabled={active.value.length !== 4} loading={saving} onPress={advance}>
         {active.cta}

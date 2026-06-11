@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
-import { Eye, EyeOff, Save, ShieldCheck } from "lucide-react-native";
+import { Eye, EyeOff, Save, ShieldCheck } from "@/components/paco/glyphs";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { Button, Card, Screen } from "@/components/paco/layout";
 import { SuccessCard } from "@/components/paco/ui";
@@ -83,7 +83,7 @@ export default function PasswordScreen() {
   return (
     <Screen title="Cambiar contraseña" description="Usarás tu contraseña para ingresar a la app.">
       <Card className="items-center gap-2 bg-brand-50 py-6">
-        <ShieldCheck size={40} color="#3148c8" />
+        <ShieldCheck size={40} color="#2F42CB" />
         <Text className="text-center text-sm leading-5 text-slate-600">
           Combina mayúsculas, minúsculas, números y símbolos para una contraseña fuerte.
         </Text>

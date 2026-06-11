@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { CheckCircle2, Clapperboard, FileQuestion, FileText, Mic, Play, RotateCcw, Send, Square, Upload } from "lucide-react-native";
+import { CheckCircle2, Clapperboard, FileQuestion, FileText, Mic, Play, RotateCcw, Send, Square, Upload } from "@/components/paco/glyphs";
 import { Pressable, Text, View } from "react-native";
 import { Badge, Button, Card, EmptyState, InlineAlert, Screen, Section } from "@/components/paco/layout";
 import { AudioPlayer, ConfirmSheet, FileTile, cn } from "@/components/paco/ui";
+import { Blink } from "@/components/paco/motion";
 import { simulate } from "@/lib/paco-api";
 import { isLessonLocked, lessonKey } from "@/lib/paco-training";
 import { courses } from "@/mock/paco";
@@ -195,7 +196,7 @@ export default function LessonScreen() {
                 <Text className="text-sm font-bold text-slate-700">Graba tu respuesta en audio (.wav)</Text>
                 {recording ? (
                   <View className="flex-row items-center gap-3 rounded-2xl border border-red-200 bg-red-50 p-3">
-                    <View className="h-3 w-3 rounded-full bg-red-500" />
+                    <Blink><View className="h-3 w-3 rounded-full bg-red-500" /></Blink>
                     <Text className="flex-1 text-sm font-bold text-red-700">
                       Grabando… 0:{String(recordSeconds).padStart(2, "0")}
                     </Text>

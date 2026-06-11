@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { CalendarDays, ChevronLeft, FileQuestion } from "lucide-react-native";
+import { CalendarDays, ChevronLeft, FileQuestion } from "@/components/paco/glyphs";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { Button, Card, EmptyState, InlineAlert, Screen } from "@/components/paco/layout";
 import { MoneyRow, RadioOption, SelectChip, StepHeader, SuccessCard } from "@/components/paco/ui";
@@ -74,7 +74,7 @@ export default function NewRequestScreen() {
     <Screen>
       {step > 0 ? (
         <Pressable accessibilityRole="button" onPress={() => setStep(step - 1)} className="min-h-11 flex-row items-center gap-1">
-          <ChevronLeft size={18} color="#3148c8" />
+          <ChevronLeft size={18} color="#2F42CB" />
           <Text className="text-sm font-bold text-brand-700">Anterior</Text>
         </Pressable>
       ) : null}

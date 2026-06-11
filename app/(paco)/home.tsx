@@ -7,16 +7,16 @@ import {
   GraduationCap,
   Lock,
   Medal,
-  Menu,
   PieChart,
   ReceiptText,
   Rocket,
   Smartphone,
   Smile,
   Wallet,
-} from "lucide-react-native";
+} from "@/components/paco/glyphs";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { Ambient, Button, Progress } from "@/components/paco/layout";
+import { FadeSlideIn, PressableScale, useAnimatedNumber } from "@/components/paco/motion";
 import { cn, mxn } from "@/components/paco/ui";
 import { Icon, IconBubble, bannerIcons, domainStyles, moduleIcons } from "@/components/paco/icons";
 import { banners, celebrations, courses, employee, moduleRegistry, onboardingTasks, surveys } from "@/mock/paco";
@@ -25,9 +25,9 @@ import { usePacoStore } from "@/store/paco-store";
 const domains = ["Finanzas", "Personas y cultura", "Documentos", "Soporte"] as const;
 
 const bannerTints = [
-  { bg: "bg-ink", text: "text-white", sub: "text-indigo-200/80", icon: "#5eead4" },
+  { bg: "bg-ink", text: "text-white", sub: "text-indigo-200/80", icon: "#6AA84F" },
   { bg: "bg-brand-500", text: "text-white", sub: "text-white/75", icon: "#fff" },
-  { bg: "bg-white/80 border border-white/90", text: "text-slate-900", sub: "text-slate-500", icon: "#3148c8" },
+  { bg: "bg-white/80 border border-white/90", text: "text-slate-900", sub: "text-slate-500", icon: "#2F42CB" },
 ] as const;
 
 function HomeHeader({ unread }: { unread: number }) {
@@ -50,19 +50,12 @@ function HomeHeader({ unread }: { unread: number }) {
         onPress={() => router.push("/(paco)/notifications")}
         className="h-11 w-11 items-center justify-center rounded-full border border-white/80 bg-white/75 shadow-card active:bg-white"
       >
-        <Bell size={18} color="#15143a" strokeWidth={2.2} />
+        <Bell size={18} color="#1E1E1E" strokeWidth={2.2} />
         {unread > 0 ? (
           <View className="absolute -right-1 -top-1 h-5 min-w-5 items-center justify-center rounded-full border-2 border-canvas bg-red-500 px-1">
             <Text className="text-[9px] font-bold text-white">{unread}</Text>
           </View>
         ) : null}
-      </Pressable>
-      <Pressable
-        accessibilityLabel="Menú"
-        onPress={() => router.push("/(paco)/menu")}
-        className="h-11 w-11 items-center justify-center rounded-full border border-white/80 bg-white/75 shadow-card active:bg-white"
-      >
-        <Menu size={18} color="#15143a" strokeWidth={2.2} />
       </Pressable>
     </View>
   );
@@ -74,7 +67,7 @@ function MandatorySurveyLock() {
   return (
     <View className="flex-1 items-center justify-center gap-4 px-7 pb-24">
       <View className="h-20 w-20 items-center justify-center rounded-[18px] border border-amber-500/25 bg-amber-500/15">
-        <Lock size={34} color="#b45309" />
+        <Lock size={34} color="#B8860B" />
       </View>
       <Text className="text-center text-2xl font-bold tracking-tight text-slate-950">Tienes una encuesta obligatoria</Text>
       <Text className="text-center text-[15px] leading-6 text-slate-500">
@@ -97,6 +90,7 @@ export default function HomeScreen() {
   const store = usePacoStore();
   const unread = store.notifications.filter((n) => !n.read).length;
   const surveyBlocked = !store.completedSurveyIds.includes("nom035");
+  const animatedAvailable = useAnimatedNumber(2500, 900);
 
   if (surveyBlocked) {
     return (
@@ -122,7 +116,7 @@ export default function HomeScreen() {
       id: "mood",
       icon: Smile,
       tint: "bg-violet-50",
-      color: "#7c3aed",
+      color: "#674EA7",
       title: "Registra tu estado de ánimo",
       meta: store.moodRegisteredToday ? "Registrado hoy" : "Pendiente de hoy · toma 1 minuto",
       done: store.moodRegisteredToday,
@@ -131,8 +125,8 @@ export default function HomeScreen() {
     {
       id: "onboarding",
       icon: Rocket,
-      tint: "bg-sky-50",
-      color: "#0284c7",
+      tint: "bg-brand-100",
+      color: "#5176F3",
       title: "Plan de onboarding",
       meta: `${onboardingDone} de ${onboardingTasks.length} tareas · mentor asignado`,
       done: onboardingDone === onboardingTasks.length,
@@ -144,7 +138,7 @@ export default function HomeScreen() {
             id: "course",
             icon: GraduationCap,
             tint: "bg-amber-50",
-            color: "#b45309",
+            color: "#B8860B",
             title: `Curso obligatorio: ${pendingCourse.title}`,
             meta: `${pendingCourse.deadline} · ${store.downloadedCourses.includes(pendingCourse.id) ? "descargado offline" : "disponible para descargar"}`,
             done: false,
@@ -157,8 +151,8 @@ export default function HomeScreen() {
           {
             id: "survey",
             icon: ClipboardList,
-            tint: "bg-teal-50",
-            color: "#0d9488",
+            tint: "bg-brand-100",
+            color: "#5176F3",
             title: "Encuesta de clima laboral",
             meta: "Junio 2026 · 3 preguntas rápidas",
             done: false,
@@ -175,11 +169,12 @@ export default function HomeScreen() {
 
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false} contentContainerClassName="gap-6 px-5 pb-24 pt-2">
         {/* Hero financiero */}
+        <FadeSlideIn>
         <View className="rounded-2xl border border-white/90 bg-white/80 p-5 shadow-pop">
           <View className="flex-row items-start justify-between">
             <View>
               <Text className="text-[11px] font-bold uppercase tracking-[1.5px] text-slate-400">Disponible para adelanto</Text>
-              <Text className="mt-1 text-[34px] font-bold tracking-tight text-slate-950">{mxn(2500)}</Text>
+              <Text className="mt-1 text-[34px] font-bold tracking-tight text-slate-950">{mxn(Math.round(animatedAvailable))}</Text>
             </View>
             <View className={cn("rounded-[8px] border px-2.5 py-1.5", debt > 0 ? "border-amber-500/25 bg-amber-500/10" : "border-emerald-500/20 bg-emerald-500/10")}>
               <Text className={cn("text-[11px] font-bold", debt > 0 ? "text-amber-700" : "text-emerald-700")}>
@@ -196,17 +191,19 @@ export default function HomeScreen() {
                 { label: "Gastos", icon: PieChart, href: "/(paco)/expenses" },
               ] as const
             ).map((action) => (
-              <Pressable key={action.label} accessibilityRole="button" onPress={() => router.push(action.href)} className="items-center gap-1.5 active:opacity-60">
+              <PressableScale key={action.label} onPress={() => router.push(action.href)} className="items-center gap-1.5">
                 <View className="h-[50px] w-[50px] items-center justify-center rounded-[14px] bg-ink">
                   <action.icon size={20} color="#fff" strokeWidth={2.1} />
                 </View>
                 <Text className="text-[11px] font-bold text-slate-600">{action.label}</Text>
-              </Pressable>
+              </PressableScale>
             ))}
           </View>
         </View>
+        </FadeSlideIn>
 
         {/* Banners */}
+        <FadeSlideIn delay={60}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerClassName="gap-3 pr-5">
           {banners.map((banner, index) => {
             const tint = bannerTints[index % bannerTints.length] ?? bannerTints[0];
@@ -222,8 +219,10 @@ export default function HomeScreen() {
             );
           })}
         </ScrollView>
+        </FadeSlideIn>
 
         {/* Pendientes de hoy */}
+        <FadeSlideIn delay={120}>
         <View className="gap-2.5">
           <View className="flex-row items-center justify-between px-0.5">
             <Text className="text-[16px] font-bold tracking-tight text-slate-900">Hoy en Paco</Text>
@@ -262,12 +261,13 @@ export default function HomeScreen() {
             </View>
           ) : null}
         </View>
+        </FadeSlideIn>
 
         {/* Celebraciones de hoy */}
         {todayCelebrations.length > 0 ? (
           <Pressable accessibilityRole="button" onPress={() => router.push("/(paco)/celebrations")} className="active:opacity-90">
             <View className="flex-row items-center gap-3 rounded-2xl border border-violet-300/40 bg-violet-500/10 p-4">
-              <IconBubble icon={Cake} color="#7c3aed" tint="bg-white/80" size={42} iconSize={19} />
+              <IconBubble icon={Cake} color="#674EA7" tint="bg-white/80" size={42} iconSize={19} />
               <View className="flex-1">
                 <Text className="text-[11px] font-bold uppercase tracking-[1.5px] text-violet-600">Celebraciones de hoy</Text>
                 {todayCelebrations.map((item) => (
@@ -304,7 +304,7 @@ export default function HomeScreen() {
                             <IconBubble icon={ModuleIcon} color={style.color} tint={style.tint} size={40} iconSize={19} />
                             {module.core ? (
                               <View className="rounded-[6px] bg-ink px-1.5 py-0.5">
-                                <Text className="text-[8px] font-bold tracking-wide text-mint-300">CORE</Text>
+                                <Text className="text-[8px] font-bold tracking-wide text-accent-400">CORE</Text>
                               </View>
                             ) : null}
                           </View>

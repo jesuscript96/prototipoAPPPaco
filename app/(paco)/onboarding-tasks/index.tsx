@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "expo-router";
-import { BookOpen, ChevronRight, ClipboardCheck, ClipboardList, Mail } from "lucide-react-native";
+import { BookOpen, ChevronRight, ClipboardCheck, ClipboardList, Mail } from "@/components/paco/glyphs";
 import { Pressable, Text, View } from "react-native";
 import { Badge, Card, EmptyState, InlineAlert, Progress, Screen } from "@/components/paco/layout";
 import { Segmented } from "@/components/paco/ui";
@@ -69,8 +69,8 @@ export default function OnboardingTasksScreen() {
                     {(() => {
                       const KindIcon = kindIcons[task.kind];
                       return (
-                        <View className="h-11 w-11 items-center justify-center rounded-[12px] bg-sky-50">
-                          <KindIcon size={20} color="#0284c7" strokeWidth={2} />
+                        <View className="h-11 w-11 items-center justify-center rounded-[12px] bg-brand-100">
+                          <KindIcon size={20} color="#5176F3" strokeWidth={2} />
                         </View>
                       );
                     })()}

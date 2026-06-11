@@ -2,7 +2,7 @@
 // selfie y validacion. Se reutiliza en adelanto de nomina y pago de servicios.
 
 import { useState } from "react";
-import { Camera, ShieldCheck } from "lucide-react-native";
+import { Camera, ShieldCheck } from "@/components/paco/glyphs";
 import { Pressable, Text, View } from "react-native";
 import { Button, Card, InlineAlert } from "@/components/paco/layout";
 import { cn } from "@/components/paco/ui";
@@ -32,7 +32,7 @@ export function KycFlow({ onDone }: { onDone: () => void }) {
     <Card className="gap-4">
       <View className="flex-row items-center gap-3">
         <View className="h-12 w-12 items-center justify-center rounded-2xl bg-amber-50">
-          <ShieldCheck size={22} color="#d97706" />
+          <ShieldCheck size={22} color="#B8860B" />
         </View>
         <View className="flex-1">
           <Text className="text-base font-bold text-slate-950">Verificación de identidad</Text>
@@ -58,7 +58,7 @@ export function KycFlow({ onDone }: { onDone: () => void }) {
                 const StepIcon = kycIcons[step.id] ?? Camera;
                 return (
                   <View className="h-10 w-10 items-center justify-center rounded-[10px] bg-amber-50">
-                    <StepIcon size={18} color="#b45309" strokeWidth={2.1} />
+                    <StepIcon size={18} color="#B8860B" strokeWidth={2.1} />
                   </View>
                 );
               })()}
@@ -68,7 +68,7 @@ export function KycFlow({ onDone }: { onDone: () => void }) {
               </View>
               {!done ? (
                 <View className="h-10 w-10 items-center justify-center rounded-xl bg-brand-50">
-                  <Camera size={18} color="#3148c8" />
+                  <Camera size={18} color="#2F42CB" />
                 </View>
               ) : null}
             </Pressable>

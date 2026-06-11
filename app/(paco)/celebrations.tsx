@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Cake, PartyPopper } from "lucide-react-native";
+import { Cake, PartyPopper } from "@/components/paco/glyphs";
 import { ScrollView, Text, View } from "react-native";
 import { Button, Card, EmptyState, Screen } from "@/components/paco/layout";
 import { Segmented, SelectChip } from "@/components/paco/ui";
@@ -59,7 +59,7 @@ export default function CelebrationsScreen() {
               <Card key={item.id} className="gap-3">
                 <View className="flex-row items-center gap-3">
                   <View className={item.type === "Cumpleaños" ? "h-11 w-11 items-center justify-center rounded-[12px] bg-violet-50" : "h-11 w-11 items-center justify-center rounded-[12px] bg-amber-50"}>
-                    {item.type === "Cumpleaños" ? <Cake size={20} color="#7c3aed" strokeWidth={2} /> : <PartyPopper size={20} color="#b45309" strokeWidth={2} />}
+                    {item.type === "Cumpleaños" ? <Cake size={20} color="#674EA7" strokeWidth={2} /> : <PartyPopper size={20} color="#B8860B" strokeWidth={2} />}
                   </View>
                   <View className="flex-1">
                     <Text className="text-base font-bold text-slate-950">{item.name}</Text>

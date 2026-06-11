@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
-import { AlertTriangle, ArrowLeft, Eye, EyeOff, HardHat, LogIn } from "lucide-react-native";
+import { AlertTriangle, ArrowLeft, Eye, EyeOff, HardHat, LogIn } from "@/components/paco/glyphs";
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { Ambient, Button, GlassNavButton } from "@/components/paco/layout";
+import { ShakeView } from "@/components/paco/motion";
 import { HelpFab } from "@/components/paco/ui";
 import { mockLogin } from "@/lib/paco-api";
 import { usePacoStore } from "@/store/paco-store";
@@ -47,7 +48,7 @@ export default function LoginScreen() {
       <ScrollView contentContainerClassName="flex-grow justify-center px-6 pb-16">
         <View className="items-center gap-3 pb-7">
           <View className="h-16 w-16 items-center justify-center rounded-[16px] border border-white/90 bg-white/85 shadow-card">
-            <HardHat size={30} color="#3148c8" strokeWidth={1.9} />
+            <HardHat size={30} color="#2F42CB" strokeWidth={1.9} />
           </View>
           <Text className="text-[27px] font-bold tracking-tight text-slate-950">Inicia sesión</Text>
           <Text className="text-center text-sm leading-6 text-slate-500">
@@ -55,7 +56,7 @@ export default function LoginScreen() {
           </Text>
         </View>
 
-        <View className="gap-4 rounded-2xl border border-white/80 bg-white/80 p-5 shadow-pop">
+        <ShakeView trigger={error} className="gap-4 rounded-2xl border border-white/80 bg-white/80 p-5 shadow-pop">
           <View className="gap-1.5">
             <Text className="text-[13px] font-semibold text-slate-600">Teléfono o correo</Text>
             <TextInput
@@ -109,7 +110,7 @@ export default function LoginScreen() {
               credenciales incorrectas.
             </Text>
           </View>
-        </View>
+        </ShakeView>
       </ScrollView>
 
       <HelpFab onPress={() => router.push("/(paco)/help")} />

@@ -1,17 +1,31 @@
 import { useMemo, useState } from "react";
-import { MessageCircle, PiggyBank } from "lucide-react-native";
+import { MessageCircle, PiggyBank, ReceiptText, Smartphone, Wallet } from "@/components/paco/glyphs";
 import { ScrollView, Text, View } from "react-native";
-import { Badge, Button, Card, EmptyState, Screen, Section } from "@/components/paco/layout";
-import { ChatBubble, ChatComposer, Segmented, SelectChip, StackedBar, cn, mxn } from "@/components/paco/ui";
+import { Button, Card, EmptyState, Screen, Section } from "@/components/paco/layout";
+import { ChatBubble, ChatComposer, ListGroup, Row, Segmented, SelectChip, StackedBar, mxn } from "@/components/paco/ui";
+import { Shimmer, useAnimatedNumber, useFakeLoad } from "@/components/paco/motion";
+import type { Icon } from "@/components/paco/icons";
 import { company, expensePeriods } from "@/mock/paco";
 import { nowLabel, usePacoStore } from "@/store/paco-store";
 
 const tabs = ["Adeudos", "Mis gastos", "Soporte"] as const;
 const categoryFilters = ["Todos", "Adelanto de nómina", "Recarga", "Pago de servicio"] as const;
 const categoryColors: Record<string, string> = {
-  "Adelanto de nómina": "#3148c8",
-  Recarga: "#0ea5e9",
-  "Pago de servicio": "#f59e0b",
+  "Adelanto de nómina": "#2F42CB",
+  Recarga: "#5176F3",
+  "Pago de servicio": "#F1C232",
+};
+
+const categoryIcons: Record<string, Icon> = {
+  "Adelanto de nómina": Wallet,
+  Recarga: Smartphone,
+  "Pago de servicio": ReceiptText,
+};
+
+const statusColors: Record<string, string> = {
+  "Adeudo próximo": "#B8860B",
+  Procesado: "#5176F3",
+  Liquidado: "#6AA84F",
 };
 
 export default function ExpensesScreen() {
@@ -22,8 +36,10 @@ export default function ExpensesScreen() {
   const [waMessages, setWaMessages] = useState<{ id: string; from: string; text: string; mine: boolean; time: string }[]>([]);
   const [openDetail, setOpenDetail] = useState<string | null>(null);
 
+  const loading = useFakeLoad(380);
   const debts = movements.filter((m) => m.status === "Adeudo próximo");
   const totalDebt = debts.reduce((sum, m) => sum + m.amount + m.commission, 0);
+  const animatedDebt = useAnimatedNumber(totalDebt);
 
   const filtered = useMemo(
     () =>
@@ -63,35 +79,42 @@ export default function ExpensesScreen() {
     >
       <Card className="gap-1 bg-ink">
         <Text className="text-xs font-bold uppercase tracking-[1px] text-white/70">Total de adeudos</Text>
-        <Text className="text-4xl font-bold text-white">{mxn(totalDebt)}</Text>
+        <Text className="text-4xl font-bold tracking-tight text-white">{mxn(Math.round(animatedDebt))}</Text>
         <Text className="text-sm text-white/80">{totalDebt > 0 ? "Se retendrá en la nómina del 15 de junio de 2026." : "No tienes adeudos pendientes."}</Text>
       </Card>
 
       <Segmented options={tabs} value={tab} onChange={setTab} />
 
       {tab === "Adeudos" ? (
-        debts.length === 0 ? (
-          <EmptyState title="$0 en adeudos" description="Cuando solicites un adelanto o pago con cargo a nómina, aparecerá aquí." icon={PiggyBank} />
-        ) : (
-          <View className="gap-3">
-            {debts.map((m) => (
-              <Card key={m.id} className="gap-2">
-                <View className="flex-row items-center justify-between">
-                  <Text className="flex-1 text-base font-bold text-slate-950">{m.concept}</Text>
-                  <Badge tone="warning">{m.status}</Badge>
+        loading ? (
+          <View className="gap-3 rounded-2xl border border-white/80 bg-white/75 p-4 shadow-card">
+            {[0, 1].map((index) => (
+              <View key={index} className="flex-row items-center gap-3">
+                <Shimmer width={36} height={36} radius={10} />
+                <View className="flex-1 gap-1.5">
+                  <Shimmer width="64%" />
+                  <Shimmer width="40%" height={10} />
                 </View>
-                <Text className="text-sm text-slate-500">
-                  {m.date} · {m.period}
-                </Text>
-                <Text className="text-lg font-bold text-slate-950">
-                  {mxn(m.amount + m.commission)}{" "}
-                  <Text className="text-xs font-semibold text-slate-500">
-                    ({mxn(m.amount)} + {mxn(m.commission)} comisión)
-                  </Text>
-                </Text>
-              </Card>
+                <Shimmer width={56} />
+              </View>
             ))}
           </View>
+        ) : debts.length === 0 ? (
+          <EmptyState title="$0 en adeudos" description="Cuando solicites un adelanto o pago con cargo a nómina, aparecerá aquí." icon={PiggyBank} />
+        ) : (
+          <ListGroup>
+            {debts.map((m) => (
+              <Row
+                key={m.id}
+                icon={categoryIcons[m.category] ?? Wallet}
+                title={m.concept}
+                subtitle={`${m.date} · ${m.period} · incluye ${mxn(m.commission)} de comisión`}
+                meta={mxn(m.amount + m.commission)} metaBold
+                metaSub="Se retiene el 15 jun"
+                metaSubColor="#B8860B"
+              />
+            ))}
+          </ListGroup>
         )
       ) : null}
 
@@ -120,37 +143,28 @@ export default function ExpensesScreen() {
                 </Card>
               </Section>
               <Section title={`Movimientos (${filtered.length})`}>
-                <View className="gap-2.5">
+                <ListGroup>
                   {filtered.map((m) => (
-                    <Card key={m.id} className="gap-1.5">
-                      <View className="flex-row items-center justify-between">
-                        <Text className="flex-1 text-sm font-bold text-slate-950">{m.concept}</Text>
-                        <Text className="text-base font-bold text-slate-950">{mxn(m.amount + m.commission)}</Text>
-                      </View>
-                      <View className="flex-row items-center justify-between">
-                        <Text className="text-xs text-slate-500">
-                          {m.date} · {m.period}
-                        </Text>
-                        <Badge tone={m.status === "Adeudo próximo" ? "warning" : m.status === "Procesado" ? "info" : "success"}>{m.status}</Badge>
-                      </View>
-                      <Text
+                    <View key={m.id}>
+                      <Row
+                        icon={categoryIcons[m.category] ?? Wallet}
+                        title={m.concept}
+                        subtitle={`${m.date} · ${m.period}`}
+                        meta={`-${mxn(m.amount + m.commission)}`} metaBold
+                        metaSub={m.status}
+                        metaSubColor={statusColors[m.status] ?? "#64748b"}
                         onPress={() => setOpenDetail(openDetail === m.id ? null : m.id)}
-                        className="text-xs font-bold text-brand-700"
-                        suppressHighlighting
-                      >
-                        {openDetail === m.id ? "Ocultar detalle" : "Ver detalle"}
-                      </Text>
+                      />
                       {openDetail === m.id ? (
-                        <View className={cn("gap-1 rounded-2xl bg-slate-50 p-3")}>
-                          <Text className="text-xs text-slate-600">Tipo: {m.category}</Text>
-                          <Text className="text-xs text-slate-600">Importe: {mxn(m.amount)}</Text>
-                          <Text className="text-xs text-slate-600">Comisión: {mxn(m.commission)}</Text>
-                          <Text className="text-xs text-slate-600">Folio: PACO-{m.id.toUpperCase()}</Text>
+                        <View className="flex-row flex-wrap gap-x-5 gap-y-1 bg-slate-900/[0.03] px-4 py-3 pl-16">
+                          <Text className="text-xs text-slate-600">Importe {mxn(m.amount)}</Text>
+                          <Text className="text-xs text-slate-600">Comisión {mxn(m.commission)}</Text>
+                          <Text className="text-xs text-slate-600">Folio PACO-{m.id.toUpperCase()}</Text>
                         </View>
                       ) : null}
-                    </Card>
+                    </View>
                   ))}
-                </View>
+                </ListGroup>
               </Section>
             </>
           )}

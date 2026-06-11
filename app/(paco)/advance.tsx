@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
-import { ChevronLeft, Wallet } from "lucide-react-native";
+import { ChevronLeft, Wallet } from "@/components/paco/glyphs";
 import { Pressable, Text, View } from "react-native";
 import { Button, Card, Checkbox, Divider, InlineAlert, Screen } from "@/components/paco/layout";
 import { AmountSlider, MoneyRow, RadioOption, StepHeader, SuccessCard, mxn } from "@/components/paco/ui";
@@ -45,7 +45,7 @@ export default function AdvanceScreen() {
     <Screen>
       {step !== "eligibility" && step !== "success" ? (
         <Pressable accessibilityRole="button" onPress={goBack} className="min-h-11 flex-row items-center gap-1">
-          <ChevronLeft size={18} color="#3148c8" />
+          <ChevronLeft size={18} color="#2F42CB" />
           <Text className="text-sm font-bold text-brand-700">Anterior</Text>
         </Pressable>
       ) : null}

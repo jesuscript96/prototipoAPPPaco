@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Medal, Search, Send } from "lucide-react-native";
+import { Medal, Search, Send } from "@/components/paco/glyphs";
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { Badge, Button, Card, EmptyState, Field, Screen, Section } from "@/components/paco/layout";
 import { Segmented, SuccessCard, cn } from "@/components/paco/ui";
@@ -213,7 +213,7 @@ export default function RecognitionsScreen() {
                         const HistoryIcon = badgeIcons[item.badgeId] ?? Medal;
                         return (
                           <View className="h-11 w-11 items-center justify-center rounded-full bg-amber-50">
-                            <HistoryIcon size={20} color="#b45309" strokeWidth={2.1} />
+                            <HistoryIcon size={20} color="#B8860B" strokeWidth={2.1} />
                           </View>
                         );
                       })()}

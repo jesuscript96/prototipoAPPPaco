@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { CheckCircle2, FileQuestion, Send } from "lucide-react-native";
+import { CheckCircle2, FileQuestion, Send } from "@/components/paco/glyphs";
 import { Text, TextInput, View } from "react-native";
 import { Badge, Button, Card, EmptyState, InlineAlert, Screen, Section } from "@/components/paco/layout";
 import { FileTile, RadioOption, StepHeader, SuccessCard } from "@/components/paco/ui";

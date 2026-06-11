@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
-import { Bell, HardHat, KeyRound, LogIn, MapPin, Phone } from "lucide-react-native";
+import { Bell, HardHat, KeyRound, LogIn, MapPin, Phone } from "@/components/paco/glyphs";
 import { Modal, Pressable, ScrollView, Text, View } from "react-native";
 import { Ambient, Button } from "@/components/paco/layout";
 import { HelpFab, cn } from "@/components/paco/ui";
@@ -58,7 +58,7 @@ export default function WelcomeScreen() {
       <ScrollView contentContainerClassName="flex-grow justify-between px-6 pb-12 pt-24">
         <View className="items-center gap-4">
           <View className="h-24 w-24 items-center justify-center rounded-[22px] border border-white/90 bg-white/85 shadow-pop">
-            <HardHat size={44} color="#3148c8" strokeWidth={1.9} />
+            <HardHat size={44} color="#2F42CB" strokeWidth={1.9} />
           </View>
           <Text className="text-4xl font-bold tracking-tight text-slate-950">paco</Text>
           <Text className="text-center text-[15px] leading-6 text-slate-500">
@@ -104,7 +104,7 @@ export default function WelcomeScreen() {
               onPress={() => router.push("/(paco)/recover")}
               className="min-h-11 flex-row items-center justify-center gap-2"
             >
-              <KeyRound size={15} color="#3148c8" />
+              <KeyRound size={15} color="#2F42CB" />
               <Text className="text-sm font-bold text-brand-600">Olvidé mi contraseña</Text>
             </Pressable>
           </View>
@@ -118,7 +118,7 @@ export default function WelcomeScreen() {
           {dialogContent ? (
             <View className="w-full max-w-sm items-center gap-3 rounded-2xl border border-white/80 bg-white/95 p-6 shadow-pop">
               <View className="h-14 w-14 items-center justify-center rounded-[14px] bg-brand-50">
-                <dialogContent.icon size={26} color="#3148c8" />
+                <dialogContent.icon size={26} color="#2F42CB" />
               </View>
               <Text className="text-center text-lg font-bold tracking-tight text-slate-950">{dialogContent.title}</Text>
               <Text className="text-center text-sm leading-6 text-slate-600">{dialogContent.body}</Text>

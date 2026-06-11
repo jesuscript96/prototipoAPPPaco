@@ -18,7 +18,7 @@ import {
   Settings,
   ShieldCheck,
   Smile,
-} from "lucide-react-native";
+} from "@/components/paco/glyphs";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { Ambient, Button, GlassNavButton } from "@/components/paco/layout";
 import { ConfirmSheet, cn } from "@/components/paco/ui";
@@ -34,27 +34,27 @@ const groups: { title: string; items: MenuItem[] }[] = [
   {
     title: "Mi información",
     items: [
-      { label: "Mi expediente", icon: Contact, color: "#0d9488", tint: "bg-teal-50", href: "/(paco)/profile" },
-      { label: "Estado de ánimo", icon: Smile, color: "#7c3aed", tint: "bg-violet-50", href: "/(paco)/mood" },
-      { label: "Mis reconocimientos", icon: Medal, color: "#b45309", tint: "bg-amber-50", href: "/(paco)/recognitions" },
+      { label: "Mi expediente", icon: Contact, color: "#5176F3", tint: "bg-brand-100", href: "/(paco)/profile" },
+      { label: "Estado de ánimo", icon: Smile, color: "#674EA7", tint: "bg-violet-50", href: "/(paco)/mood" },
+      { label: "Mis reconocimientos", icon: Medal, color: "#B8860B", tint: "bg-amber-50", href: "/(paco)/recognitions" },
       { label: "Estatus de voz del colaborador", icon: Megaphone, color: "#dc2626", tint: "bg-red-50", href: "/(paco)/voice/status" },
     ],
   },
   {
     title: "Finanzas y documentos",
     items: [
-      { label: "Reporte de gastos", icon: PieChart, color: "#3148c8", tint: "bg-brand-50", href: "/(paco)/expenses" },
-      { label: "Recibos de nómina", icon: FileText, color: "#3148c8", tint: "bg-brand-50", href: "/(paco)/receipts" },
-      { label: "Cartas SUA", icon: Mail, color: "#b45309", tint: "bg-amber-50", href: "/(paco)/sua" },
-      { label: "Documentos corporativos", icon: FolderOpen, color: "#b45309", tint: "bg-amber-50", href: "/(paco)/corporate-docs" },
+      { label: "Reporte de gastos", icon: PieChart, color: "#2F42CB", tint: "bg-brand-50", href: "/(paco)/expenses" },
+      { label: "Recibos de nómina", icon: FileText, color: "#2F42CB", tint: "bg-brand-50", href: "/(paco)/receipts" },
+      { label: "Cartas SUA", icon: Mail, color: "#B8860B", tint: "bg-amber-50", href: "/(paco)/sua" },
+      { label: "Documentos corporativos", icon: FolderOpen, color: "#B8860B", tint: "bg-amber-50", href: "/(paco)/corporate-docs" },
     ],
   },
   {
     title: "Comunicación y ayuda",
     items: [
-      { label: "Chat interno", icon: MessagesSquare, color: "#0d9488", tint: "bg-teal-50", href: "/(paco)/chat" },
-      { label: "Preguntas frecuentes", icon: HelpCircle, color: "#0284c7", tint: "bg-sky-50", href: "/(paco)/help" },
-      { label: "Chat de soporte técnico", icon: LifeBuoy, color: "#0284c7", tint: "bg-sky-50", href: "/(paco)/support" },
+      { label: "Chat interno", icon: MessagesSquare, color: "#5176F3", tint: "bg-brand-100", href: "/(paco)/chat" },
+      { label: "Preguntas frecuentes", icon: HelpCircle, color: "#5176F3", tint: "bg-brand-100", href: "/(paco)/help" },
+      { label: "Chat de soporte técnico", icon: LifeBuoy, color: "#5176F3", tint: "bg-brand-100", href: "/(paco)/support" },
       { label: "Términos y condiciones", icon: ShieldCheck, color: "#475569", tint: "bg-slate-100", href: "/(paco)/legal" },
       { label: "Configuración", icon: Settings, color: "#475569", tint: "bg-slate-100", href: "/(paco)/settings" },
     ],
@@ -71,7 +71,11 @@ export default function MenuScreen() {
       <Ambient />
 
       <View className="flex-row items-center px-5 pb-2 pt-14">
-        <GlassNavButton icon={ArrowLeft} label="Regresar" onPress={() => router.back()} />
+        {router.canGoBack() ? (
+          <GlassNavButton icon={ArrowLeft} label="Regresar" onPress={() => router.back()} />
+        ) : (
+          <View className="h-11 w-11" />
+        )}
         <Text className="flex-1 pr-11 text-center text-[15px] font-bold text-slate-900">Menú</Text>
       </View>
 

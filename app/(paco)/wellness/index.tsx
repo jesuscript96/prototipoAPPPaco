@@ -2,7 +2,7 @@ import { useRouter } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 import { Screen } from "@/components/paco/layout";
 import { wellnessIcons } from "@/components/paco/icons";
-import { HeartPulse } from "lucide-react-native";
+import { HeartPulse } from "@/components/paco/glyphs";
 import { wellnessCategories } from "@/mock/paco";
 
 export default function WellnessScreen() {
@@ -25,7 +25,7 @@ export default function WellnessScreen() {
               const WellnessIcon = wellnessIcons[category.id] ?? HeartPulse;
               return (
                 <View className="h-14 w-14 items-center justify-center rounded-[14px] bg-violet-50">
-                  <WellnessIcon size={26} color="#7c3aed" strokeWidth={2} />
+                  <WellnessIcon size={26} color="#674EA7" strokeWidth={2} />
                 </View>
               );
             })()}

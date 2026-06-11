@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { Check, FileQuestion, Pencil, Trash2, X } from "lucide-react-native";
+import { Check, FileQuestion, Pencil, Trash2, X } from "@/components/paco/glyphs";
 import { Text, TextInput, View } from "react-native";
 import { Badge, Button, Card, EmptyState, InlineAlert, Screen, Section } from "@/components/paco/layout";
 import { ConfirmSheet, MoneyRow, SelectChip, cn } from "@/components/paco/ui";

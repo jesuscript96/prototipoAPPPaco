@@ -1,20 +1,17 @@
 import { Stack } from "expo-router";
+import { View } from "react-native";
+import { ToastHost } from "@/components/paco/ui";
 
 export default function StorybookLayout() {
   return (
-    <Stack
-      screenOptions={{
-        headerStyle: { backgroundColor: "#f7f9fc" },
-        headerShadowVisible: false,
-        contentStyle: { backgroundColor: "#f7f9fc" },
-      }}
-    >
-      <Stack.Screen name="index" options={{ title: "Storybook móvil" }} />
-      <Stack.Screen name="fundamentos" options={{ title: "Fundamentos" }} />
-      <Stack.Screen name="componentes" options={{ title: "Componentes" }} />
-      <Stack.Screen name="formularios" options={{ title: "Formularios" }} />
-      <Stack.Screen name="listas" options={{ title: "Listas y datos" }} />
-      <Stack.Screen name="navegacion" options={{ title: "Navegación" }} />
-    </Stack>
+    <View className="flex-1 bg-canvas">
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          contentStyle: { backgroundColor: "#F6F8FF" },
+        }}
+      />
+      <ToastHost />
+    </View>
   );
 }

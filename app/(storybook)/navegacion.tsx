@@ -1,76 +1,134 @@
+import { useState } from "react";
 import { Text, View } from "react-native";
-import { Bell, ChevronLeft, ExternalLink, Home, Lock, User } from "lucide-react-native";
-import { Badge, Button, Card, GuideNote, InlineAlert, ListItem, Screen, Section, SegmentedControl } from "@/components/ui";
-import { useDemoStore } from "@/store/demo-store";
+import { ArrowsClockwise, CheckCircle, CursorClick, HandTap } from "phosphor-react-native";
+import { Button, Card, Progress, Screen, Section } from "@/components/paco/layout";
+import { ConfettiBurst, FadeSlideIn, PopIn, PressableScale, ShakeView, Shimmer, useAnimatedNumber } from "@/components/paco/motion";
+import { mxn } from "@/components/paco/ui";
+import { usePacoStore } from "@/store/paco-store";
 
-export default function NavigationScreen() {
-  const { simulatedSession, toggleSession } = useDemoStore();
+export default function MovimientoScreen() {
+  const showToast = usePacoStore((s) => s.showToast);
+  const [replay, setReplay] = useState(0);
+  const [balance, setBalance] = useState(2500);
+  const [shake, setShake] = useState(0);
+  const animated = useAnimatedNumber(balance);
 
   return (
     <Screen
-      eyebrow="Navegación"
-      title="Patrones móviles"
-      description="Ejemplos de navegación file-based con Expo Router: stack, tabs inferiores, detalle, modal, deep link y protección simulada."
+      eyebrow="Microinteracciones"
+      title="Movimiento"
+      description="Reglas: solo transform/opacity, entradas ease-out de 200-280 ms, feedback de presión de 110 ms con rebote sutil al soltar. Nada decorativo."
     >
-      <Section title="Stack navigation">
-        <Card className="gap-3">
+      <Section title="Press-scale (110 ms + spring)" description="Todo elemento accionable encoge 3% al presionar.">
+        <PressableScale onPress={() => showToast("Feedback de presión.")} className="rounded-2xl border border-white/80 bg-white/75 p-4 shadow-card">
           <View className="flex-row items-center gap-3">
-            <ChevronLeft size={20} color="#3148c8" />
-            <Text className="text-lg font-bold text-slate-950">Detalle de registro</Text>
+            <View className="h-10 w-10 items-center justify-center rounded-[12px] bg-brand-100">
+              <HandTap size={20} color="#2F42CB" weight="bold" />
+            </View>
+            <Text className="text-[14px] font-semibold text-slate-800">Mantén presionado para sentir la anticipación</Text>
           </View>
-          <Text className="text-sm leading-5 text-slate-600">Usa headers claros, botón atrás visible y títulos cortos. Evita esconder navegación esencial.</Text>
-          <ListItem title="Abrir detalle real" subtitle="Ruta dinámica con mock data." href="/(prototype)/registro/r1" />
+        </PressableScale>
+      </Section>
+
+      <Section title="Entradas escalonadas" description="FadeSlideIn con delay incremental de 60 ms.">
+        <Button variant="secondary" icon={ArrowsClockwise} onPress={() => setReplay((v) => v + 1)}>
+          Reproducir de nuevo
+        </Button>
+        <View key={replay} className="gap-2">
+          {["Primero entra el contexto", "Después el contenido principal", "Al final las acciones"].map((label, index) => (
+            <FadeSlideIn key={label} delay={index * 90}>
+              <Card>
+                <Text className="text-[13px] font-semibold text-slate-700">{label}</Text>
+              </Card>
+            </FadeSlideIn>
+          ))}
+        </View>
+      </Section>
+
+      <Section title="Pop con overshoot" description="Sellos de éxito y confirmaciones.">
+        <Card className="items-center gap-3 py-6">
+          <PopIn key={`pop-${replay}`}>
+            <View className="h-14 w-14 items-center justify-center rounded-full bg-emerald-500 shadow-card">
+              <CheckCircle size={28} color="#fff" weight="bold" />
+            </View>
+          </PopIn>
+          <Text className="text-[12px] font-semibold text-slate-500">Spring con bounciness 12: rebota un pelo y se asienta</Text>
         </Card>
       </Section>
 
-      <Section title="Tabs inferiores">
-        <Card className="gap-4">
-          <SegmentedControl options={["Inicio", "Inbox", "Perfil"]} value="Inicio" />
-          <View className="flex-row justify-around rounded-3xl bg-slate-100 p-3">
-            {[Home, Bell, User].map((Icon, index) => (
-              <View key={index} className="items-center gap-1">
-                <Icon size={22} color={index === 0 ? "#3148c8" : "#64748b"} />
-                <Text className={index === 0 ? "text-xs font-bold text-brand-700" : "text-xs text-slate-500"}>
-                  {["Inicio", "Avisos", "Perfil"][index]}
-                </Text>
+      <Section title="Números animados" description="Los saldos interpolan 650 ms ease-out al cambiar.">
+        <Card className="items-center gap-3 py-5">
+          <Text className="text-4xl font-bold tracking-tight text-slate-950">{mxn(Math.round(animated))}</Text>
+          <View className="flex-row gap-2">
+            <Button variant="outline" onPress={() => setBalance((v) => Math.max(0, v - 700))}>
+              Gastar $700
+            </Button>
+            <Button variant="outline" onPress={() => setBalance(2500)}>
+              Restaurar
+            </Button>
+          </View>
+        </Card>
+      </Section>
+
+      <Section title="Error con sacudida elástica" description="Validación fallida: 4 oscilaciones decrecientes en 360 ms.">
+        <ShakeView trigger={shake}>
+          <Card className="gap-3 border-red-200">
+            <Text className="text-[13px] font-semibold text-slate-700">Campo con error de validación</Text>
+            <Button variant="destructive" onPress={() => setShake((v) => v + 1)}>
+              Provocar error
+            </Button>
+          </Card>
+        </ShakeView>
+      </Section>
+
+      <Section title="Skeleton con brillo" description="Para cargas de 300-500 ms en listas; un destello recorre el bloque.">
+        <Card className="gap-3">
+          {[0, 1, 2].map((index) => (
+            <View key={index} className="flex-row items-center gap-3">
+              <Shimmer width={36} height={36} radius={10} />
+              <View className="flex-1 gap-1.5">
+                <Shimmer width="70%" />
+                <Shimmer width="45%" height={10} />
               </View>
-            ))}
-          </View>
+            </View>
+          ))}
         </Card>
       </Section>
 
-      <Section title="Modal route">
-        <ListItem title="Abrir ruta modal" subtitle="Presentación modal definida en Root Stack." icon={ExternalLink} href="/modal" />
-      </Section>
-
-      <Section title="Deep link mock">
-        <InlineAlert tone="info" title="paco-showroom://registro/r1" description="El scheme está configurado para documentar deep links, sin depender de backend." />
-      </Section>
-
-      <Section title="Protected route simulada">
-        <Card className="gap-3">
-          <View className="flex-row items-center justify-between">
-            <Text className="text-base font-bold text-slate-900">Sesión demo</Text>
-            <Badge tone={simulatedSession ? "success" : "warning"}>{simulatedSession ? "Activa" : "Bloqueada"}</Badge>
-          </View>
-          <Button icon={Lock} onPress={toggleSession}>{simulatedSession ? "Cerrar sesión mock" : "Activar sesión mock"}</Button>
-          <InlineAlert
-            tone={simulatedSession ? "success" : "warning"}
-            title={simulatedSession ? "Ruta permitida" : "Ruta protegida"}
-            description={simulatedSession ? "El usuario puede ver el contenido demo." : "Muestra una pantalla clara para iniciar sesión o pedir acceso."}
-          />
+      <Section title="Confetti contenido" description="Una sola ráfaga de 10 partículas para éxitos de alto valor.">
+        <Card className="items-center gap-2 overflow-hidden py-6" key={`confetti-${replay}`}>
+          <ConfettiBurst trigger={replay} />
+          <PopIn key={`seal-${replay}`}>
+            <View className="h-12 w-12 items-center justify-center rounded-full bg-emerald-500 shadow-card">
+              <CheckCircle size={24} color="#fff" weight="bold" />
+            </View>
+          </PopIn>
+          <Text className="text-[12px] font-semibold text-slate-500">Usa "Reproducir de nuevo" arriba</Text>
         </Card>
       </Section>
 
-      <Section title="Onboarding, ajustes y perfil">
-        <Card className="gap-3">
-          <ListItem title="Onboarding inicial" subtitle="Presenta valor, permisos y primer paso." href="/(prototype)/onboarding" />
-          <ListItem title="Ajustes/configuración" subtitle="Preferencias agrupadas, copy claro y switches." href="/(prototype)/configuracion" />
-          <ListItem title="Menú de perfil" subtitle="Identidad, seguridad y cierre de sesión mock." href="/(prototype)/perfil" />
+      <Section title="Progreso animado" description="La barra crece con ease-out al montar o cambiar.">
+        <Card className="gap-3" key={`bar-${replay}`}>
+          <Progress value={68} />
         </Card>
       </Section>
 
-      <GuideNote />
+      <Section title="Principios" >
+        <Card className="gap-2">
+          {[
+            "Ease-out al entrar, ease-in al salir; nunca lineal.",
+            "100-200 ms para micro feedback, 200-300 ms para transiciones.",
+            "Overshoot sutil: el rebote se siente, no se ve.",
+            "El backend mock corre en paralelo: la animación nunca retrasa la acción.",
+            "Consistencia: el mismo gesto produce siempre la misma respuesta.",
+          ].map((rule) => (
+            <View key={rule} className="flex-row items-start gap-2">
+              <CursorClick size={14} color="#2F42CB" weight="bold" />
+              <Text className="flex-1 text-[13px] leading-5 text-slate-600">{rule}</Text>
+            </View>
+          ))}
+        </Card>
+      </Section>
     </Screen>
   );
 }

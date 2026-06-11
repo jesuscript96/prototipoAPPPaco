@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
-import { ChevronLeft, Smartphone } from "lucide-react-native";
+import { ChevronLeft, Smartphone } from "@/components/paco/glyphs";
 import { operatorIcons } from "@/components/paco/icons";
 import { Pressable, Text, View } from "react-native";
 import { Button, Card, Divider, Field, InlineAlert, Screen } from "@/components/paco/layout";
 import { MoneyRow, Segmented, StepHeader, SuccessCard, cn, mxn } from "@/components/paco/ui";
+import { ShakeView } from "@/components/paco/motion";
 import { mockValidateCode, simulate } from "@/lib/paco-api";
 import { TopupOperator, topupOperators } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
@@ -71,7 +72,7 @@ export default function TopupsScreen() {
     <Screen>
       {step !== "operator" && step !== "success" ? (
         <Pressable accessibilityRole="button" onPress={goBack} className="min-h-11 flex-row items-center gap-1">
-          <ChevronLeft size={18} color="#3148c8" />
+          <ChevronLeft size={18} color="#2F42CB" />
           <Text className="text-sm font-bold text-brand-700">Anterior</Text>
         </Pressable>
       ) : null}
@@ -90,7 +91,7 @@ export default function TopupsScreen() {
                   className="mb-3 w-[31.5%] items-center gap-2 rounded-xl border border-white/80 bg-white/75 px-2 py-4 shadow-card active:bg-white"
                 >
                   <View className="h-10 w-10 items-center justify-center rounded-[10px] bg-brand-50">
-                    <OperatorIcon size={18} color="#3148c8" strokeWidth={2.1} />
+                    <OperatorIcon size={18} color="#2F42CB" strokeWidth={2.1} />
                   </View>
                   <Text className="text-center text-xs font-bold text-slate-800" numberOfLines={1}>
                     {op.name}
@@ -138,6 +139,7 @@ export default function TopupsScreen() {
       {step === "phone" && operator ? (
         <>
           <StepHeader step={3 } total={4} title="¿A qué número?" subtitle="Captura y confirma el celular que recibirá la recarga." />
+          <ShakeView trigger={phoneError}>
           <Card className="gap-3">
             <Field
               label="Número celular"
@@ -156,6 +158,7 @@ export default function TopupsScreen() {
               error={phoneError ?? undefined}
             />
           </Card>
+          </ShakeView>
           <Button onPress={continueToGateway}>Continuar</Button>
         </>
       ) : null}
@@ -171,6 +174,7 @@ export default function TopupsScreen() {
             <MoneyRow label="Total a pagar" value={mxn(amount)} strong />
             <MoneyRow label="Cargo a" value="Saldo de adelanto de nómina" />
           </Card>
+          <ShakeView trigger={codeError}>
           <Card className="gap-3">
             <Field
               label="Código de seguridad"
@@ -186,6 +190,7 @@ export default function TopupsScreen() {
               Confirmar pago
             </Button>
           </Card>
+          </ShakeView>
         </>
       ) : null}
 

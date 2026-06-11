@@ -90,3 +90,19 @@ Iteración final por dirección del cliente: claro, no oscuro; lenguaje de mater
 - Prohibición total de emojis: registro central de iconografía en `components/paco/icons.tsx` (módulos, banners, operadores de recarga, categorías de servicios, voz, bienestar, medallas, cursos, KYC, cupones PiN, niveles de ánimo con caras lucide, tipos de archivo). Los mocks ya no llevan campos `emoji`/`cover`.
 - Acentos por dominio se mantienen (Finanzas azul, Personas violeta, Documentos ámbar, Soporte teal) en burbujas `IconBubble` de 12 px de radio.
 - Dashboard: tarjeta wallet glass con saldo grande y 4 tiles ink; banners en tres tintes (ink, brand, glass); pendientes como lista glass con separadores hairline.
+
+## Identidad 4.0 · Brand Guidelines aplicadas (vigente)
+
+- **Color**: paleta oficial del PDF — Azul Paco #2F42CB (primario), azul medio #5176F3 (informativo/Soporte), naranja #FB4F33 reservado como acento estratégico (punto de no leído, sello CORE), azules claros nube/celeste/bruma como tints y lienzo, carbón #1E1E1E como tinta de CTAs y pizarra #263238 en hover. Énfasis UI del manual: verde 6AA84F, amarillo F1C232, rojo CC0000, violeta 674EA7 (Personas), mora A64D79.
+- **Tipografía**: Lato cargada vía Google Fonts en web (cuerpo 150%); Gordita Bold declarada en `font-display` con fallback a Lato hasta contar con licencia.
+- **Iconografía**: migración completa a Phosphor Icons weight Bold mediante capa de compatibilidad `components/paco/glyphs.tsx` (resuelve nombres heredados con fallbacks). `react-native-svg` + `phosphor-react-native` instalados.
+- **Densidad Revolut**: nuevo patrón `ListGroup`/`Row` — las colecciones (notificaciones, movimientos, comunicados, estatus de voz, chats, solicitudes, cuentas, recibos) dejan las tarjetas con borde por una lista única con separadores hairline, icono tintado de 36 px, subtítulo de una línea y meta alineada a la derecha (monto en negro, hora/estado en gris).
+- **Storybook**: reescrito como fuente de verdad del sistema (fundamentos con HEX oficiales, componentes vivos, patrones de lista, formularios y una sala de Movimiento con demos reproducibles de cada microinteracción).
+- **Movimiento**: sistema documentado en `docs/paco-interactions-plan.md` con specs (disparador/propiedades/curva/resultado) por interacción; primitivos en `components/paco/motion.tsx`.
+
+## Navegación inferior (tab bar sticky)
+
+- `components/paco/tabbar.tsx`: barra glass fija al fondo con cinco posiciones — Inicio, Dinero (estado de cuenta + flujos financieros), Solicitudes, Chat y "Más" (abre el menú completo).
+- Estado activo: icono Phosphor cambia de `bold` a `fill` en Azul Paco, etiqueta en negrita y píldora indicadora que desliza con spring (misma física que las tabs segmentadas).
+- Reglas de visibilidad: oculta sin sesión, durante el bloqueo por encuesta obligatoria (para no saltarse el candado) y en pantallas de conversación con composer (chat interno y chat con RH).
+- Implementada como hermano del Stack (no overlay), de modo que ningún contenido queda tapado; el burger del dashboard se retiró porque el menú ahora vive en "Más".

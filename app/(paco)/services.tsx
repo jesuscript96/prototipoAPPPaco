@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
-import { Camera, ChevronLeft, Receipt } from "lucide-react-native";
+import { Camera, ChevronLeft, Receipt } from "@/components/paco/glyphs";
 import { Modal, Pressable, Text, View } from "react-native";
 import { Button, Card, Checkbox, Divider, Field, InlineAlert, Screen } from "@/components/paco/layout";
 import { MoneyRow, OptionCard, RadioOption, StepHeader, SuccessCard, mxn } from "@/components/paco/ui";
 import { KycFlow } from "@/components/paco/kyc";
+import { ShakeView } from "@/components/paco/motion";
 import { serviceCategoryIcons } from "@/components/paco/icons";
 import { mockValidateCode, simulate } from "@/lib/paco-api";
 import { ServiceCategory, company, serviceCategories } from "@/mock/paco";
@@ -81,7 +82,7 @@ export default function ServicesScreen() {
     <Screen>
       {step !== "category" && step !== "success" ? (
         <Pressable accessibilityRole="button" onPress={goBack} className="min-h-11 flex-row items-center gap-1">
-          <ChevronLeft size={18} color="#3148c8" />
+          <ChevronLeft size={18} color="#2F42CB" />
           <Text className="text-sm font-bold text-brand-700">Anterior</Text>
         </Pressable>
       ) : null}
@@ -214,6 +215,7 @@ export default function ServicesScreen() {
             <Divider />
             <MoneyRow label="Total" value={mxn(total)} strong />
           </Card>
+          <ShakeView trigger={codeError}>
           <Card className="gap-3">
             <Field
               label="Código de validación"
@@ -229,6 +231,7 @@ export default function ServicesScreen() {
               Pagar {mxn(total)}
             </Button>
           </Card>
+          </ShakeView>
         </>
       ) : null}
 

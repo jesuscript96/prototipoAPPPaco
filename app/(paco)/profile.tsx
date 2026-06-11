@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Camera, FileText, Pencil, Save, Upload, X } from "lucide-react-native";
+import { Camera, FileText, Pencil, Save, Upload, X } from "@/components/paco/glyphs";
 import { Modal, Pressable, Text, TextInput, View } from "react-native";
 import { Badge, Button, Card, Divider, Screen, Section } from "@/components/paco/layout";
 import { cn } from "@/components/paco/ui";
@@ -64,7 +64,7 @@ function EditableRow({
             }}
             className="h-10 w-10 items-center justify-center rounded-xl bg-slate-100"
           >
-            <Pencil size={14} color="#3148c8" />
+            <Pencil size={14} color="#2F42CB" />
           </Pressable>
         </View>
       )}

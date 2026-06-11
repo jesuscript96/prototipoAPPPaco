@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { ClipboardCheck } from "lucide-react-native";
+import { ClipboardCheck } from "@/components/paco/glyphs";
 import { Text, View } from "react-native";
 import { Badge, Button, Card, EmptyState, Screen } from "@/components/paco/layout";
 import { surveys } from "@/mock/paco";

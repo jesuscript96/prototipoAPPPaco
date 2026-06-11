@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { ArrowDownAZ, FileQuestion, FolderOpen, Search } from "lucide-react-native";
+import { ArrowDownAZ, FileQuestion, FolderOpen, Search } from "@/components/paco/glyphs";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { Button, EmptyState, Screen } from "@/components/paco/layout";
 import { FileTile } from "@/components/paco/ui";
@@ -58,7 +58,7 @@ export default function WellnessCategoryScreen() {
               onPress={() => setSortAsc((v) => !v)}
               className="h-12 w-12 items-center justify-center rounded-2xl border border-slate-200 bg-white"
             >
-              <ArrowDownAZ size={18} color="#3148c8" />
+              <ArrowDownAZ size={18} color="#2F42CB" />
             </Pressable>
           </View>
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
-import { Camera, ChevronRight, CreditCard, KeyRound, LockKeyhole, LogOut, Mail, Trash2 } from "lucide-react-native";
+import { Camera, ChevronRight, CreditCard, KeyRound, LockKeyhole, LogOut, Mail, Trash2 } from "@/components/paco/glyphs";
 import { Pressable, Text, View } from "react-native";
 import { Button, Card, InlineAlert, Screen, Section } from "@/components/paco/layout";
 import { ConfirmSheet, cn } from "@/components/paco/ui";
@@ -49,7 +49,7 @@ export default function SettingsScreen() {
           onPress={store.setProfilePhoto}
           className={cn("h-16 w-16 items-center justify-center rounded-full", store.profilePhotoSet ? "bg-brand-500" : "bg-brand-100")}
         >
-          {store.profilePhotoSet ? <Text className="text-xl font-bold text-white">{employee.initials}</Text> : <Camera size={22} color="#3148c8" />}
+          {store.profilePhotoSet ? <Text className="text-xl font-bold text-white">{employee.initials}</Text> : <Camera size={22} color="#2F42CB" />}
         </Pressable>
         <View className="flex-1">
           <Text className="text-base font-bold text-slate-950">{employee.name}</Text>
@@ -70,7 +70,7 @@ export default function SettingsScreen() {
               className={cn("flex-row items-center gap-3 px-3 py-3.5 active:bg-slate-50", index < rows.length - 1 && "border-b border-slate-100")}
             >
               <View className="h-10 w-10 items-center justify-center rounded-xl bg-brand-50">
-                <row.icon size={18} color="#3148c8" />
+                <row.icon size={18} color="#2F42CB" />
               </View>
               <View className="flex-1">
                 <Text className="text-base font-semibold text-slate-800">{row.label}</Text>

@@ -1,97 +1,99 @@
 import { useState } from "react";
-import { RefreshControl, Text, View } from "react-native";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { Archive, Filter, MoreHorizontal, Search } from "lucide-react-native";
-import { Badge, Button, Card, Chip, EmptyState, GuideNote, InlineAlert, ListItem, Screen, SearchBox, Section, Skeleton } from "@/components/ui";
-import { getRecords } from "@/lib/mock-api";
-import { records } from "@/mock/data";
-import { useDemoStore } from "@/store/demo-store";
+import { View } from "react-native";
+import { Cake, ClipboardList, Smartphone, Wallet } from "@/components/paco/glyphs";
+import { Card, Screen, Section } from "@/components/paco/layout";
+import { BarChart, CountBar, FileTile, ListGroup, Row, StackedBar } from "@/components/paco/ui";
+import { usePacoStore } from "@/store/paco-store";
 
-export default function ListsScreen() {
-  const { filter, setFilter, activeSegment, setActiveSegment } = useDemoStore();
-  const [refreshing, setRefreshing] = useState(false);
-  const query = useInfiniteQuery({
-    queryKey: ["records", filter],
-    queryFn: ({ pageParam }) => getRecords({ pageParam, query: filter }),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage) => lastPage.nextPage,
-  });
-  const items = query.data?.pages.flatMap((page) => page.items) ?? [];
-
-  const refresh = async () => {
-    setRefreshing(true);
-    await query.refetch();
-    setRefreshing(false);
-  };
+export default function ListasScreen() {
+  const showToast = usePacoStore((s) => s.showToast);
+  const [downloaded, setDownloaded] = useState(false);
 
   return (
     <Screen
-      eyebrow="Listas y datos"
-      title="Patrones para contenido móvil"
-      description="Cards en lugar de tablas, filtros visibles y estados completos para carga, vacío, error y actualización."
+      eyebrow="Patrones"
+      title="Listas y datos"
+      description="Regla de densidad: los colecciones largas no usan tarjetas con borde por elemento; usan un grupo glass único con filas divididas por hairline y la meta alineada a la derecha."
     >
-      <RefreshControl refreshing={refreshing} onRefresh={refresh} />
-
-      <Section title="Listado simple">
-        {records.slice(0, 3).map((record) => (
-          <ListItem key={record.id} title={`${record.folio} · ${record.client}`} subtitle={`${record.status} · ${record.owner}`} meta={record.amount} href={`/(prototype)/registro/${record.id}`} />
-        ))}
+      <Section title="ListGroup + Row" description="Notificación, movimiento y evento: icono tintado, título, subtítulo de una línea, meta derecha.">
+        <ListGroup>
+          <Row
+            icon={ClipboardList}
+            iconColor="#674EA7"
+            iconTint="bg-violet-50"
+            title="Encuesta NOM-035 obligatoria"
+            subtitle="Vence en 22 días · 5 preguntas"
+            meta="9:40"
+            unread
+            onPress={() => showToast("Abriendo notificación…")}
+          />
+          <Row
+            icon={Wallet}
+            title="Adelanto de nómina · Nómina BBVA"
+            subtitle="10 jun 2026 · 1Q junio"
+            meta="-$1,296"
+            metaSub="Adeudo próximo"
+            metaSubColor="#B8860B"
+            onPress={() => showToast("Detalle del movimiento")}
+          />
+          <Row
+            icon={Smartphone}
+            iconColor="#5176F3"
+            title="Recarga Telcel 55 6677 8899"
+            subtitle="5 jun 2026 · 1Q junio"
+            meta="-$150"
+            metaSub="Procesado"
+            metaSubColor="#5176F3"
+          />
+          <Row
+            icon={Cake}
+            iconColor="#A64D79"
+            iconTint="bg-pink-50"
+            title="Jorge Patiño"
+            subtitle="Cumpleaños · Operaciones"
+            metaSub="Hoy"
+            metaSubColor="#FB4F33"
+            chevron
+            onPress={() => showToast("Ir a celebraciones")}
+          />
+        </ListGroup>
       </Section>
 
-      <Section title="Búsqueda y filtros">
+      <Section title="Archivo descargable">
+        <FileTile
+          name="Politica-vacaciones-2026.docx"
+          kind="DOCX"
+          size="480 KB"
+          downloaded={downloaded}
+          onDownload={() => {
+            setDownloaded(true);
+            showToast("Archivo descargado.");
+          }}
+        />
+      </Section>
+
+      <Section title="Gráficas mock" description="Solo Views: barras, conteos y distribución.">
         <Card className="gap-4">
-          <SearchBox value={filter} onChangeText={setFilter} />
-          <View className="flex-row flex-wrap gap-2">
-            {["Todos", "Alta", "Pendiente", "Aprobado"].map((item) => (
-              <Chip key={item} label={item} active={activeSegment === item} />
-            ))}
-          </View>
-          <Button variant="secondary" icon={Filter} onPress={() => setActiveSegment(activeSegment === "Alta" ? "Todos" : "Alta")}>
-            Alternar filtro activo
-          </Button>
+          <BarChart
+            bars={[
+              { label: "Lun", value: 50, color: "#F1C232" },
+              { label: "Mar", value: 75, color: "#6AA84F" },
+              { label: "Mié", value: 100, color: "#6AA84F" },
+              { label: "Jue", value: 25, color: "#FB4F33" },
+              { label: "Vie", value: 75, color: "#6AA84F" },
+            ]}
+          />
+          <CountBar label="Trabajo" count={4} max={4} />
+          <CountBar label="Familia" count={2} max={4} color="#5176F3" />
+          <StackedBar
+            slices={[
+              { label: "Adelanto de nómina", value: 540, color: "#2F42CB" },
+              { label: "Pago de servicio", value: 832, color: "#F1C232" },
+              { label: "Recarga", value: 150, color: "#5176F3" },
+            ]}
+          />
         </Card>
       </Section>
-
-      <Section title="Infinite scroll mock">
-        <View className="gap-3">
-          {query.isLoading ? <Skeleton lines={4} /> : null}
-          {query.isError ? <InlineAlert tone="danger" title="No se pudo cargar" description="Muestra una acción de reintento y conserva contexto." /> : null}
-          {!query.isLoading && items.length === 0 ? <EmptyState title="Sin resultados" description="No encontramos registros con esos filtros." icon={Search} /> : null}
-          {items.map((record) => (
-            <Card key={record.id} className="gap-3">
-              <View className="flex-row items-start justify-between">
-                <View className="flex-1">
-                  <Text className="text-lg font-bold text-slate-950">{record.folio}</Text>
-                  <Text className="text-sm text-slate-500">{record.client}</Text>
-                </View>
-                <Badge tone={record.status === "Aprobado" ? "success" : record.status === "Rechazado" ? "danger" : "warning"}>{record.status}</Badge>
-              </View>
-              <Text className="text-sm text-slate-600">Prioridad {record.priority} · Responsable {record.owner}</Text>
-              <View className="flex-row gap-2">
-                <View className="flex-1"><Button variant="outline">Ver detalle</Button></View>
-                <View className="flex-1"><Button variant="ghost" icon={MoreHorizontal}>Acciones</Button></View>
-              </View>
-            </Card>
-          ))}
-          {query.hasNextPage ? <Button loading={query.isFetchingNextPage} onPress={() => void query.fetchNextPage()}>Cargar más</Button> : null}
-        </View>
-      </Section>
-
-      <Section title="Acciones por item y swipe viable">
-        <Card className="gap-3">
-          <InlineAlert tone="info" title="Swipe actions" description="Úsalas como atajo, nunca como único acceso a una acción crítica." />
-          <View className="flex-row gap-2">
-            <Button variant="outline">Archivar</Button>
-            <Button variant="destructive">Eliminar con confirmación</Button>
-          </View>
-        </Card>
-      </Section>
-
-      <Section title="Master-detail móvil">
-        <ListItem title="Vista detalle desde item" subtitle="En móvil se navega a una ruta de detalle con header y botón atrás." icon={Archive} href="/(prototype)/registro/r1" />
-      </Section>
-
-      <GuideNote />
     </Screen>
   );
 }

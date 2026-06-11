@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "expo-router";
-import { Check, MessageSquarePlus, Paperclip, Plus, Search, Users } from "lucide-react-native";
+import { Check, MessageSquarePlus, Paperclip, Plus, Search, Users } from "@/components/paco/glyphs";
 import { Modal, Pressable, Text, TextInput, View } from "react-native";
-import { Button, Card, EmptyState, Field, Screen } from "@/components/paco/layout";
-import { SheetHeader, cn } from "@/components/paco/ui";
+import { Button, EmptyState, Field, Screen } from "@/components/paco/layout";
+import { ListGroup, Row, SheetHeader, cn } from "@/components/paco/ui";
 import { directory } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
 
@@ -67,21 +67,18 @@ export default function ChatListScreen() {
           icon={MessageSquarePlus}
         />
       ) : (
-        <View className="gap-2.5">
+        <ListGroup>
           {filtered.map((room) => {
             const last = room.messages[room.messages.length - 1];
             return (
-              <Pressable
+              <Row
                 key={room.id}
-                accessibilityRole="button"
-                onPress={() => router.push({ pathname: "/(paco)/chat/[id]", params: { id: room.id } })}
-              >
-                <Card className="flex-row items-center gap-3">
-                  <View className={cn("h-12 w-12 items-center justify-center rounded-full", room.isGroup ? "bg-violet-100" : "bg-brand-100")}>
+                leading={
+                  <View className={cn("h-10 w-10 items-center justify-center rounded-full", room.isGroup ? "bg-violet-50" : "bg-brand-100")}>
                     {room.isGroup ? (
-                      <Users size={20} color="#7c3aed" />
+                      <Users size={17} color="#674EA7" />
                     ) : (
-                      <Text className="text-sm font-bold text-brand-700">
+                      <Text className="text-xs font-bold text-brand-600">
                         {room.name
                           .split(" ")
                           .map((w) => w[0])
@@ -90,18 +87,16 @@ export default function ChatListScreen() {
                       </Text>
                     )}
                   </View>
-                  <View className="flex-1">
-                    <Text className="text-base font-bold text-slate-950">{room.name}</Text>
-                    <Text className="text-xs text-slate-500" numberOfLines={1}>
-                      {last ? `${last.mine ? "Tú: " : ""}${last.attachment ? "Adjunto · " : ""}${last.text}` : "Sala creada · sin mensajes"}
-                    </Text>
-                  </View>
-                  <Text className="text-[10px] font-semibold text-slate-400">{last?.time ?? ""}</Text>
-                </Card>
-              </Pressable>
+                }
+                title={room.name}
+                subtitle={last ? `${last.mine ? "Tú: " : ""}${last.attachment ? "Adjunto · " : ""}${last.text}` : "Sala creada · sin mensajes"}
+                meta={last?.time?.replace("Hoy · ", "") ?? ""}
+                chevron
+                onPress={() => router.push({ pathname: "/(paco)/chat/[id]", params: { id: room.id } })}
+              />
             );
           })}
-        </View>
+        </ListGroup>
       )}
 
       <Button icon={Plus} onPress={() => setCreating(true)}>

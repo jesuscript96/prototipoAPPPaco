@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { ArrowLeft, FileText, Image as ImageIcon, MessageSquareX, MessagesSquare, Users, Video } from "lucide-react-native";
+import { ArrowLeft, FileText, Image as ImageIcon, MessageSquareX, MessagesSquare, Users, Video } from "@/components/paco/glyphs";
 import { Modal, Pressable, ScrollView, Text, View } from "react-native";
 import { Button, EmptyState, Screen } from "@/components/paco/layout";
 import { ChatBubble, ChatComposer, SheetHeader } from "@/components/paco/ui";
@@ -37,11 +37,11 @@ export default function ChatRoomScreen() {
           onPress={() => router.back()}
           className="h-10 w-10 items-center justify-center rounded-full bg-slate-100 active:bg-slate-200"
         >
-          <ArrowLeft size={18} color="#15143a" />
+          <ArrowLeft size={18} color="#1E1E1E" />
         </Pressable>
         <View className="h-10 w-10 items-center justify-center rounded-full bg-brand-100">
           {room.isGroup ? (
-            <Users size={18} color="#3148c8" />
+            <Users size={18} color="#2F42CB" />
           ) : (
             <Text className="text-xs font-bold text-brand-700">
               {room.name
@@ -67,8 +67,8 @@ export default function ChatRoomScreen() {
       >
         {room.messages.length === 0 ? (
           <View className="items-center py-8">
-            <View className="h-14 w-14 items-center justify-center rounded-[14px] bg-teal-50">
-              <MessagesSquare size={26} color="#0d9488" strokeWidth={2} />
+            <View className="h-14 w-14 items-center justify-center rounded-[14px] bg-brand-100">
+              <MessagesSquare size={26} color="#5176F3" strokeWidth={2} />
             </View>
             <Text className="mt-2 text-sm font-semibold text-slate-500">Sala creada. ¡Manda el primer mensaje!</Text>
           </View>
@@ -98,7 +98,7 @@ export default function ChatRoomScreen() {
                   className="flex-1 items-center gap-2 rounded-2xl border border-slate-200 bg-white py-5 active:bg-brand-50"
                 >
                   <View className="h-12 w-12 items-center justify-center rounded-2xl bg-brand-50">
-                    <option.icon size={22} color="#3148c8" />
+                    <option.icon size={22} color="#2F42CB" />
                   </View>
                   <Text className="text-sm font-bold text-slate-800">{option.label}</Text>
                 </Pressable>

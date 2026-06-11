@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { FolderOpen, Search } from "lucide-react-native";
+import { FolderOpen, Search } from "@/components/paco/glyphs";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { Card, EmptyState, Screen, Section } from "@/components/paco/layout";
 import { FileTile, cn } from "@/components/paco/ui";
@@ -69,7 +69,7 @@ export default function CorporateDocsScreen() {
                   className="min-h-11 flex-row items-center gap-3"
                 >
                   <View className="h-10 w-10 items-center justify-center rounded-[10px] bg-amber-50">
-                    <FolderOpen size={18} color="#b45309" strokeWidth={2.1} />
+                    <FolderOpen size={18} color="#B8860B" strokeWidth={2.1} />
                   </View>
                   <View className="flex-1">
                     <Text className="text-base font-bold text-slate-950">{folder.name}</Text>

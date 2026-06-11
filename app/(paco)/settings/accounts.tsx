@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { CreditCard, Landmark, Plus, Trash2 } from "lucide-react-native";
+import { CreditCard, Landmark, Plus, Trash2 } from "@/components/paco/glyphs";
 import { Modal, Pressable, Text, View } from "react-native";
-import { Badge, Button, Card, Field, Screen } from "@/components/paco/layout";
-import { ConfirmSheet, Segmented, SelectChip, SheetHeader, cn } from "@/components/paco/ui";
+import { Button, Field, Screen } from "@/components/paco/layout";
+import { ConfirmSheet, ListGroup, Row, Segmented, SelectChip, SheetHeader } from "@/components/paco/ui";
 import { banks } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
 
@@ -43,36 +43,31 @@ export default function AccountsScreen() {
       title="Cuentas y tarjetas"
       description="Métodos registrados para depósitos y cobros de tus adelantos de nómina y pagos."
     >
-      <View className="gap-2.5">
+      <ListGroup>
         {accounts.map((account) => (
-          <Card key={account.id} className="gap-2">
-            <View className="flex-row items-center gap-3">
-              <View className={cn("h-11 w-11 items-center justify-center rounded-[12px]", account.kind === "Tarjeta" ? "bg-violet-50" : "bg-brand-50")}>
-                {account.kind === "Tarjeta" ? <CreditCard size={20} color="#7c3aed" strokeWidth={2} /> : <Landmark size={20} color="#3148c8" strokeWidth={2} />}
-              </View>
-              <View className="flex-1">
-                <Text className="text-base font-bold text-slate-950">{account.alias}</Text>
-                <Text className="text-sm text-slate-500">
-                  {account.bank} · {account.masked}
-                </Text>
-              </View>
-              {account.primary ? <Badge tone="success">Principal</Badge> : null}
-            </View>
-            {!account.primary ? (
-              <Pressable
-                accessibilityRole="button"
-                onPress={() => setRemoving(account.id)}
-                className="min-h-10 flex-row items-center gap-1.5 self-start"
-              >
-                <Trash2 size={14} color="#dc2626" />
-                <Text className="text-xs font-bold text-red-600">Eliminar</Text>
-              </Pressable>
-            ) : (
-              <Text className="text-xs text-slate-400">La cuenta principal de nómina no puede eliminarse desde la app.</Text>
-            )}
-          </Card>
+          <Row
+            key={account.id}
+            icon={account.kind === "Tarjeta" ? CreditCard : Landmark}
+            iconColor={account.kind === "Tarjeta" ? "#674EA7" : "#2F42CB"}
+            iconTint={account.kind === "Tarjeta" ? "bg-violet-50" : "bg-brand-100"}
+            title={account.alias}
+            subtitle={`${account.bank} · ${account.masked}`}
+            metaSub={account.primary ? "Principal" : undefined}
+            metaSubColor="#6AA84F"
+            trailing={
+              !account.primary ? (
+                <Pressable
+                  accessibilityLabel={`Eliminar ${account.alias}`}
+                  onPress={() => setRemoving(account.id)}
+                  className="h-8 w-8 items-center justify-center rounded-full active:bg-red-50"
+                >
+                  <Trash2 size={14} color="#CC0000" />
+                </Pressable>
+              ) : undefined
+            }
+          />
         ))}
-      </View>
+      </ListGroup>
 
       <Button icon={Plus} onPress={() => setAdding(true)}>
         Agregar cuenta o tarjeta

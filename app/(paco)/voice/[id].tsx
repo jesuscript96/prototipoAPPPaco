@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { ArrowLeft, MessagesSquare } from "lucide-react-native";
+import { ArrowLeft, MessagesSquare } from "@/components/paco/glyphs";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { Button, EmptyState, Screen } from "@/components/paco/layout";
 import { ChatBubble, ChatComposer, StatusDot } from "@/components/paco/ui";
@@ -50,7 +50,7 @@ export default function VoiceChatScreen() {
             onPress={() => router.back()}
             className="h-10 w-10 items-center justify-center rounded-full bg-slate-100 active:bg-slate-200"
           >
-            <ArrowLeft size={18} color="#15143a" />
+            <ArrowLeft size={18} color="#1E1E1E" />
           </Pressable>
           <View className="flex-1">
             <Text className="text-base font-bold text-slate-950" numberOfLines={1}>

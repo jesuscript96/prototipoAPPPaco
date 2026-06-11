@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { Award, Check, FileQuestion, Lock, Play } from "lucide-react-native";
+import { Award, Check, FileQuestion, Lock, Play } from "@/components/paco/glyphs";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { Badge, Button, Card, EmptyState, Progress, Screen, Section } from "@/components/paco/layout";
 import { RadioOption, SuccessCard, cn } from "@/components/paco/ui";

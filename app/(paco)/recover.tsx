@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
-import { KeyRound, Send } from "lucide-react-native";
+import { KeyRound, Send } from "@/components/paco/glyphs";
 import { Text, View } from "react-native";
 import { Button, Card, Field, Screen } from "@/components/paco/layout";
 import { SuccessCard } from "@/components/paco/ui";
@@ -45,7 +45,7 @@ export default function RecoverScreen() {
         <Card className="gap-4">
           <View className="flex-row items-center gap-3">
             <View className="h-12 w-12 items-center justify-center rounded-2xl bg-brand-50">
-              <KeyRound size={22} color="#3148c8" />
+              <KeyRound size={22} color="#2F42CB" />
             </View>
             <Text className="flex-1 text-sm leading-5 text-slate-600">
               Por seguridad, la liga sólo funciona una vez y caduca a los 30 minutos.

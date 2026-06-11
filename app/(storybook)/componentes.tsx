@@ -1,135 +1,106 @@
-import { Text, View } from "react-native";
-import { AlertTriangle, Archive, CheckCircle2, Edit3, Plus, Send, Trash2 } from "lucide-react-native";
-import {
-  Accordion,
-  AttachmentPreview,
-  Avatar,
-  Badge,
-  BottomSheetMock,
-  Button,
-  Card,
-  Checkbox,
-  Chip,
-  DemoModal,
-  Divider,
-  EmptyState,
-  FAB,
-  FeedbackToast,
-  Field,
-  GuideNote,
-  IconButton,
-  InlineAlert,
-  KpiCard,
-  ListItem,
-  Progress,
-  RadioRow,
-  Screen,
-  Section,
-  SegmentedControl,
-  SelectMock,
-  Skeleton,
-  SwitchRow,
-} from "@/components/ui";
+import { useState } from "react";
+import { View } from "react-native";
+import { Download, Plus, ShieldCheck } from "@/components/paco/glyphs";
+import { Badge, Button, Card, Checkbox, EmptyState, InlineAlert, Screen, Section } from "@/components/paco/layout";
+import { OptionCard, RadioOption, Segmented, SelectChip, StatusDot, ToggleRow } from "@/components/paco/ui";
+import { IconBubble, domainStyles, moduleIcons } from "@/components/paco/icons";
+import { Bell } from "@/components/paco/glyphs";
+import { usePacoStore } from "@/store/paco-store";
 
-export default function ComponentsScreen() {
+export default function ComponentesScreen() {
+  const showToast = usePacoStore((s) => s.showToast);
+  const [tab, setTab] = useState("Pendientes");
+  const [chip, setChip] = useState("Todos");
+  const [checked, setChecked] = useState(true);
+  const [toggled, setToggled] = useState(true);
+  const [radio, setRadio] = useState("a");
+
   return (
     <Screen
-      eyebrow="Componentes"
-      title="Biblioteca base"
-      description="Variantes y estados listos para combinarse en flujos reales, no solo ejemplos aislados."
+      eyebrow="Sistema Paco"
+      title="Componentes"
+      description="Cada control incluye su microinteracción: press-scale en botones y tarjetas, indicador deslizante en tabs, pop en checks."
     >
-      <Section title="Buttons">
+      <Section title="Botones" description="Primario en carbón; el resto glass. Todos encogen 3% al presionar.">
+        <Card className="gap-2.5">
+          <Button icon={ShieldCheck} onPress={() => showToast("Acción primaria ejecutada.")}>Primario</Button>
+          <Button variant="secondary" icon={Download} onPress={() => showToast("Acción secundaria.")}>Secundario</Button>
+          <Button variant="outline" onPress={() => showToast("Acción outline.")}>Outline</Button>
+          <View className="flex-row gap-2">
+            <View className="flex-1"><Button variant="ghost" onPress={() => showToast("Ghost.")}>Ghost</Button></View>
+            <View className="flex-1"><Button variant="destructive" onPress={() => showToast("Destructiva.")}>Eliminar</Button></View>
+          </View>
+          <Button loading>Cargando</Button>
+          <Button disabled>Deshabilitado</Button>
+        </Card>
+      </Section>
+
+      <Section title="Tabs segmentadas" description="Indicador blanco con spring entre opciones.">
+        <Segmented options={["Pendientes", "En curso", "Finalizados"]} value={tab} onChange={setTab} />
+      </Section>
+
+      <Section title="Chips de filtro">
+        <View className="flex-row flex-wrap gap-2">
+          {["Todos", "Finanzas", "Personas", "Documentos"].map((label) => (
+            <SelectChip key={label} label={label} active={chip === label} onPress={() => setChip(label)} />
+          ))}
+        </View>
+      </Section>
+
+      <Section title="Badges y semáforo">
         <Card className="gap-3">
-          <Button>Primary</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="outline">Outline</Button>
-          <Button variant="ghost">Ghost</Button>
-          <Button variant="destructive" icon={Trash2}>Destructive</Button>
-          <Button loading>Guardando</Button>
-          <Button disabled>Disabled</Button>
-          <IconButton icon={Edit3} label="Editar" />
-        </Card>
-      </Section>
-
-      <Section title="Inputs y selección">
-        <Card className="gap-4">
-          <Field label="Nombre" placeholder="Ej. Mariana López" helper="Usa el nombre legal del contacto." />
-          <Field label="Campo con error" placeholder="RFC" error="El formato no es válido" />
-          <Field label="Notas" placeholder="Describe el contexto" multiline />
-          <SelectMock label="Área" value="Operaciones" />
-          <Checkbox label="Acepto los términos" checked />
-          <RadioRow label="Notificación por correo" selected />
-          <SwitchRow label="Recibir alertas críticas" value />
-        </Card>
-      </Section>
-
-      <Section title="Badges, chips, tags y avatars">
-        <Card className="gap-4">
           <View className="flex-row flex-wrap gap-2">
-            <Badge tone="success">Aprobado</Badge>
+            <Badge tone="success">Aprobada</Badge>
             <Badge tone="warning">Pendiente</Badge>
-            <Badge tone="danger">Bloqueado</Badge>
-            <Badge tone="info">Nuevo</Badge>
+            <Badge tone="danger">Rechazada</Badge>
+            <Badge tone="info">En proceso</Badge>
+            <Badge tone="neutral">Borrador</Badge>
           </View>
-          <View className="flex-row flex-wrap gap-2">
-            <Chip label="Todos" active />
-            <Chip label="Alta prioridad" />
-            <Chip label="Asignados a mí" />
-          </View>
-          <View className="flex-row gap-3">
-            <Avatar name="Mariana López" />
-            <Avatar name="Diego Ramos" />
-            <Avatar name="Ana Torres" />
+          <View className="flex-row gap-5">
+            <StatusDot status="Pendiente" />
+            <StatusDot status="En proceso" />
+            <StatusDot status="Atendido" />
           </View>
         </Card>
       </Section>
 
-      <Section title="Cards, KPIs y listas">
-        <View className="gap-3">
-          <KpiCard label="Conversión mensual" value="82%" trend="+4%" tone="success" />
-          <ListItem title="Solicitud PAC-1024" subtitle="Café Norte, revisión legal" meta="Hoy" icon={Archive} />
-          <Divider />
-        </View>
+      <Section title="Alertas">
+        <InlineAlert title="Información" description="Mensajes contextuales con barra de tono y fondo translúcido." tone="info" />
+        <InlineAlert title="Advertencia" description="Para reglas, vencimientos y bloqueos recuperables." tone="warning" />
+        <InlineAlert title="Éxito" description="Confirmaciones persistentes dentro del flujo." tone="success" />
       </Section>
 
-      <Section title="Estados y feedback">
-        <View className="gap-3">
-          <EmptyState title="Sin resultados" description="Ajusta filtros o intenta con otro término de búsqueda." icon={Archive} />
-          <InlineAlert tone="warning" title="Requiere confirmación" description="Las acciones destructivas siempre deben pedir confirmación." />
-          <Skeleton />
-          <Progress value={42} />
-          <FeedbackToast message="Cambios guardados. Puedes continuar." />
-        </View>
-      </Section>
-
-      <Section title="Overlays y composición">
-        <Card className="gap-4">
-          <DemoModal title="Confirmar acción">
-            <Text className="mb-4 text-base leading-6 text-slate-600">Este patrón evita errores en acciones irreversibles.</Text>
-            <Button variant="destructive" icon={AlertTriangle}>Confirmar eliminación</Button>
-          </DemoModal>
-          <BottomSheetMock>
-            <Text className="text-lg font-bold text-slate-950">Bottom sheet simulado</Text>
-            <Text className="mt-1 text-sm text-slate-500">Ideal para acciones secundarias sin perder contexto.</Text>
-          </BottomSheetMock>
-          <SegmentedControl options={["Todos", "Activos", "Cerrados"]} value="Todos" />
-          <Accordion title="Buenas prácticas">
-            <Text className="text-sm leading-5 text-slate-600">Evita saturar pantallas; prioriza una acción principal y feedback inmediato.</Text>
-          </Accordion>
-          <AttachmentPreview name="contrato-firmado.pdf" size="2.1 MB" />
-          <FAB icon={Plus} label="Crear registro" />
+      <Section title="Selección" description="Radio, checkbox con pop y switch con thumb animado.">
+        <Card className="gap-3">
+          <RadioOption label="Opción A" helper="Con texto de apoyo" selected={radio === "a"} onPress={() => setRadio("a")} />
+          <RadioOption label="Opción B" selected={radio === "b"} onPress={() => setRadio("b")} />
+          <Checkbox label="Acepto los términos y condiciones del servicio." checked={checked} onPress={() => setChecked((v) => !v)} />
+          <ToggleRow label="Enviar de forma anónima" helper="El thumb desliza con spring" value={toggled} onChange={setToggled} />
         </Card>
       </Section>
 
-      <Section title="Tooltip / helper text">
-        <InlineAlert tone="info" title="Helper text" description="En móvil es más estable mostrar ayuda persistente junto al campo que depender de tooltips precisos." />
+      <Section title="Tarjeta de opción" description="Para catálogos (servicios, voz, solicitudes).">
+        <OptionCard
+          title="Agua, luz y gas"
+          subtitle="CFE · Agua CDMX · Naturgy"
+          icon={moduleIcons.services}
+          onPress={() => showToast("Categoría seleccionada.")}
+        />
       </Section>
 
-      <Button icon={Send}>Ejemplo de acción principal</Button>
-      <GuideNote />
-      <InlineAlert tone="success" title="Accesibilidad" description="Los componentes usan labels visibles, feedback textual y áreas de toque cómodas." />
-      <InlineAlert tone="danger" title="Error común" description="No uses solo color para comunicar estados; siempre incluye texto o iconografía." />
-      <CheckCircle2 size={1} color="transparent" />
+      <Section title="Burbujas por dominio">
+        <Card className="flex-row flex-wrap gap-3">
+          {Object.entries(domainStyles).map(([domain, style]) => (
+            <View key={domain} className="items-center gap-1">
+              <IconBubble icon={moduleIcons.advance ?? Bell} color={style.color} tint={style.tint} />
+            </View>
+          ))}
+        </Card>
+      </Section>
+
+      <Section title="Estado vacío">
+        <EmptyState title="Sin elementos" description="Borde discontinuo sobre material glass, con icono neutro." icon={Plus} />
+      </Section>
     </Screen>
   );
 }
