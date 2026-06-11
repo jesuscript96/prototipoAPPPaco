@@ -1,0 +1,32 @@
+---
+description: Build Paco App prototype deeply from videos and functional docs
+alwaysApply: true
+---
+
+# Paco Prototype Rule
+
+When working on this repository, treat the goal as building a complete Expo/React Native front-end prototype of Paco App with mock data.
+
+Mandatory sources before coding:
+- `AGENTS.md`
+- `funcionalidadvideo.md`
+- `assets/videosfuncioalidades/WhatsApp Video 2026-02-03 at 13.45.15.mp4`
+- `assets/videosfuncioalidades/WhatsApp Video 2026-02-03 at 13.48.21.mp4`
+- `docs/claude-fable/one-shot-master-prompt.md`
+- `docs/claude-fable/functional-spec.md`
+- `docs/claude-fable/acceptance-checklist.md`
+
+Do not copy the reference app pixel-perfect. Use the videos to extract behavior, flows, edge cases, hierarchy and content. Rebuild with a modern corporate UX using the repo storybook/components as the design base.
+
+No superficial coverage:
+- A module is not done when it has only a card, route, static list or descriptive text.
+- Every module needs navigable flows, mock data, local state, actions, feedback, empty/loading/error/success states where relevant, and cross-module effects when the reference implies them.
+- Every visible primary button must do something observable.
+
+Expo rule:
+- Expo changed. Before using Expo/React Native APIs, consult exact SDK 56 docs at `https://docs.expo.dev/versions/v56.0.0/`.
+
+Definition of done:
+- `npm run typecheck` passes.
+- No new lints in touched files.
+- All items in `docs/claude-fable/acceptance-checklist.md` are implemented or explicitly marked as a visible mock limitation.
