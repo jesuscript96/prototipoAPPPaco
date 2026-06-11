@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { ExternalLink, MapPin, Tags } from "@/components/paco/glyphs";
-import { ScrollView, Text, View } from "react-native";
+import { Image, ScrollView, Text, View } from "react-native";
+import { moduleAssets } from "@/components/paco/assets";
 import { Badge, Button, Card, EmptyState, Screen, Section } from "@/components/paco/layout";
 import { SelectChip } from "@/components/paco/ui";
-import { couponIcons } from "@/components/paco/icons";
 import { company, pinCategories, pinCoupons } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
 
@@ -22,7 +22,7 @@ export default function PinScreen() {
       <Screen title="Club de Descuentos PiN" description="Promociones y cupones de comercios cercanos, operados por nuestro aliado PiN.">
         <Card className="items-center gap-3 py-8">
           <View className="h-16 w-16 items-center justify-center rounded-2xl bg-amber-100">
-            <MapPin size={28} color="#B8860B" />
+            <Image source={moduleAssets.pin} resizeMode="contain" style={{ width: 42, height: 42 }} />
           </View>
           <Text className="text-center text-lg font-bold text-slate-950">Activa tu ubicación</Text>
           <Text className="text-center text-sm leading-5 text-slate-600">
@@ -63,14 +63,9 @@ export default function PinScreen() {
               return (
                 <Card key={coupon.id} className="gap-3">
                   <View className="flex-row items-start gap-3">
-                    {(() => {
-                      const CouponIcon = couponIcons[coupon.category] ?? Tags;
-                      return (
-                        <View className="h-11 w-11 items-center justify-center rounded-[12px] bg-brand-50">
-                          <CouponIcon size={20} color="#2F42CB" strokeWidth={2.1} />
-                        </View>
-                      );
-                    })()}
+                    <View className="h-11 w-11 items-center justify-center rounded-[12px] bg-brand-50">
+                      <Image source={moduleAssets.pin} resizeMode="contain" style={{ width: 26, height: 26 }} />
+                    </View>
                     <View className="flex-1">
                       <Text className="text-base font-bold text-slate-950">{coupon.brand}</Text>
                       <Text className="text-lg font-bold text-brand-700">{coupon.offer}</Text>

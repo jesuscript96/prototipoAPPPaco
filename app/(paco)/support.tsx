@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import { useRouter } from "expo-router";
-import { ArrowUpRight, HelpCircle, LifeBuoy, MessageCircle, Send, UserRound } from "@/components/paco/glyphs";
-import { Text, View } from "react-native";
+import { ArrowUpRight, HelpCircle, MessageCircle, Send, UserRound } from "@/components/paco/glyphs";
+import { Image, Text, View } from "react-native";
+import { illustrationAssets } from "@/components/paco/assets";
 import { Badge, Button, Card, Field, InlineAlert, Screen, Section } from "@/components/paco/layout";
 import { ChatBubble, ChatComposer } from "@/components/paco/ui";
 import { simulate } from "@/lib/paco-api";
@@ -47,6 +48,10 @@ export default function SupportScreen() {
       title="Soporte técnico"
       description={`Canales para resolver problemas del aplicativo. Chat en vivo operado por ${company.chatProvider}.`}
     >
+      <Card className="items-center gap-2 bg-brand-50">
+        <Image source={illustrationAssets.support} resizeMode="contain" style={{ width: 150, height: 94 }} />
+        <Text className="text-center text-sm font-semibold text-brand-700">Soporte Paco con ticket, bot y escalamiento a agente humano.</Text>
+      </Card>
       <Section title="Otros canales">
         <Card className="gap-2.5">
           <Button icon={HelpCircle} variant="outline" onPress={() => router.push("/(paco)/help")}>
@@ -66,7 +71,7 @@ export default function SupportScreen() {
         <Section title="Chatea con nosotros ahora" description="Sin conversaciones activas. Completa el formulario para abrir un ticket.">
           <Card className="items-center gap-2 py-5">
             <View className="h-14 w-14 items-center justify-center rounded-[14px] bg-brand-100">
-              <LifeBuoy size={26} color="#5176F3" strokeWidth={2} />
+              <Image source={illustrationAssets.support} resizeMode="contain" style={{ width: 42, height: 42 }} />
             </View>
             <Text className="text-center text-sm leading-5 text-slate-600">
               Las herramientas tecnológicas a tu lado: nuestro bot te atiende de inmediato y puede escalar tu caso a un agente

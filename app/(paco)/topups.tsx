@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import { ChevronLeft, Smartphone } from "@/components/paco/glyphs";
+import { assetForTopupOperator, topupAssets } from "@/components/paco/assets";
 import { operatorIcons } from "@/components/paco/icons";
-import { Pressable, Text, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
 import { Button, Card, Divider, Field, InlineAlert, Screen } from "@/components/paco/layout";
 import { MoneyRow, Segmented, StepHeader, SuccessCard, cn, mxn } from "@/components/paco/ui";
 import { ShakeView } from "@/components/paco/motion";
@@ -83,6 +84,7 @@ export default function TopupsScreen() {
           <View className="flex-row flex-wrap justify-between">
             {topupOperators.map((op) => {
               const OperatorIcon = operatorIcons[op.id] ?? Smartphone;
+              const operatorAsset = assetForTopupOperator(op.id);
               return (
                 <Pressable
                   key={op.id}
@@ -91,7 +93,7 @@ export default function TopupsScreen() {
                   className="mb-3 w-[31.5%] items-center gap-2 rounded-xl border border-white/80 bg-white/75 px-2 py-4 shadow-card active:bg-white"
                 >
                   <View className="h-10 w-10 items-center justify-center rounded-[10px] bg-brand-50">
-                    <OperatorIcon size={18} color="#2F42CB" strokeWidth={2.1} />
+                    {operatorAsset ? <Image source={operatorAsset} resizeMode="contain" style={{ width: 28, height: 28 }} /> : <OperatorIcon size={18} color="#2F42CB" strokeWidth={2.1} />}
                   </View>
                   <Text className="text-center text-xs font-bold text-slate-800" numberOfLines={1}>
                     {op.name}
@@ -112,6 +114,14 @@ export default function TopupsScreen() {
             ) : (
               <InlineAlert title={operator.types[0] ?? ""} description="Único tipo de recarga disponible con este operador." tone="info" />
             )}
+            <View className="flex-row gap-2">
+              {operator.types.map((type) => (
+                <View key={type} className="flex-1 items-center gap-1 rounded-xl bg-white/70 p-3">
+                  <Image source={type === "Datos" ? topupAssets.datos : topupAssets.aire} resizeMode="contain" style={{ width: 34, height: 34 }} />
+                  <Text className="text-xs font-bold text-slate-600">{type}</Text>
+                </View>
+              ))}
+            </View>
             <View className="flex-row flex-wrap justify-between">
               {operator.amounts.map((value) => (
                 <Pressable

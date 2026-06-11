@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { ArrowLeft, FileText, Image as ImageIcon, MessageSquareX, MessagesSquare, Users, Video } from "@/components/paco/glyphs";
-import { Modal, Pressable, ScrollView, Text, View } from "react-native";
+import { ArrowLeft, FileText, Image as ImageIcon, MessageSquareX, Users, Video } from "@/components/paco/glyphs";
+import { Image, Modal, Pressable, ScrollView, Text, View } from "react-native";
+import { illustrationAssets, peopleAssets } from "@/components/paco/assets";
 import { Button, EmptyState, Screen } from "@/components/paco/layout";
 import { ChatBubble, ChatComposer, SheetHeader } from "@/components/paco/ui";
 import { usePacoStore } from "@/store/paco-store";
@@ -23,7 +24,7 @@ export default function ChatRoomScreen() {
   if (!room) {
     return (
       <Screen title="Conversación no encontrada">
-        <EmptyState title="Sin conversación" description="La sala no existe o fue eliminada." icon={MessageSquareX} />
+        <EmptyState title="Sin conversación" description="La sala no existe o fue eliminada." icon={MessageSquareX} image={illustrationAssets.support} />
         <Button onPress={() => router.back()}>Volver</Button>
       </Screen>
     );
@@ -43,13 +44,7 @@ export default function ChatRoomScreen() {
           {room.isGroup ? (
             <Users size={18} color="#2F42CB" />
           ) : (
-            <Text className="text-xs font-bold text-brand-700">
-              {room.name
-                .split(" ")
-                .map((w) => w[0])
-                .join("")
-                .slice(0, 2)}
-            </Text>
+            <Image source={peopleAssets.avatarSmall} resizeMode="cover" style={{ width: 36, height: 36, borderRadius: 18 }} />
           )}
         </View>
         <View className="flex-1">
@@ -68,7 +63,7 @@ export default function ChatRoomScreen() {
         {room.messages.length === 0 ? (
           <View className="items-center py-8">
             <View className="h-14 w-14 items-center justify-center rounded-[14px] bg-brand-100">
-              <MessagesSquare size={26} color="#5176F3" strokeWidth={2} />
+              <Image source={peopleAssets.paperclip} resizeMode="contain" style={{ width: 34, height: 34 }} />
             </View>
             <Text className="mt-2 text-sm font-semibold text-slate-500">Sala creada. ¡Manda el primer mensaje!</Text>
           </View>
@@ -98,7 +93,7 @@ export default function ChatRoomScreen() {
                   className="flex-1 items-center gap-2 rounded-2xl border border-slate-200 bg-white py-5 active:bg-brand-50"
                 >
                   <View className="h-12 w-12 items-center justify-center rounded-2xl bg-brand-50">
-                    <option.icon size={22} color="#2F42CB" />
+                    <Image source={option.id === "doc" ? peopleAssets.docIcon : option.id === "image" ? peopleAssets.user : peopleAssets.paperclip} resizeMode="contain" style={{ width: 30, height: 30 }} />
                   </View>
                   <Text className="text-sm font-bold text-slate-800">{option.label}</Text>
                 </Pressable>

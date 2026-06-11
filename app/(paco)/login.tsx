@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
-import { AlertTriangle, ArrowLeft, Eye, EyeOff, HardHat, LogIn } from "@/components/paco/glyphs";
-import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
+import { AlertTriangle, ArrowLeft, Eye, EyeOff, LogIn } from "@/components/paco/glyphs";
+import { Image, Pressable, ScrollView, Text, TextInput, View } from "react-native";
+import { brandAssets, illustrationAssets } from "@/components/paco/assets";
 import { Ambient, Button, GlassNavButton } from "@/components/paco/layout";
 import { ShakeView } from "@/components/paco/motion";
 import { HelpFab } from "@/components/paco/ui";
@@ -48,8 +49,9 @@ export default function LoginScreen() {
       <ScrollView contentContainerClassName="flex-grow justify-center px-6 pb-16">
         <View className="items-center gap-3 pb-7">
           <View className="h-16 w-16 items-center justify-center rounded-[16px] border border-white/90 bg-white/85 shadow-card">
-            <HardHat size={30} color="#2F42CB" strokeWidth={1.9} />
+            <Image source={brandAssets.iconMain} resizeMode="contain" style={{ width: 45, height: 45 }} />
           </View>
+          <Image source={illustrationAssets.loginConfirm} resizeMode="contain" style={{ width: 168, height: 92 }} />
           <Text className="text-[27px] font-bold tracking-tight text-slate-950">Inicia sesión</Text>
           <Text className="text-center text-sm leading-6 text-slate-500">
             Acceso exclusivo para colaboradores registrados por tu empresa en el panel Paco.

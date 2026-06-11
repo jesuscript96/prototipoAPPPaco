@@ -1,12 +1,12 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "expo-router";
 import { CheckCircle2, Download, GraduationCap, Search, WifiOff } from "@/components/paco/glyphs";
-import { Modal, Pressable, Text, TextInput, View } from "react-native";
+import { Image, Modal, Pressable, Text, TextInput, View } from "react-native";
+import { illustrationAssets, moduleAssets } from "@/components/paco/assets";
 import { Badge, Button, Card, EmptyState, Progress, Screen } from "@/components/paco/layout";
 import { Segmented } from "@/components/paco/ui";
 import { runPhases } from "@/lib/paco-api";
 import { courseProgress, courseStatus } from "@/lib/paco-training";
-import { courseIcons } from "@/components/paco/icons";
 import { Course, courses, downloadPhases } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
 
@@ -77,6 +77,7 @@ export default function TrainingScreen() {
           title={`Sin cursos en ${tab.toLowerCase()}`}
           description={query ? `Ningún curso coincide con “${query}”.` : "Cuando tu empresa te asigne cursos en este estado, aparecerán aquí."}
           icon={GraduationCap}
+          image={illustrationAssets.training}
         />
       ) : (
         <View className="gap-3">
@@ -86,14 +87,9 @@ export default function TrainingScreen() {
             return (
               <Card key={course.id} className="gap-3">
                 <View className="flex-row items-start gap-3">
-                  {(() => {
-                    const CourseIcon = courseIcons[course.id] ?? GraduationCap;
-                    return (
-                      <View className="h-12 w-12 items-center justify-center rounded-[12px] bg-brand-50">
-                        <CourseIcon size={22} color="#2F42CB" strokeWidth={2} />
-                      </View>
-                    );
-                  })()}
+                  <View className="h-12 w-12 items-center justify-center rounded-[12px] bg-brand-50">
+                    <Image source={moduleAssets.training} resizeMode="contain" style={{ width: 30, height: 30 }} />
+                  </View>
                   <View className="flex-1 gap-1">
                     <Text className="text-base font-bold text-slate-950">{course.title}</Text>
                     <View className="flex-row flex-wrap items-center gap-1.5">
@@ -138,7 +134,7 @@ export default function TrainingScreen() {
               <>
                 <View className="items-center">
                   <View className="h-14 w-14 items-center justify-center rounded-2xl bg-brand-50">
-                    <WifiOff size={26} color="#2F42CB" />
+                    <Image source={illustrationAssets.training} resizeMode="contain" style={{ width: 40, height: 40 }} />
                   </View>
                 </View>
                 <Text className="text-center text-lg font-bold text-slate-950">Contenido disponible sin conexión</Text>

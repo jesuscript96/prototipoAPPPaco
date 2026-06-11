@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Medal, Search, Send } from "@/components/paco/glyphs";
-import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
+import { Image, Pressable, ScrollView, Text, TextInput, View } from "react-native";
+import { illustrationAssets, moduleAssets, peopleAssets } from "@/components/paco/assets";
 import { Badge, Button, Card, EmptyState, Field, Screen, Section } from "@/components/paco/layout";
 import { Segmented, SuccessCard, cn } from "@/components/paco/ui";
 import { simulate } from "@/lib/paco-api";
@@ -52,6 +53,7 @@ export default function RecognitionsScreen() {
         <SuccessCard
           title={`¡Medalla de ${badge.name} enviada!`}
           description={`${person} recibirá una notificación con tu reconocimiento: “${reason.trim()}”. También quedó registrado en tu historial de enviados.`}
+          image={moduleAssets.recognitions}
         >
           <View className="w-full gap-2 pt-2">
             <Button
@@ -82,6 +84,10 @@ export default function RecognitionsScreen() {
 
   return (
     <Screen title="Reconoce a tu equipo" description="Envía medallas con los valores de tu organización y consulta tu historial.">
+      <Card className="flex-row items-center gap-3 bg-brand-50">
+        <Image source={moduleAssets.recognitions} resizeMode="contain" style={{ width: 58, height: 58 }} />
+        <Text className="flex-1 text-sm font-semibold leading-5 text-brand-700">Celebra comportamientos visibles con medallas y notificaciones internas.</Text>
+      </Card>
       <Segmented options={["Reconocer", "Mis reconocimientos"]} value={tab} onChange={setTab} />
 
       {tab === "Reconocer" ? (
@@ -201,6 +207,7 @@ export default function RecognitionsScreen() {
               title={historyTab === "Recibidos" ? "Aún no recibes medallas" : "Aún no envías medallas"}
               description={historyTab === "Recibidos" ? "Cuando un compañero o el sistema te reconozca, lo verás aquí." : "Reconoce a un compañero desde la pestaña Reconocer."}
               icon={Medal}
+              image={illustrationAssets.empty}
             />
           ) : (
             <View className="gap-2.5">
@@ -209,14 +216,9 @@ export default function RecognitionsScreen() {
                 return (
                   <Card key={item.id} className="gap-2">
                     <View className="flex-row items-center gap-3">
-                      {(() => {
-                        const HistoryIcon = badgeIcons[item.badgeId] ?? Medal;
-                        return (
-                          <View className="h-11 w-11 items-center justify-center rounded-full bg-amber-50">
-                            <HistoryIcon size={20} color="#B8860B" strokeWidth={2.1} />
-                          </View>
-                        );
-                      })()}
+                      <View className="h-11 w-11 items-center justify-center rounded-full bg-amber-50">
+                        <Image source={peopleAssets.surveyFinal} resizeMode="contain" style={{ width: 28, height: 28 }} />
+                      </View>
                       <View className="flex-1">
                         <Text className="text-base font-bold text-slate-950">{item.badgeName}</Text>
                         <Text className="text-sm text-slate-600">

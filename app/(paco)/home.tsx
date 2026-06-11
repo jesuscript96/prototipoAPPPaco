@@ -14,11 +14,12 @@ import {
   Smile,
   Wallet,
 } from "@/components/paco/glyphs";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Image, Pressable, ScrollView, Text, View } from "react-native";
+import { assetForModule, bannerAssets, brandAssets, peopleAssets, quickActionAssets } from "@/components/paco/assets";
 import { Ambient, Button, Progress } from "@/components/paco/layout";
 import { FadeSlideIn, PressableScale, useAnimatedNumber } from "@/components/paco/motion";
 import { cn, mxn } from "@/components/paco/ui";
-import { Icon, IconBubble, bannerIcons, domainStyles, moduleIcons } from "@/components/paco/icons";
+import { AssetIconBubble, Icon, IconBubble, bannerIcons, domainStyles, moduleIcons } from "@/components/paco/icons";
 import { banners, celebrations, courses, employee, moduleRegistry, onboardingTasks, surveys } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
 
@@ -39,9 +40,10 @@ function HomeHeader({ unread }: { unread: number }) {
         onPress={() => router.push("/(paco)/profile")}
         className="h-11 w-11 items-center justify-center rounded-full border border-white/80 bg-white/75 shadow-card"
       >
-        <Text className="text-[13px] font-bold text-ink">{employee.initials}</Text>
+        <Image source={peopleAssets.avatarSmall} resizeMode="cover" style={{ width: 38, height: 38, borderRadius: 19 }} />
       </Pressable>
       <View className="flex-1">
+        <Image source={brandAssets.headerIcon} resizeMode="contain" style={{ width: 72, height: 22 }} />
         <Text className="text-[17px] font-bold tracking-tight text-slate-950">Hola, {employee.preferredName}</Text>
         <Text className="text-[11px] text-slate-500">Miércoles 10 de junio · {employee.role}</Text>
       </View>
@@ -167,7 +169,7 @@ export default function HomeScreen() {
       <Ambient />
       <HomeHeader unread={unread} />
 
-      <ScrollView className="flex-1" showsVerticalScrollIndicator={false} contentContainerClassName="gap-6 px-5 pb-24 pt-2">
+      <ScrollView className="flex-1" showsVerticalScrollIndicator={false} contentContainerClassName="gap-6 px-5 pb-44 pt-2">
         {/* Hero financiero */}
         <FadeSlideIn>
         <View className="rounded-2xl border border-white/90 bg-white/80 p-5 shadow-pop">
@@ -176,6 +178,7 @@ export default function HomeScreen() {
               <Text className="text-[11px] font-bold uppercase tracking-[1.5px] text-slate-400">Disponible para adelanto</Text>
               <Text className="mt-1 text-[34px] font-bold tracking-tight text-slate-950">{mxn(Math.round(animatedAvailable))}</Text>
             </View>
+            <Image source={quickActionAssets.advance} resizeMode="contain" style={{ width: 54, height: 54 }} />
             <View className={cn("rounded-[8px] border px-2.5 py-1.5", debt > 0 ? "border-amber-500/25 bg-amber-500/10" : "border-emerald-500/20 bg-emerald-500/10")}>
               <Text className={cn("text-[11px] font-bold", debt > 0 ? "text-amber-700" : "text-emerald-700")}>
                 {debt > 0 ? `Adeudo ${mxn(debt)}` : "Sin adeudos"}
@@ -192,9 +195,20 @@ export default function HomeScreen() {
               ] as const
             ).map((action) => (
               <PressableScale key={action.label} onPress={() => router.push(action.href)} className="items-center gap-1.5">
-                <View className="h-[50px] w-[50px] items-center justify-center rounded-[14px] bg-ink">
-                  <action.icon size={20} color="#fff" strokeWidth={2.1} />
-                </View>
+                <AssetIconBubble
+                  source={
+                    action.label === "Adelanto"
+                      ? quickActionAssets.advance
+                      : action.label === "Recargas"
+                        ? quickActionAssets.topups
+                        : action.label === "Servicios"
+                          ? quickActionAssets.services
+                          : quickActionAssets.expenses
+                  }
+                  tint="bg-ink"
+                  size={50}
+                  imageSize={28}
+                />
                 <Text className="text-[11px] font-bold text-slate-600">{action.label}</Text>
               </PressableScale>
             ))}
@@ -211,7 +225,10 @@ export default function HomeScreen() {
             return (
               <Link key={banner.id} href={banner.href} asChild>
                 <Pressable className={cn("w-72 rounded-2xl p-4 shadow-card active:opacity-90", tint.bg)}>
-                  <BannerIcon size={26} color={tint.icon} strokeWidth={2} />
+                  <View className="flex-row items-start justify-between gap-3">
+                    <BannerIcon size={26} color={tint.icon} strokeWidth={2} />
+                    <Image source={bannerAssets[banner.id as keyof typeof bannerAssets]} resizeMode="contain" style={{ width: 72, height: 54 }} />
+                  </View>
                   <Text className={cn("mt-2.5 text-[15px] font-bold", tint.text)}>{banner.title}</Text>
                   <Text className={cn("mt-0.5 text-[13px] leading-5", tint.sub)}>{banner.subtitle}</Text>
                 </Pressable>
@@ -297,11 +314,16 @@ export default function HomeScreen() {
                   .filter((m) => m.domain === domain)
                   .map((module) => {
                     const ModuleIcon = moduleIcons[module.id] ?? Wallet;
+                    const moduleAsset = assetForModule(module.id);
                     return (
                       <Link key={module.id} href={module.href} asChild>
                         <Pressable className="mb-3 w-[48.5%] rounded-2xl border border-white/80 bg-white/75 p-4 shadow-card active:bg-white">
                           <View className="flex-row items-start justify-between">
-                            <IconBubble icon={ModuleIcon} color={style.color} tint={style.tint} size={40} iconSize={19} />
+                            {moduleAsset ? (
+                              <AssetIconBubble source={moduleAsset} tint={style.tint} size={40} imageSize={24} />
+                            ) : (
+                              <IconBubble icon={ModuleIcon} color={style.color} tint={style.tint} size={40} iconSize={19} />
+                            )}
                             {module.core ? (
                               <View className="rounded-[6px] bg-ink px-1.5 py-0.5">
                                 <Text className="text-[8px] font-bold tracking-wide text-accent-400">CORE</Text>

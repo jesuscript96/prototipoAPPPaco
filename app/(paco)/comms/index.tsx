@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "expo-router";
 import { Megaphone, Newspaper } from "@/components/paco/glyphs";
+import { Image, View } from "react-native";
+import { illustrationAssets, peopleAssets } from "@/components/paco/assets";
 import { EmptyState, Screen } from "@/components/paco/layout";
 import { ListGroup, Row, Segmented } from "@/components/paco/ui";
 import { communications } from "@/mock/paco";
@@ -24,7 +26,7 @@ export default function CommsScreen() {
       <Segmented options={["Recientes", "Antiguos"]} value={filter} onChange={setFilter} />
 
       {list.length === 0 ? (
-        <EmptyState title="Sin comunicados" description="Cuando tu empresa publique un comunicado aparecerá aquí." icon={Megaphone} />
+        <EmptyState title="Sin comunicados" description="Cuando tu empresa publique un comunicado aparecerá aquí." icon={Megaphone} image={illustrationAssets.empty} />
       ) : (
         <ListGroup>
           {list.map((comm) => {
@@ -33,6 +35,11 @@ export default function CommsScreen() {
               <Row
                 key={comm.id}
                 icon={Newspaper}
+                leading={
+                  <View className="h-10 w-10 items-center justify-center rounded-[12px] bg-brand-50">
+                    <Image source={peopleAssets.docIcon} resizeMode="contain" style={{ width: 25, height: 25 }} />
+                  </View>
+                }
                 title={comm.title}
                 subtitle={`${comm.author} · ${comm.body}`}
                 meta={comm.date.split(" · ")[0]}

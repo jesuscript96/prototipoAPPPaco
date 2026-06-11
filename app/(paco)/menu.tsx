@@ -2,7 +2,6 @@ import { ComponentType, useState } from "react";
 import { useRouter, type Href } from "expo-router";
 import {
   ArrowLeft,
-  Camera,
   ChevronRight,
   Contact,
   FileText,
@@ -19,44 +18,45 @@ import {
   ShieldCheck,
   Smile,
 } from "@/components/paco/glyphs";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Image, Pressable, ScrollView, Text, View } from "react-native";
+import { assetForMenu, brandAssets, peopleAssets } from "@/components/paco/assets";
 import { Ambient, Button, GlassNavButton } from "@/components/paco/layout";
 import { ConfirmSheet, cn } from "@/components/paco/ui";
-import { IconBubble } from "@/components/paco/icons";
+import { AssetIconBubble, IconBubble } from "@/components/paco/icons";
 import { employee } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
 
 type Icon = ComponentType<{ size?: number; color?: string; strokeWidth?: number }>;
 
-type MenuItem = { label: string; icon: Icon; color: string; tint: string; href: Href };
+type MenuItem = { id: string; label: string; icon: Icon; color: string; tint: string; href: Href };
 
 const groups: { title: string; items: MenuItem[] }[] = [
   {
     title: "Mi información",
     items: [
-      { label: "Mi expediente", icon: Contact, color: "#5176F3", tint: "bg-brand-100", href: "/(paco)/profile" },
-      { label: "Estado de ánimo", icon: Smile, color: "#674EA7", tint: "bg-violet-50", href: "/(paco)/mood" },
-      { label: "Mis reconocimientos", icon: Medal, color: "#B8860B", tint: "bg-amber-50", href: "/(paco)/recognitions" },
-      { label: "Estatus de voz del colaborador", icon: Megaphone, color: "#dc2626", tint: "bg-red-50", href: "/(paco)/voice/status" },
+      { id: "profile", label: "Mi expediente", icon: Contact, color: "#5176F3", tint: "bg-brand-100", href: "/(paco)/profile" },
+      { id: "mood", label: "Estado de ánimo", icon: Smile, color: "#674EA7", tint: "bg-violet-50", href: "/(paco)/mood" },
+      { id: "recognitions", label: "Mis reconocimientos", icon: Medal, color: "#B8860B", tint: "bg-amber-50", href: "/(paco)/recognitions" },
+      { id: "voice", label: "Estatus de voz del colaborador", icon: Megaphone, color: "#dc2626", tint: "bg-red-50", href: "/(paco)/voice/status" },
     ],
   },
   {
     title: "Finanzas y documentos",
     items: [
-      { label: "Reporte de gastos", icon: PieChart, color: "#2F42CB", tint: "bg-brand-50", href: "/(paco)/expenses" },
-      { label: "Recibos de nómina", icon: FileText, color: "#2F42CB", tint: "bg-brand-50", href: "/(paco)/receipts" },
-      { label: "Cartas SUA", icon: Mail, color: "#B8860B", tint: "bg-amber-50", href: "/(paco)/sua" },
-      { label: "Documentos corporativos", icon: FolderOpen, color: "#B8860B", tint: "bg-amber-50", href: "/(paco)/corporate-docs" },
+      { id: "expenses", label: "Reporte de gastos", icon: PieChart, color: "#2F42CB", tint: "bg-brand-50", href: "/(paco)/expenses" },
+      { id: "receipts", label: "Recibos de nómina", icon: FileText, color: "#2F42CB", tint: "bg-brand-50", href: "/(paco)/receipts" },
+      { id: "sua", label: "Cartas SUA", icon: Mail, color: "#B8860B", tint: "bg-amber-50", href: "/(paco)/sua" },
+      { id: "corporate-docs", label: "Documentos corporativos", icon: FolderOpen, color: "#B8860B", tint: "bg-amber-50", href: "/(paco)/corporate-docs" },
     ],
   },
   {
     title: "Comunicación y ayuda",
     items: [
-      { label: "Chat interno", icon: MessagesSquare, color: "#5176F3", tint: "bg-brand-100", href: "/(paco)/chat" },
-      { label: "Preguntas frecuentes", icon: HelpCircle, color: "#5176F3", tint: "bg-brand-100", href: "/(paco)/help" },
-      { label: "Chat de soporte técnico", icon: LifeBuoy, color: "#5176F3", tint: "bg-brand-100", href: "/(paco)/support" },
-      { label: "Términos y condiciones", icon: ShieldCheck, color: "#475569", tint: "bg-slate-100", href: "/(paco)/legal" },
-      { label: "Configuración", icon: Settings, color: "#475569", tint: "bg-slate-100", href: "/(paco)/settings" },
+      { id: "chat", label: "Chat interno", icon: MessagesSquare, color: "#5176F3", tint: "bg-brand-100", href: "/(paco)/chat" },
+      { id: "help", label: "Preguntas frecuentes", icon: HelpCircle, color: "#5176F3", tint: "bg-brand-100", href: "/(paco)/help" },
+      { id: "support", label: "Chat de soporte técnico", icon: LifeBuoy, color: "#5176F3", tint: "bg-brand-100", href: "/(paco)/support" },
+      { id: "legal", label: "Términos y condiciones", icon: ShieldCheck, color: "#475569", tint: "bg-slate-100", href: "/(paco)/legal" },
+      { id: "settings", label: "Configuración", icon: Settings, color: "#475569", tint: "bg-slate-100", href: "/(paco)/settings" },
     ],
   },
 ];
@@ -79,7 +79,7 @@ export default function MenuScreen() {
         <Text className="flex-1 pr-11 text-center text-[15px] font-bold text-slate-900">Menú</Text>
       </View>
 
-      <ScrollView className="flex-1" showsVerticalScrollIndicator={false} contentContainerClassName="gap-5 px-5 pb-20 pt-3">
+      <ScrollView className="flex-1" showsVerticalScrollIndicator={false} contentContainerClassName="gap-5 px-5 pb-40 pt-3">
         <View className="items-center gap-3 rounded-2xl border border-white/80 bg-white/75 p-5 shadow-card">
           <Pressable
             accessibilityLabel="Cambiar foto de perfil"
@@ -92,7 +92,7 @@ export default function MenuScreen() {
             {profilePhotoSet ? (
               <Text className="text-2xl font-bold text-white">{employee.initials}</Text>
             ) : (
-              <Camera size={26} color="#64748b" />
+              <Image source={peopleAssets.avatarPlaceholder} resizeMode="cover" style={{ width: 74, height: 74, borderRadius: 37 }} />
             )}
           </Pressable>
           <View className="items-center">
@@ -115,7 +115,11 @@ export default function MenuScreen() {
                   onPress={() => router.push(item.href)}
                   className={cn("flex-row items-center gap-3 px-4 py-3.5 active:bg-white", index > 0 && "border-t border-slate-900/5")}
                 >
-                  <IconBubble icon={item.icon} color={item.color} tint={item.tint} size={38} iconSize={17} />
+                  {assetForMenu(item.id) ? (
+                    <AssetIconBubble source={assetForMenu(item.id)!} tint={item.tint} size={38} imageSize={22} />
+                  ) : (
+                    <IconBubble icon={item.icon} color={item.color} tint={item.tint} size={38} iconSize={17} />
+                  )}
                   <Text className="flex-1 text-[14px] font-semibold text-slate-800">{item.label}</Text>
                   <ChevronRight size={17} color="#cbd5e1" />
                 </Pressable>
@@ -127,7 +131,10 @@ export default function MenuScreen() {
         <Button icon={LogOut} variant="secondary" onPress={() => setConfirmLogout(true)}>
           Cerrar sesión
         </Button>
-        <Text className="text-center text-[11px] text-slate-400">Paco App · prototipo demo · versión 2026.06</Text>
+        <View className="items-center gap-1">
+          <Image source={brandAssets.headerIcon} resizeMode="contain" style={{ width: 70, height: 24 }} />
+          <Text className="text-center text-[11px] text-slate-400">Prototipo demo · versión 2026.06</Text>
+        </View>
       </ScrollView>
 
       <ConfirmSheet

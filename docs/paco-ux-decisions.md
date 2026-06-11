@@ -106,3 +106,11 @@ Iteración final por dirección del cliente: claro, no oscuro; lenguaje de mater
 - Estado activo: icono Phosphor cambia de `bold` a `fill` en Azul Paco, etiqueta en negrita y píldora indicadora que desliza con spring (misma física que las tabs segmentadas).
 - Reglas de visibilidad: oculta sin sesión, durante el bloqueo por encuesta obligatoria (para no saltarse el candado) y en pantallas de conversación con composer (chat interno y chat con RH).
 - Implementada como hermano del Stack (no overlay), de modo que ningún contenido queda tapado; el burger del dashboard se retiró porque el menú ahora vive en "Más".
+
+## Identidad 5.0 · Assets Migrados Aplicados
+
+- Los assets extraídos del repo Ionic se curaron en `assets/paco` y se consumen mediante `components/paco/assets.ts`, con `require` estático para Metro.
+- Se usa asset real cuando aporta marca, proveedor, categoría, emoción o estado visual: onboarding/login, home, menú, módulos, recargas, servicios, adelanto, encuestas, mood, comunicados, documentos, capacitación, soporte y chat.
+- Se conservan glyphs Phosphor para acciones pequeñas y universales: navegación, búsqueda, descarga, firma, envío, edición, eliminación y controles de formularios.
+- No se replica pixel-perfect la app fuente. Los assets se integran dentro del lenguaje Light Glass vigente para que la app se sienta Paco sin heredar densidad, layout o fricción del Ionic original.
+- Los duplicados y densidades `@2x/@3x` permanecen trazables en `migration-assets/paco-app`; la app consume solo una selección curada para evitar peso y ruido visual.

@@ -6,16 +6,14 @@ import { PacoTabBar } from "@/components/paco/tabbar";
 export default function PacoLayout() {
   return (
     <View className="flex-1 bg-canvas">
-      <View className="flex-1">
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            contentStyle: { backgroundColor: "#F6F8FF" },
-          }}
-        />
-        <ToastHost />
-      </View>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          contentStyle: { backgroundColor: "#F6F8FF" },
+        }}
+      />
       <PacoTabBar />
+      <ToastHost />
     </View>
   );
 }

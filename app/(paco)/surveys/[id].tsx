@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ChevronLeft, FileQuestion } from "@/components/paco/glyphs";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Image, Pressable, Text, TextInput, View } from "react-native";
+import { peopleAssets } from "@/components/paco/assets";
 import { Button, Card, EmptyState, Screen } from "@/components/paco/layout";
 import { RadioOption, SelectChip, StepHeader, SuccessCard, cn } from "@/components/paco/ui";
 import { simulate } from "@/lib/paco-api";
@@ -23,7 +24,7 @@ export default function SurveyRunnerScreen() {
   if (!survey) {
     return (
       <Screen title="Encuesta no encontrada">
-        <EmptyState title="Sin encuesta" description="La encuesta solicitada no existe o ya no está disponible." icon={FileQuestion} />
+        <EmptyState title="Sin encuesta" description="La encuesta solicitada no existe o ya no está disponible." icon={FileQuestion} image={peopleAssets.surveyBlank} />
         <Button onPress={() => router.back()}>Volver</Button>
       </Screen>
     );
@@ -39,6 +40,7 @@ export default function SurveyRunnerScreen() {
               ? "Gracias por completar la encuesta obligatoria. La navegación de la app queda desbloqueada."
               : "Tus respuestas se enviaron al panel de tu empresa. Gracias por participar."
           }
+          image={peopleAssets.surveyFinal}
         >
           <View className="w-full gap-2 pt-2">
             <Button onPress={() => router.replace("/(paco)/home")}>{survey.mandatory ? "Entrar al inicio" : "Volver al inicio"}</Button>
@@ -83,6 +85,7 @@ export default function SurveyRunnerScreen() {
       <StepHeader step={index + 1} total={total} title={`Pregunta ${index + 1} de ${total}`} subtitle={survey.title} />
 
       <Card className="gap-4">
+        <Image source={question.kind === "scale" ? peopleAssets.surveyWink : peopleAssets.surveyWelcome} resizeMode="contain" style={{ alignSelf: "center", width: 110, height: 70 }} />
         <Text className="text-lg font-bold leading-7 text-slate-950">{question.text}</Text>
 
         {question.kind === "yesno" ? (

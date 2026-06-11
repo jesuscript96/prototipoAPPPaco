@@ -3,7 +3,8 @@
 // heredados pero la UI resuelve siempre contra estos mapas.
 
 import { ComponentType } from "react";
-import { View } from "react-native";
+import { Image, View } from "react-native";
+import type { ImageSourcePropType } from "react-native";
 import {
   Angry,
   Award,
@@ -97,6 +98,26 @@ export function IconBubble({
   return (
     <View style={{ width: size, height: size }} className={join("items-center justify-center rounded-[12px]", tint, className)}>
       <IconComponent size={iconSize} color={color} strokeWidth={2.1} />
+    </View>
+  );
+}
+
+export function AssetIconBubble({
+  source,
+  tint = "bg-white/80",
+  size = 44,
+  imageSize = 24,
+  className = "",
+}: {
+  source: ImageSourcePropType;
+  tint?: string;
+  size?: number;
+  imageSize?: number;
+  className?: string;
+}) {
+  return (
+    <View style={{ width: size, height: size }} className={join("items-center justify-center overflow-hidden rounded-[12px]", tint, className)}>
+      <Image source={source} resizeMode="contain" style={{ width: imageSize, height: imageSize }} />
     </View>
   );
 }

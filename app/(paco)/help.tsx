@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import { ChevronDown, ChevronUp, ExternalLink, MessageCircle, Ticket } from "@/components/paco/glyphs";
-import { Pressable, Text, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
+import { brandAssets, illustrationAssets } from "@/components/paco/assets";
 import { Button, Card, Screen, Section } from "@/components/paco/layout";
 import { usePacoStore } from "@/store/paco-store";
 import { company, faqTopics } from "@/mock/paco";
@@ -19,6 +20,8 @@ export default function HelpScreen() {
       description="Redirección simulada al portal externo de soporte: guía de uso de la app, preguntas frecuentes por tema y levantamiento de tickets."
     >
       <Card className="gap-3 bg-ink">
+        <Image source={brandAssets.headerIconWhite} resizeMode="contain" style={{ width: 104, height: 36 }} />
+        <Image source={illustrationAssets.support} resizeMode="contain" style={{ alignSelf: "center", width: 150, height: 100 }} />
         <Text className="text-xs font-bold uppercase tracking-[1px] text-white/70">Portal externo</Text>
         <Text className="text-2xl font-bold text-white">PACO, la plataforma de People Analytics y Cultura Organizacional</Text>
         <Button variant="secondary" icon={ExternalLink} onPress={() => showToast(`Abriendo ${company.faqUrl} en el navegador (simulado).`)}>

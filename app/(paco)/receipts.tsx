@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Award, FileCheck2, FileDown, FileText } from "@/components/paco/glyphs";
-import { Modal, Pressable, Text, View } from "react-native";
+import { FileCheck2, FileDown, FileText } from "@/components/paco/glyphs";
+import { Image, Modal, Pressable, Text, View } from "react-native";
+import { illustrationAssets } from "@/components/paco/assets";
 import { Button, Card, InlineAlert, Screen } from "@/components/paco/layout";
 import { ListGroup, Row, SignatureBox } from "@/components/paco/ui";
 import { runPhases } from "@/lib/paco-api";
@@ -35,6 +36,7 @@ export default function ReceiptsScreen() {
     >
       {pendingIds.length > 0 ? (
         <Card className="gap-3 bg-ink">
+          <Image source={illustrationAssets.documents} resizeMode="contain" style={{ alignSelf: "flex-end", width: 86, height: 62 }} />
           <Text className="text-base font-bold text-white">Tienes {pendingIds.length} recibo(s) sin firmar</Text>
           <Text className="text-sm text-white/80">Puedes firmarlos todos de golpe con tu firma digital registrada.</Text>
           <Button variant="secondary" icon={FileCheck2} loading={signing === "all"} onPress={() => sign("all")}>
@@ -91,7 +93,7 @@ export default function ReceiptsScreen() {
       <Card className="gap-3">
         <View className="flex-row items-center gap-3">
           <View className="h-12 w-12 items-center justify-center rounded-2xl bg-amber-50">
-            <Award size={22} color="#B8860B" />
+            <Image source={illustrationAssets.documents} resizeMode="contain" style={{ width: 34, height: 34 }} />
           </View>
           <View className="flex-1">
             <Text className="text-base font-bold text-slate-950">Certificado de firma digital</Text>

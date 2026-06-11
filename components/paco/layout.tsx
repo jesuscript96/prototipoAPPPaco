@@ -4,7 +4,8 @@
 // contenidos (12-16 px), tipografia densa y acentos por dominio.
 
 import { ComponentType, ReactNode, useEffect, useRef } from "react";
-import { ActivityIndicator, Animated, Platform, Pressable, ScrollView, Text, TextInput, TextInputProps, View } from "react-native";
+import { ActivityIndicator, Animated, Image, Platform, Pressable, ScrollView, Text, TextInput, TextInputProps, View } from "react-native";
+import type { ImageSourcePropType } from "react-native";
 import { useRouter } from "expo-router";
 import { ArrowLeft, Check } from "@/components/paco/glyphs";
 import { FadeSlideIn, PopIn, easeOut } from "@/components/paco/motion";
@@ -75,7 +76,7 @@ export function Screen({
           </View>
         ) : null}
         <FadeSlideIn className="flex-1">
-          <View className="flex-1 gap-4 px-5 pb-20 pt-2">{children}</View>
+          <View className="flex-1 gap-4 px-5 pb-40 pt-2">{children}</View>
         </FadeSlideIn>
       </ScrollView>
     </View>
@@ -263,12 +264,22 @@ export function InlineAlert({ title, description, tone = "info" }: { title: stri
   );
 }
 
-export function EmptyState({ title, description, icon: IconComponent }: { title: string; description: string; icon: Icon }) {
+export function EmptyState({
+  title,
+  description,
+  icon: IconComponent,
+  image,
+}: {
+  title: string;
+  description: string;
+  icon: Icon;
+  image?: ImageSourcePropType;
+}) {
   return (
     <View className="items-center gap-3 rounded-2xl border border-dashed border-slate-900/15 bg-white/40 px-6 py-10">
       <PopIn>
-        <View className="h-14 w-14 items-center justify-center rounded-[14px] border border-white/80 bg-white/70">
-          <IconComponent size={24} color="#94a3b8" />
+        <View className="h-20 w-20 items-center justify-center rounded-[18px] border border-white/80 bg-white/70">
+          {image ? <Image source={image} resizeMode="contain" style={{ width: 58, height: 58 }} /> : <IconComponent size={28} color="#94a3b8" />}
         </View>
       </PopIn>
       <Text className="text-center text-base font-bold text-slate-800">{title}</Text>

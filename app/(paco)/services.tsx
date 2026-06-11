@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import { Camera, ChevronLeft, Receipt } from "@/components/paco/glyphs";
-import { Modal, Pressable, Text, View } from "react-native";
+import { Image, Modal, Pressable, Text, View } from "react-native";
+import { assetForService, serviceAssets } from "@/components/paco/assets";
 import { Button, Card, Checkbox, Divider, Field, InlineAlert, Screen } from "@/components/paco/layout";
 import { MoneyRow, OptionCard, RadioOption, StepHeader, SuccessCard, mxn } from "@/components/paco/ui";
 import { KycFlow } from "@/components/paco/kyc";
@@ -97,6 +98,7 @@ export default function ServicesScreen() {
                 title={cat.name}
                 subtitle={cat.providers.map((p) => p.name).join(" · ")}
                 icon={serviceCategoryIcons[cat.id]}
+                image={assetForService(cat.id)}
                 onPress={() => {
                   setCategory(cat);
                   setProvider(null);
@@ -118,6 +120,7 @@ export default function ServicesScreen() {
                 title={p.name}
                 subtitle={p.refLabel}
                 icon={serviceCategoryIcons[category.id]}
+                image={assetForService(p.id)}
                 onPress={() => {
                   setProvider(p);
                   setReference("");
@@ -150,6 +153,10 @@ export default function ServicesScreen() {
             <Button icon={Camera} variant="outline" loading={scanning} onPress={scan}>
               Escanear código de barras del recibo
             </Button>
+            <View className="items-center rounded-xl bg-brand-50 p-3">
+              <Image source={serviceAssets.scanner} resizeMode="contain" style={{ width: 58, height: 42 }} />
+              <Text className="mt-1 text-xs font-semibold text-brand-700">Escaneo mock con iconografía original Paco</Text>
+            </View>
           </Card>
           <Button onPress={continueFromDetails}>Continuar</Button>
         </>

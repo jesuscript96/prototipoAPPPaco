@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
-import { FolderOpen, Search } from "@/components/paco/glyphs";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Search } from "@/components/paco/glyphs";
+import { Image, Pressable, Text, TextInput, View } from "react-native";
+import { illustrationAssets } from "@/components/paco/assets";
 import { Card, EmptyState, Screen, Section } from "@/components/paco/layout";
 import { FileTile, cn } from "@/components/paco/ui";
 import { corporateFolders } from "@/mock/paco";
@@ -38,7 +39,7 @@ export default function CorporateDocsScreen() {
 
       {searching ? (
         searchResults.length === 0 ? (
-          <EmptyState title="Sin resultados" description={`Ningún documento coincide con “${query}”.`} icon={Search} />
+          <EmptyState title="Sin resultados" description={`Ningún documento coincide con “${query}”.`} icon={Search} image={illustrationAssets.documents} />
         ) : (
           <Section title={`Resultados (${searchResults.length})`}>
             <View className="gap-2">
@@ -69,7 +70,7 @@ export default function CorporateDocsScreen() {
                   className="min-h-11 flex-row items-center gap-3"
                 >
                   <View className="h-10 w-10 items-center justify-center rounded-[10px] bg-amber-50">
-                    <FolderOpen size={18} color="#B8860B" strokeWidth={2.1} />
+                    <Image source={illustrationAssets.documents} resizeMode="contain" style={{ width: 28, height: 28 }} />
                   </View>
                   <View className="flex-1">
                     <Text className="text-base font-bold text-slate-950">{folder.name}</Text>
@@ -83,7 +84,7 @@ export default function CorporateDocsScreen() {
                 {open ? (
                   folder.documents.length === 0 ? (
                     <View className="items-center gap-2 rounded-2xl bg-slate-50 py-6">
-                      <FolderOpen size={24} color="#94a3b8" />
+                      <Image source={illustrationAssets.empty} resizeMode="contain" style={{ width: 42, height: 42 }} />
                       <Text className="text-sm font-semibold text-slate-500">Por el momento no hay ningún documento disponible</Text>
                     </View>
                   ) : (

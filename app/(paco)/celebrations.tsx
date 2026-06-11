@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
-import { Cake, PartyPopper } from "@/components/paco/glyphs";
-import { ScrollView, Text, View } from "react-native";
+import { PartyPopper } from "@/components/paco/glyphs";
+import { Image, ScrollView, Text, View } from "react-native";
+import { illustrationAssets, moduleAssets } from "@/components/paco/assets";
 import { Button, Card, EmptyState, Screen } from "@/components/paco/layout";
 import { Segmented, SelectChip } from "@/components/paco/ui";
 import { celebrations } from "@/mock/paco";
@@ -50,6 +51,7 @@ export default function CelebrationsScreen() {
           title="Sin celebraciones"
           description="No hay cumpleaños ni aniversarios con los filtros seleccionados. Prueba otro día o pestaña."
           icon={PartyPopper}
+          image={illustrationAssets.empty}
         />
       ) : (
         <View className="gap-3">
@@ -59,7 +61,7 @@ export default function CelebrationsScreen() {
               <Card key={item.id} className="gap-3">
                 <View className="flex-row items-center gap-3">
                   <View className={item.type === "Cumpleaños" ? "h-11 w-11 items-center justify-center rounded-[12px] bg-violet-50" : "h-11 w-11 items-center justify-center rounded-[12px] bg-amber-50"}>
-                    {item.type === "Cumpleaños" ? <Cake size={20} color="#674EA7" strokeWidth={2} /> : <PartyPopper size={20} color="#B8860B" strokeWidth={2} />}
+                    <Image source={moduleAssets.celebrations} resizeMode="contain" style={{ width: 28, height: 28 }} />
                   </View>
                   <View className="flex-1">
                     <Text className="text-base font-bold text-slate-950">{item.name}</Text>

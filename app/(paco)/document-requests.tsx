@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FileSignature, Save } from "@/components/paco/glyphs";
-import { ActivityIndicator, Text, View } from "react-native";
+import { ActivityIndicator, Image, Text, View } from "react-native";
+import { illustrationAssets } from "@/components/paco/assets";
 import { Badge, Button, Card, InlineAlert, Screen, Section } from "@/components/paco/layout";
 import { ConfirmSheet, SignatureBox, cn } from "@/components/paco/ui";
 import { simulate } from "@/lib/paco-api";
@@ -43,6 +44,7 @@ export default function DocumentRequestsScreen() {
       <Screen eyebrow={selected.folder} title={selected.name} description="Documento generado y autocompletado con tus datos del expediente.">
         <Card className="gap-3 border-slate-300">
           <View className="items-center gap-1 border-b border-slate-200 pb-3">
+            <Image source={illustrationAssets.documents} resizeMode="contain" style={{ width: 80, height: 58 }} />
             <Text className="text-xs font-bold uppercase tracking-[2px] text-slate-400">Vista previa · PDF</Text>
             <Text className="text-center text-base font-bold text-slate-950">
               {selected.id === "dt1" ? "Carátula de Operación · Instituto Mexicano del Seguro Social" : selected.name}
@@ -100,6 +102,10 @@ export default function DocumentRequestsScreen() {
       title="Solicitud de documentos"
       description="Genera constancias y formatos oficiales parametrizados por tu empresa, fírmalos y se suben solos al panel."
     >
+      <Card className="items-center gap-2 bg-brand-50">
+        <Image source={illustrationAssets.documents} resizeMode="contain" style={{ width: 142, height: 92 }} />
+        <Text className="text-center text-sm font-semibold text-brand-700">Generación PDF mock con firma visible y guardado en expediente.</Text>
+      </Card>
       {phase === "generating" ? (
         <Card className="items-center gap-3 py-8">
           <ActivityIndicator color="#2F42CB" size="large" />

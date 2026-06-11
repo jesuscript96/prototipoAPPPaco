@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import { ChevronLeft, Wallet } from "@/components/paco/glyphs";
-import { Pressable, Text, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
+import { financeAssets } from "@/components/paco/assets";
 import { Button, Card, Checkbox, Divider, InlineAlert, Screen } from "@/components/paco/layout";
 import { AmountSlider, MoneyRow, RadioOption, StepHeader, SuccessCard, mxn } from "@/components/paco/ui";
 import { KycFlow } from "@/components/paco/kyc";
@@ -53,6 +54,7 @@ export default function AdvanceScreen() {
       {step === "eligibility" ? (
         <>
           <Card className="gap-3 bg-ink">
+            <Image source={financeAssets.cardSent} resizeMode="contain" style={{ alignSelf: "flex-end", width: 154, height: 66 }} />
             <Text className="text-xs font-bold uppercase tracking-[1px] text-white/70">Servicio core de Paco</Text>
             <Text className="text-2xl font-bold text-white">Adelanta parte de tu sueldo ya devengado</Text>
             <Text className="text-sm leading-5 text-white/85">
@@ -124,13 +126,15 @@ export default function AdvanceScreen() {
           <Card className="gap-3">
             <Text className="text-sm font-bold text-slate-700">Cuenta de depósito y cobro</Text>
             {store.accounts.map((acc) => (
-              <RadioOption
-                key={acc.id}
-                label={`${acc.alias} · ${acc.masked}`}
-                helper={`${acc.bank} · aquí se deposita el adelanto y se domicilia el cobro`}
-                selected={accountId === acc.id}
-                onPress={() => setAccountId(acc.id)}
-              />
+              <View key={acc.id} className="gap-2">
+                <Image source={acc.kind === "Tarjeta" ? financeAssets.cardVisa : financeAssets.cardAccount} resizeMode="contain" style={{ width: 124, height: 72 }} />
+                <RadioOption
+                  label={`${acc.alias} · ${acc.masked}`}
+                  helper={`${acc.bank} · aquí se deposita el adelanto y se domicilia el cobro`}
+                  selected={accountId === acc.id}
+                  onPress={() => setAccountId(acc.id)}
+                />
+              </View>
             ))}
             <Button variant="ghost" onPress={() => router.push("/(paco)/settings/accounts")}>
               Administrar cuentas y tarjetas
@@ -177,6 +181,7 @@ export default function AdvanceScreen() {
         <SuccessCard
           title={`Adelanto de ${mxn(amount)} confirmado`}
           description={`Recibirás ${mxn(net)} en ${account?.alias ?? "tu cuenta"} en los próximos minutos. El cargo de ${mxn(amount + commission)} se aplicará en tu nómina del 15 de junio. Ya quedó registrado como adeudo en tu reporte de gastos.`}
+          image={financeAssets.check}
         >
           <View className="w-full gap-2 pt-2">
             <Button onPress={() => router.replace("/(paco)/expenses")}>Ver en reporte de gastos</Button>

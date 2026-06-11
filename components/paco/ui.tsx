@@ -1,5 +1,6 @@
 import { Children, ComponentType, ReactNode, useEffect, useRef, useState } from "react";
-import { Animated, Modal, Pressable, Text, TextInput, View } from "react-native";
+import { Animated, Image, Modal, Pressable, Text, TextInput, View } from "react-native";
+import type { ImageSourcePropType } from "react-native";
 import { Check, ChevronRight, Minus, Paperclip, Pause, Play, Plus, Send, X } from "@/components/paco/glyphs";
 import { Button } from "@/components/paco/layout";
 import { fileIconFor } from "@/components/paco/icons";
@@ -44,7 +45,7 @@ export function ToastHost() {
   return (
     <Animated.View
       style={{ opacity, pointerEvents: "none", transform: [{ translateY: lift }] }}
-      className="absolute bottom-6 left-5 right-5 items-center"
+      className="absolute bottom-32 left-5 right-5 items-center"
     >
       <View className="max-w-full flex-row items-center gap-2 rounded-[14px] bg-ink/95 px-4 py-3 shadow-pop">
         <Check size={15} color="#6AA84F" strokeWidth={3} />
@@ -238,6 +239,7 @@ export function OptionCard({
   title,
   subtitle,
   icon: IconComponent,
+  image,
   iconColor = "#2F42CB",
   iconTint = "bg-brand-50",
   selected,
@@ -247,6 +249,7 @@ export function OptionCard({
   title: string;
   subtitle?: string;
   icon?: Icon | undefined;
+  image?: ImageSourcePropType | undefined;
   iconColor?: string;
   iconTint?: string;
   selected?: boolean;
@@ -261,7 +264,11 @@ export function OptionCard({
         selected ? "border-ink/70 bg-white" : "border-white/80 bg-white/75",
       )}
     >
-      {IconComponent ? (
+      {image ? (
+        <View className={cn("h-11 w-11 items-center justify-center rounded-[12px]", iconTint)}>
+          <Image source={image} resizeMode="contain" style={{ width: 30, height: 30 }} />
+        </View>
+      ) : IconComponent ? (
         <View className={cn("h-11 w-11 items-center justify-center rounded-[12px]", iconTint)}>
           <IconComponent size={20} color={iconColor} strokeWidth={2.1} />
         </View>
@@ -396,13 +403,13 @@ export function MoneyRow({ label, value, strong }: { label: string; value: strin
   );
 }
 
-export function SuccessCard({ title, description, children }: { title: string; description: string; children?: ReactNode }) {
+export function SuccessCard({ title, description, children, image }: { title: string; description: string; children?: ReactNode; image?: ImageSourcePropType }) {
   return (
     <View className="items-center gap-3 overflow-hidden rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-6">
       <ConfettiBurst />
       <PopIn>
-        <View className="h-14 w-14 items-center justify-center rounded-full bg-emerald-500 shadow-card">
-          <Check size={28} color="#fff" strokeWidth={3} />
+        <View className="h-16 w-16 items-center justify-center rounded-full bg-emerald-500 shadow-card">
+          {image ? <Image source={image} resizeMode="contain" style={{ width: 46, height: 46 }} /> : <Check size={28} color="#fff" strokeWidth={3} />}
         </View>
       </PopIn>
       <Text className="text-center text-xl font-bold tracking-tight text-slate-950">{title}</Text>

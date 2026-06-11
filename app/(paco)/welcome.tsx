@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
-import { Bell, HardHat, KeyRound, LogIn, MapPin, Phone } from "@/components/paco/glyphs";
-import { Modal, Pressable, ScrollView, Text, View } from "react-native";
+import { Bell, KeyRound, LogIn, MapPin, Phone } from "@/components/paco/glyphs";
+import { Image, Modal, Pressable, ScrollView, Text, View } from "react-native";
+import { brandAssets, illustrationAssets } from "@/components/paco/assets";
 import { Ambient, Button } from "@/components/paco/layout";
 import { HelpFab, cn } from "@/components/paco/ui";
 import { usePacoStore } from "@/store/paco-store";
@@ -58,9 +59,10 @@ export default function WelcomeScreen() {
       <ScrollView contentContainerClassName="flex-grow justify-between px-6 pb-12 pt-24">
         <View className="items-center gap-4">
           <View className="h-24 w-24 items-center justify-center rounded-[22px] border border-white/90 bg-white/85 shadow-pop">
-            <HardHat size={44} color="#2F42CB" strokeWidth={1.9} />
+            <Image source={brandAssets.iconMain} resizeMode="contain" style={{ width: 70, height: 70 }} />
           </View>
-          <Text className="text-4xl font-bold tracking-tight text-slate-950">paco</Text>
+          <Image source={brandAssets.textLogo} resizeMode="contain" style={{ width: 132, height: 44 }} />
+          <Image source={illustrationAssets.onboarding1} resizeMode="contain" style={{ width: 210, height: 142 }} />
           <Text className="text-center text-[15px] leading-6 text-slate-500">
             Tu plataforma de beneficios, salud financiera y cultura organizacional. Si ya activaste tu cuenta, accede con tu
             teléfono o correo.

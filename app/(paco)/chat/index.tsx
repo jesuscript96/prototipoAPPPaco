@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "expo-router";
 import { Check, MessageSquarePlus, Paperclip, Plus, Search, Users } from "@/components/paco/glyphs";
-import { Modal, Pressable, Text, TextInput, View } from "react-native";
+import { Image, Modal, Pressable, Text, TextInput, View } from "react-native";
+import { illustrationAssets, peopleAssets } from "@/components/paco/assets";
 import { Button, EmptyState, Field, Screen } from "@/components/paco/layout";
 import { ListGroup, Row, SheetHeader, cn } from "@/components/paco/ui";
 import { directory } from "@/mock/paco";
@@ -65,6 +66,7 @@ export default function ChatListScreen() {
           title={query ? "Sin resultados" : "Sin conversaciones"}
           description={query ? `Nada coincide con “${query}”.` : "Crea una sala o inicia una conversación con un compañero."}
           icon={MessageSquarePlus}
+          image={illustrationAssets.support}
         />
       ) : (
         <ListGroup>
@@ -78,13 +80,7 @@ export default function ChatListScreen() {
                     {room.isGroup ? (
                       <Users size={17} color="#674EA7" />
                     ) : (
-                      <Text className="text-xs font-bold text-brand-600">
-                        {room.name
-                          .split(" ")
-                          .map((w) => w[0])
-                          .join("")
-                          .slice(0, 2)}
-                      </Text>
+                      <Image source={peopleAssets.avatarSmall} resizeMode="cover" style={{ width: 36, height: 36, borderRadius: 18 }} />
                     )}
                   </View>
                 }

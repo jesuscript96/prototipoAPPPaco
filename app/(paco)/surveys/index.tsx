@@ -1,6 +1,7 @@
 import { useRouter } from "expo-router";
 import { ClipboardCheck } from "@/components/paco/glyphs";
-import { Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
+import { peopleAssets } from "@/components/paco/assets";
 import { Badge, Button, Card, EmptyState, Screen } from "@/components/paco/layout";
 import { surveys } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
@@ -20,6 +21,7 @@ export default function SurveysScreen() {
           title="Por el momento no hay encuestas disponibles"
           description="Cuando tu empresa dispare una nueva encuesta te llegará una notificación push."
           icon={ClipboardCheck}
+          image={peopleAssets.surveyBlank}
         />
       ) : null}
 
@@ -28,6 +30,7 @@ export default function SurveysScreen() {
           const done = completedSurveyIds.includes(survey.id);
           return (
             <Card key={survey.id} className="gap-3">
+              <Image source={survey.mandatory ? peopleAssets.surveyWelcome : peopleAssets.surveyWink} resizeMode="contain" style={{ alignSelf: "flex-end", width: 70, height: 54 }} />
               <View className="flex-row items-start justify-between gap-2">
                 <Text className="flex-1 text-lg font-bold text-slate-950">{survey.title}</Text>
                 <Badge tone={done ? "success" : survey.mandatory ? "warning" : "info"}>

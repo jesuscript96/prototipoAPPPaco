@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import { KeyRound, Send } from "@/components/paco/glyphs";
-import { Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
+import { illustrationAssets } from "@/components/paco/assets";
 import { Button, Card, Field, Screen } from "@/components/paco/layout";
 import { SuccessCard } from "@/components/paco/ui";
 import { mockSendRecovery } from "@/lib/paco-api";
@@ -36,6 +37,7 @@ export default function RecoverScreen() {
         <SuccessCard
           title="Revisa tu correo"
           description={`Enviamos la liga de recuperación a ${email || "tu correo registrado"}. La liga vence en 30 minutos.`}
+          image={illustrationAssets.success}
         >
           <View className="w-full gap-2 pt-2">
             <Button onPress={() => router.replace("/(paco)/login")}>Volver a iniciar sesión</Button>
@@ -43,6 +45,9 @@ export default function RecoverScreen() {
         </SuccessCard>
       ) : (
         <Card className="gap-4">
+          <View className="items-center gap-2">
+            <Image source={illustrationAssets.password} resizeMode="contain" style={{ width: 178, height: 112 }} />
+          </View>
           <View className="flex-row items-center gap-3">
             <View className="h-12 w-12 items-center justify-center rounded-2xl bg-brand-50">
               <KeyRound size={22} color="#2F42CB" />

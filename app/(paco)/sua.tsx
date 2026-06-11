@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FileCheck2, FileDown, Mail } from "@/components/paco/glyphs";
-import { Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
+import { illustrationAssets } from "@/components/paco/assets";
 import { Badge, Button, Card, EmptyState, InlineAlert, Screen } from "@/components/paco/layout";
 import { SignatureBox, cn } from "@/components/paco/ui";
 import { employee, seedSuaLetters } from "@/mock/paco";
@@ -16,7 +17,7 @@ export default function SuaScreen() {
       description="Cartas del Sistema Único de Autodeterminación asignadas desde el panel: consúltalas, descárgalas y fírmalas."
     >
       {seedSuaLetters.length === 0 ? (
-        <EmptyState title="Sin cartas asignadas" description="Cuando tu empresa te asigne una carta SUA aparecerá aquí." icon={Mail} />
+        <EmptyState title="Sin cartas asignadas" description="Cuando tu empresa te asigne una carta SUA aparecerá aquí." icon={Mail} image={illustrationAssets.documents} />
       ) : (
         <View className="gap-3">
           {seedSuaLetters.map((letter) => {
@@ -25,6 +26,7 @@ export default function SuaScreen() {
             const fileName = `${letter.title.replace(/ /g, "-")}.pdf`;
             return (
               <Card key={letter.id} className={cn("gap-3", !signed && "border-amber-200")}>
+                <Image source={illustrationAssets.documents} resizeMode="contain" style={{ alignSelf: "flex-end", width: 70, height: 50 }} />
                 <View className="flex-row items-center justify-between gap-2">
                   <View className="flex-1">
                     <Text className="text-base font-bold text-slate-950">{letter.title}</Text>

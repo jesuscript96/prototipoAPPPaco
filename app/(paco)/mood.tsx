@@ -1,10 +1,10 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "expo-router";
 import { BarChart3, ChevronLeft } from "@/components/paco/glyphs";
-import { Pressable, Text, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
+import { assetForMoodScore, illustrationAssets } from "@/components/paco/assets";
 import { Button, Card, Screen, Section } from "@/components/paco/layout";
 import { SelectChip, StepHeader, SuccessCard, cn } from "@/components/paco/ui";
-import { moodIconFor } from "@/components/paco/icons";
 import { simulate } from "@/lib/paco-api";
 import { baseFeelings, extraFeelings, moodFactors, moodLevels } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
@@ -15,12 +15,11 @@ const levelForScore = (score: number) =>
 function MoodSlider({ value, onChange }: { value: number; onChange: (value: number) => void }) {
   const segments = 21;
   const level = levelForScore(value);
-  const LevelIcon = moodIconFor(value);
   return (
     <View className="gap-4">
       <View className="items-center gap-2">
         <View style={{ backgroundColor: `${level.color}22` }} className="h-28 w-28 items-center justify-center rounded-full">
-          <LevelIcon size={64} color={level.color} strokeWidth={1.6} />
+          <Image source={assetForMoodScore(value)} resizeMode="contain" style={{ width: 72, height: 72 }} />
         </View>
         <Text style={{ color: level.color }} className="text-2xl font-bold">
           {level.label}
@@ -82,10 +81,7 @@ export default function MoodScreen() {
       <Screen title="Hoy, 10 de junio" description="Tu registro diario alimenta los analíticos de clima laboral de forma anónima y agregada.">
         {moodRegisteredToday && todayEntry ? (
           <Card className="items-center gap-3 py-6">
-            {(() => {
-              const TodayIcon = moodIconFor(todayEntry.score);
-              return <TodayIcon size={56} color={levelForScore(todayEntry.score).color} strokeWidth={1.6} />;
-            })()}
+            <Image source={assetForMoodScore(todayEntry.score)} resizeMode="contain" style={{ width: 64, height: 64 }} />
             <Text className="text-xl font-bold text-slate-950">Te sientes “{levelForScore(todayEntry.score).label}”</Text>
             {todayEntry.feelings.length > 0 ? (
               <Text className="text-center text-sm text-slate-600">Sentimientos: {todayEntry.feelings.join(", ")}</Text>
@@ -98,7 +94,7 @@ export default function MoodScreen() {
         ) : (
           <Card className="items-center gap-3 py-8">
             <View className="h-16 w-16 items-center justify-center rounded-full bg-slate-900/5">
-              <BarChart3 size={26} color="#94a3b8" />
+              <Image source={illustrationAssets.wellness} resizeMode="contain" style={{ width: 48, height: 48 }} />
             </View>
             <Text className="text-lg font-bold text-slate-900">Sin entrada</Text>
             <Text className="text-center text-sm leading-5 text-slate-500">
@@ -118,10 +114,9 @@ export default function MoodScreen() {
           <View className="gap-2">
             {moodEntries.slice(0, 5).map((entry) => {
               const level = levelForScore(entry.score);
-              const EntryIcon = moodIconFor(entry.score);
               return (
                 <Card key={entry.id} className="flex-row items-center gap-3 py-3">
-                  <EntryIcon size={26} color={level.color} strokeWidth={1.8} />
+                  <Image source={assetForMoodScore(entry.score)} resizeMode="contain" style={{ width: 30, height: 30 }} />
                   <View className="flex-1">
                     <Text className="text-sm font-bold text-slate-900">
                       {entry.dateLabel} · {level.label}
@@ -145,6 +140,7 @@ export default function MoodScreen() {
         <SuccessCard
           title="Tu registro ha sido exitoso"
           description="Gracias por compartir cómo te sientes. Tu registro se sumó a tu histórico y a los analíticos de tu empresa."
+          image={illustrationAssets.success}
         >
           <View className="w-full gap-2 pt-2">
             <Button onPress={() => router.push("/(paco)/mood-charts")}>Mostrar gráficas</Button>

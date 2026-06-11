@@ -1,0 +1,4512 @@
+{
+  "sourceRepository": "https://vcs.789.com.mx/orlando.luna/paco-app.git",
+  "sourceHead": "7401f6ae5947676abb1667fe67946b5bf9b046c7",
+  "generatedFrom": ".tmp/paco-app-source",
+  "assetCount": 281,
+  "copiedRoot": "migration-assets/paco-app",
+  "assets": [
+    {
+      "sourcePath": "resources/android/icon/drawable-hdpi-icon.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/drawable-hdpi-icon.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 4264,
+      "sha256": "7eb53606bbfdc6beb291ddad738ab5f8644b1931db03859a15375f26cbf5985e",
+      "dimensions": {
+        "width": 72,
+        "height": 72
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/android/icon/drawable-ldpi-icon.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/drawable-ldpi-icon.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 1654,
+      "sha256": "ff4167771d89e7c5a3a1d64323724685f4ac9df6098b4499654d257d7f335b3d",
+      "dimensions": {
+        "width": 36,
+        "height": 36
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/android/icon/drawable-mdpi-icon.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/drawable-mdpi-icon.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 2597,
+      "sha256": "1bc584c7933a16d006ba3aec129d61ec662c8d2b0a34622496097da0e906e6d7",
+      "dimensions": {
+        "width": 48,
+        "height": 48
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/android/icon/drawable-xhdpi-icon.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/drawable-xhdpi-icon.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 6529,
+      "sha256": "37f56ae99f434ae5201fd449c3ce1e6d69339317fbd45f3370b2246beea72f74",
+      "dimensions": {
+        "width": 96,
+        "height": 96
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/android/icon/drawable-xxhdpi-icon.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/drawable-xxhdpi-icon.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 11034,
+      "sha256": "1656b70be52d8e629c66c959d58f83f20199a21114f5a91b3ac79ad6afb39569",
+      "dimensions": {
+        "width": 144,
+        "height": 144
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/android/icon/drawable-xxxhdpi-icon.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/drawable-xxxhdpi-icon.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 14886,
+      "sha256": "03d39611eef936fcd3a91f6e45728d368f863b6394b6bf40bebfae2e576fc4ea",
+      "dimensions": {
+        "width": 192,
+        "height": 192
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/android/splash/drawable-land-hdpi-screen.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/drawable-land-hdpi-screen.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 28087,
+      "sha256": "d372bd31b28bef3d2db227e16af791b3905586511ea5bd7e4b6fff100369707f",
+      "dimensions": {
+        "width": 800,
+        "height": 480
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/android/splash/drawable-land-ldpi-screen.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/drawable-land-ldpi-screen.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 8520,
+      "sha256": "5fd15b9367f40d927534cb2617926dce3b6d5572e7b14a1fc0912eadfe65fb70",
+      "dimensions": {
+        "width": 320,
+        "height": 240
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/android/splash/drawable-land-mdpi-screen.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/drawable-land-mdpi-screen.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 14547,
+      "sha256": "d2727edbcbeca65186afb09d07170556e1ea8fa8c03d330386ec2b9f5dd133f5",
+      "dimensions": {
+        "width": 480,
+        "height": 320
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/android/splash/drawable-land-xhdpi-screen.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/drawable-land-xhdpi-screen.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 48332,
+      "sha256": "0251c00484e86e999c643e7248dfdddbe9bbd2e39189ddac3544167f31ebc5f5",
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/android/splash/drawable-land-xxhdpi-screen.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/drawable-land-xxhdpi-screen.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 81272,
+      "sha256": "eb30fe0fafe8ee84851c4b5364bb82121a8110667b788586a8a4fbf0354b0cf3",
+      "dimensions": {
+        "width": 1600,
+        "height": 960
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/android/splash/drawable-land-xxxhdpi-screen.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/drawable-land-xxxhdpi-screen.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 113380,
+      "sha256": "b6f1548745f8ead1ad1164afb40c62a40d5bd02a750edd5a542d23df150ac8d9",
+      "dimensions": {
+        "width": 1920,
+        "height": 1280
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/android/splash/drawable-port-hdpi-screen.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/drawable-port-hdpi-screen.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 26962,
+      "sha256": "6f8f3b69d8ce50c55e74142cd382799b27934fdd9932d384826f2fc0dd1977b1",
+      "dimensions": {
+        "width": 480,
+        "height": 800
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/android/splash/drawable-port-ldpi-screen.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/drawable-port-ldpi-screen.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 8207,
+      "sha256": "2d5b30d79ad957ced01b68e11c4e924c7c1073c8f5fe2c2fe8de2050ebccc563",
+      "dimensions": {
+        "width": 240,
+        "height": 320
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/android/splash/drawable-port-mdpi-screen.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/drawable-port-mdpi-screen.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 13979,
+      "sha256": "14340f0d282d5792be5243afaccde8581df7cfe1603acd854b7f3b252724edc1",
+      "dimensions": {
+        "width": 320,
+        "height": 480
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/android/splash/drawable-port-xhdpi-screen.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/drawable-port-xhdpi-screen.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 47984,
+      "sha256": "d7eef983e04de68d238fc97e1ff4d5a35b158a3072afb18c3febd8af3e1f455a",
+      "dimensions": {
+        "width": 720,
+        "height": 1280
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/android/splash/drawable-port-xxhdpi-screen.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/drawable-port-xxhdpi-screen.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 70891,
+      "sha256": "c2cbc1e4f990a851e0c5eff724361cde3ee8b9034f5aca208a4fae8aa5b43dcb",
+      "dimensions": {
+        "width": 960,
+        "height": 1600
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/android/splash/drawable-port-xxxhdpi-screen.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/drawable-port-xxxhdpi-screen.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 101114,
+      "sha256": "aaeec0bed9d9522551b4a14bcded3dee3d7daba730d65b9703693ebcd7d9e040",
+      "dimensions": {
+        "width": 1280,
+        "height": 1920
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/icon.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 60857,
+      "sha256": "07578767f88507cc894d2bbe8d46dc78771398e6f99933cdd60ef5d0d90e6bcb",
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "referencedBy": [],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-1024.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-1024.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 61395,
+      "sha256": "9a3f899ec6fd9832852ab96833107b9592fe26b44337aff7302d1058c5c5483f",
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-20.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-20.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 686,
+      "sha256": "63a4cf7bf7d1ae34ed9b62cff93052d1bda5c22e5835b8f97c240d323ec5cd84",
+      "dimensions": {
+        "width": 20,
+        "height": 20
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-20@2x.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-20@2x.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 1937,
+      "sha256": "734b3221a59712035b2a654ae44cccbbbcb0467d1a7be200c022c59e1ea9c7b6",
+      "dimensions": {
+        "width": 40,
+        "height": 40
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-20@3x.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-20@3x.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 3417,
+      "sha256": "36defe305e04a29e1283848c761efa8e2fdb51c057b039266fd9cb1e572085ba",
+      "dimensions": {
+        "width": 60,
+        "height": 60
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-24@2x.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-24@2x.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 2597,
+      "sha256": "1bc584c7933a16d006ba3aec129d61ec662c8d2b0a34622496097da0e906e6d7",
+      "dimensions": {
+        "width": 48,
+        "height": 48
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-27.5@2x.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-27.5@2x.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 3066,
+      "sha256": "85c7703771482cc50e55d8cb723a858d0bfc009843927691720727bb5fa203ca",
+      "dimensions": {
+        "width": 55,
+        "height": 55
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-29.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-29.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 1267,
+      "sha256": "83da3386f6a014b49ae28f0b9f00b923978622d0ac64347c433f67a5547eb8a1",
+      "dimensions": {
+        "width": 29,
+        "height": 29
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-29@2x.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-29@2x.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 3362,
+      "sha256": "5f2ee81b1e8ce389cf0b3a5e3137fbd1339e5f929b361ec5dadcbb6ae747d64d",
+      "dimensions": {
+        "width": 58,
+        "height": 58
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-29@3x.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-29@3x.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 5937,
+      "sha256": "4d16a36fb5f2b4f581cc69a55f5a728fc12f470619f32cca085a38db6687eb02",
+      "dimensions": {
+        "width": 87,
+        "height": 87
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-40.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-40.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 1937,
+      "sha256": "734b3221a59712035b2a654ae44cccbbbcb0467d1a7be200c022c59e1ea9c7b6",
+      "dimensions": {
+        "width": 40,
+        "height": 40
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-40@2x.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-40@2x.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 5253,
+      "sha256": "f398b88dc657a844fcf6f4254bba1b95e9679d759a360abb813247fb683d8f3f",
+      "dimensions": {
+        "width": 80,
+        "height": 80
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-40@3x.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-40@3x.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 8254,
+      "sha256": "7aafe53ce73ec323b15b159252b1c26a5384bcead0ef16ccc369719f33cdd487",
+      "dimensions": {
+        "width": 120,
+        "height": 120
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-44@2x.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-44@2x.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 5833,
+      "sha256": "fab43a9dfb8f964230233f90bf6ca8a4e0ce7c48dd7aca32da1401255d3bff3b",
+      "dimensions": {
+        "width": 88,
+        "height": 88
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-50.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-50.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 2757,
+      "sha256": "ed35a90c12266ad37c2174d26aa8417769742ec676b8dc41408e1ad948109b52",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-50@2x.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-50@2x.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 6842,
+      "sha256": "7c1531715828abb007b7b0751ede83ec892e37b0cc2084955d6d78428efa054d",
+      "dimensions": {
+        "width": 100,
+        "height": 100
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-60.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-60.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 3417,
+      "sha256": "36defe305e04a29e1283848c761efa8e2fdb51c057b039266fd9cb1e572085ba",
+      "dimensions": {
+        "width": 60,
+        "height": 60
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-60@2x.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-60@2x.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 8254,
+      "sha256": "7aafe53ce73ec323b15b159252b1c26a5384bcead0ef16ccc369719f33cdd487",
+      "dimensions": {
+        "width": 120,
+        "height": 120
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-60@3x.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-60@3x.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 14475,
+      "sha256": "adf1f353f92da8c6993f1d3f35a70d064a8bffa8781dc28b7e0b0b77a6c20d65",
+      "dimensions": {
+        "width": 180,
+        "height": 180
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-72.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-72.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 4264,
+      "sha256": "7eb53606bbfdc6beb291ddad738ab5f8644b1931db03859a15375f26cbf5985e",
+      "dimensions": {
+        "width": 72,
+        "height": 72
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-72@2x.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-72@2x.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 11034,
+      "sha256": "1656b70be52d8e629c66c959d58f83f20199a21114f5a91b3ac79ad6afb39569",
+      "dimensions": {
+        "width": 144,
+        "height": 144
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-76.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-76.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 4931,
+      "sha256": "6754405d8d66ae1257c7701d5922718e035c500ab1d064d45a25ffc0bd8a0281",
+      "dimensions": {
+        "width": 76,
+        "height": 76
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-76@2x.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-76@2x.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 11699,
+      "sha256": "432b60dfc96c66e90346dc230d0111a8c6f6ffc3e8cc2c39bfcc31eb1d86a904",
+      "dimensions": {
+        "width": 152,
+        "height": 152
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-83.5@2x.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-83.5@2x.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 12660,
+      "sha256": "7b35b93f4b8e0d6332772cb9938425db9d3775a8125e9bf1c616510693e980c3",
+      "dimensions": {
+        "width": 167,
+        "height": 167
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-86@2x.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-86@2x.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 13553,
+      "sha256": "d90d01cf4cab4188c23e3f131c8556153c7b34a2ab61d6f1611b9d2fd70e1d5f",
+      "dimensions": {
+        "width": 172,
+        "height": 172
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-98@2x.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-98@2x.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 16355,
+      "sha256": "6ba21e79760919e3bb4bf21c61e090b5ce2db8aae1f7df0dda5a4f63628d4d51",
+      "dimensions": {
+        "width": 196,
+        "height": 196
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-small.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-small.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 1267,
+      "sha256": "83da3386f6a014b49ae28f0b9f00b923978622d0ac64347c433f67a5547eb8a1",
+      "dimensions": {
+        "width": 29,
+        "height": 29
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-small@2x.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-small@2x.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 3362,
+      "sha256": "5f2ee81b1e8ce389cf0b3a5e3137fbd1339e5f929b361ec5dadcbb6ae747d64d",
+      "dimensions": {
+        "width": 58,
+        "height": 58
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon-small@3x.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon-small@3x.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 5937,
+      "sha256": "4d16a36fb5f2b4f581cc69a55f5a728fc12f470619f32cca085a38db6687eb02",
+      "dimensions": {
+        "width": 87,
+        "height": 87
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon__2.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 3281,
+      "sha256": "8fcc5318b8a8be63eef0ad768813b070ec4b43f151b60a35c4c98e82e345547c",
+      "dimensions": {
+        "width": 57,
+        "height": 57
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/icon/icon@2x.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/icon@2x.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 8226,
+      "sha256": "80357220e0b5b3d98148a029ac01471d15678a4e413ba17685b05800a632ec96",
+      "dimensions": {
+        "width": 114,
+        "height": 114
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/splash/Default-2436h.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/Default-2436h.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 106666,
+      "sha256": "347c48e34ac8697eef1c7bffa6fac33dcf2e1c9a4fcc2d820510ab5beabfe109",
+      "dimensions": {
+        "width": 1125,
+        "height": 2436
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/splash/Default-568h@2x~iphone.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/Default-568h@2x~iphone.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 40249,
+      "sha256": "fd967c1545215b28976d0836e9668adc9ae5353fcb30e9353b37b2374189cdf5",
+      "dimensions": {
+        "width": 640,
+        "height": 1136
+      },
+      "referencedBy": [],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/splash/Default-667h.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/Default-667h.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 51333,
+      "sha256": "4df8018ca7f614ca85349f7382a2faf05ac6f1d625d2eab50e0f45db0753b5a1",
+      "dimensions": {
+        "width": 750,
+        "height": 1334
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/splash/Default-736h.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/Default-736h.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 108540,
+      "sha256": "ff2507759670e5da0942b5a6a40b13b953752f8bd58e49b5b1ad3b6f4c5fb630",
+      "dimensions": {
+        "width": 1242,
+        "height": 2208
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/splash/Default-Landscape-2436h.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/Default-Landscape-2436h.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 115885,
+      "sha256": "62f1be1eca9dc5c9d7a35c4f7f0f16f011f741b98e7ae7e7af8ba9d9e72418cf",
+      "dimensions": {
+        "width": 2436,
+        "height": 1125
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/splash/Default-Landscape-736h.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/Default-Landscape-736h.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 119640,
+      "sha256": "00d185873453852b130639fd3d160640709941e0ccaad0041538bcafd8cfb875",
+      "dimensions": {
+        "width": 2208,
+        "height": 1242
+      },
+      "referencedBy": [
+        "config.xml"
+      ],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/splash/Default-Landscape@2x~ipad.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/Default-Landscape@2x~ipad.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 136246,
+      "sha256": "4b64e71b1cf1d38338d022f1c80b4ce1e385415350435ac4d56dd2f15fc701e4",
+      "dimensions": {
+        "width": 2048,
+        "height": 1536
+      },
+      "referencedBy": [],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/splash/Default-Landscape@~ipadpro.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/Default-Landscape@~ipadpro.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 95354,
+      "sha256": "ffd59bf7874ab0d72a66d4f25618e7ce8a39e053359150e86f370d409a1be31a",
+      "dimensions": {
+        "width": 2732,
+        "height": 2048
+      },
+      "referencedBy": [],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/splash/Default-Landscape~ipad.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/Default-Landscape~ipad.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 44293,
+      "sha256": "4986364b1ed0ef4f3a300fa67bf4fb2fee3e60cbd876218df28eb7b013efe720",
+      "dimensions": {
+        "width": 1024,
+        "height": 768
+      },
+      "referencedBy": [],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/splash/Default-Portrait@2x~ipad.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/Default-Portrait@2x~ipad.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 150631,
+      "sha256": "82386e4644014643ddd5f44e3ac0c10c387ea6e0b7b17d3ab39267b0fce132e1",
+      "dimensions": {
+        "width": 1536,
+        "height": 2048
+      },
+      "referencedBy": [],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/splash/Default-Portrait@~ipadpro.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/Default-Portrait@~ipadpro.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 101584,
+      "sha256": "1c294ebe0f3d30227f7134c96ff8ee67d20b0a4c37adf78b1ace5e448029022e",
+      "dimensions": {
+        "width": 2048,
+        "height": 2732
+      },
+      "referencedBy": [],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/splash/Default-Portrait~ipad.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/Default-Portrait~ipad.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 44140,
+      "sha256": "5c9836afc220c5d0168da726750908155893c88971623d8bb938b5d40dc1346d",
+      "dimensions": {
+        "width": 768,
+        "height": 1024
+      },
+      "referencedBy": [],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/splash/Default@2x~iphone.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/Default@2x~iphone.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 36620,
+      "sha256": "44f9295f638e5d698d7895d348f9fa02a2a011f42a9521ff2d543ddc59b0a79a",
+      "dimensions": {
+        "width": 640,
+        "height": 960
+      },
+      "referencedBy": [],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/splash/Default@2x~universal~anyany.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/Default@2x~universal~anyany.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 123242,
+      "sha256": "878747021fbe662116104cd891eafa42cae9d20e5571444ff7c31e93510d55af",
+      "dimensions": {
+        "width": 2732,
+        "height": 2732
+      },
+      "referencedBy": [],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/ios/splash/Default~iphone.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/Default~iphone.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 13979,
+      "sha256": "14340f0d282d5792be5243afaccde8581df7cfe1603acd854b7f3b252724edc1",
+      "dimensions": {
+        "width": 320,
+        "height": 480
+      },
+      "referencedBy": [],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "resources/splash.png",
+      "outputPath": "migration-assets/paco-app/branding/splash/splash.png",
+      "category": "branding/splash",
+      "extension": "png",
+      "sizeBytes": 78688,
+      "sha256": "f83c749215257b15c94e1a12eb88e09b389e99afdcc4928fa8cd1ee1d320180e",
+      "dimensions": {
+        "width": 2732,
+        "height": 2732
+      },
+      "referencedBy": [],
+      "usage": "Icono/splash Cordova de plataforma"
+    },
+    {
+      "sourcePath": "src/assets/fonts/Gordita-Bold.otf",
+      "outputPath": "migration-assets/paco-app/fonts/Gordita-Bold.otf",
+      "category": "fonts",
+      "extension": "otf",
+      "sizeBytes": 124568,
+      "sha256": "6ac723c1831ed9996fbe7dee1d44950e6611c8c0b87f1d754dcc6f23c3b8b5a3",
+      "dimensions": null,
+      "referencedBy": [
+        "src/global.scss"
+      ],
+      "usage": "Tipografia custom de la app"
+    },
+    {
+      "sourcePath": "src/assets/fonts/Gordita-Bold.woff",
+      "outputPath": "migration-assets/paco-app/fonts/Gordita-Bold.woff",
+      "category": "fonts",
+      "extension": "woff",
+      "sizeBytes": 85520,
+      "sha256": "958a9bd031592738c3691770af434c516597629bcafed373d50d34f391d3c14b",
+      "dimensions": null,
+      "referencedBy": [
+        "src/global.scss"
+      ],
+      "usage": "Tipografia custom de la app"
+    },
+    {
+      "sourcePath": "src/assets/fonts/Gordita-Regular.woff",
+      "outputPath": "migration-assets/paco-app/fonts/Gordita-Regular.woff",
+      "category": "fonts",
+      "extension": "woff",
+      "sizeBytes": 84412,
+      "sha256": "95e9992835f9a398c2336287e163bf4ca3714e865e8c248b3af2aed0eeef6ecd",
+      "dimensions": null,
+      "referencedBy": [
+        "src/global.scss"
+      ],
+      "usage": "Tipografia custom de la app"
+    },
+    {
+      "sourcePath": "src/assets/fonts/Lato-Regular.ttf",
+      "outputPath": "migration-assets/paco-app/fonts/Lato-Regular.ttf",
+      "category": "fonts",
+      "extension": "ttf",
+      "sizeBytes": 120196,
+      "sha256": "7ae714b63c2c8b940bdd211a0cc678f01168a34eea8aa13c0df25364f29238a7",
+      "dimensions": null,
+      "referencedBy": [],
+      "usage": "Tipografia custom de la app"
+    },
+    {
+      "sourcePath": "src/assets/icon/Candado.png",
+      "outputPath": "migration-assets/paco-app/icons/Candado.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 9343,
+      "sha256": "766365536c166aab4a3fde46f8bdd0dd9b43fe21b7612b39fd17a46e01bce70f",
+      "dimensions": {
+        "width": 260,
+        "height": 260
+      },
+      "referencedBy": [
+        "src/app/modals/permission-modal/permission-modal.component.html"
+      ],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/Card_Sent_ B.png",
+      "outputPath": "migration-assets/paco-app/icons/Card_Sent__B.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 79487,
+      "sha256": "65d101cc876e3099ce778afb5e685b86ddd5b9897feedaa9126b1ca6945eecc0",
+      "dimensions": {
+        "width": 279,
+        "height": 120
+      },
+      "referencedBy": [
+        "src/app/home/message-note/message-note.page.html"
+      ],
+      "usage": "Adelanto / pagos / confirmaciones"
+    },
+    {
+      "sourcePath": "src/assets/icon/Card_Sent_ B@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/Card_Sent__B@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 274455,
+      "sha256": "2b463cfebc70906359acb04c40308a58761649be9dd6e7825c0c32ec9dd33ecb",
+      "dimensions": {
+        "width": 558,
+        "height": 240
+      },
+      "referencedBy": [],
+      "usage": "Adelanto / pagos / confirmaciones"
+    },
+    {
+      "sourcePath": "src/assets/icon/Card_Sent_ B@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/Card_Sent__B@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 549185,
+      "sha256": "b3e6cfffa6388a85d8e39646339f91ed4a6458d38013ffeb9ae05ddd79f00ddb",
+      "dimensions": {
+        "width": 837,
+        "height": 360
+      },
+      "referencedBy": [],
+      "usage": "Adelanto / pagos / confirmaciones"
+    },
+    {
+      "sourcePath": "src/assets/icon/Group 263.png",
+      "outputPath": "migration-assets/paco-app/icons/Group_263.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 4544,
+      "sha256": "f9aa4dde1b1ed33dceb671aceccda65082bc3c44b8da8e506c77e5e9334cc5c5",
+      "dimensions": {
+        "width": 263,
+        "height": 105
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/Group3.png",
+      "outputPath": "migration-assets/paco-app/icons/Group3.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 17915,
+      "sha256": "c15cef9843592fbcabcccbf33ca3891f02e15e2b9d163485d1ec8932add5f016",
+      "dimensions": {
+        "width": 475,
+        "height": 466
+      },
+      "referencedBy": [
+        "src/app/init-app/landing-introduction/landing-introduction.page.html"
+      ],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/Group3@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/Group3@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 11734,
+      "sha256": "0b0ba387f9dea3bebfe4e5010d3857e30620289a63b36d771e869dca92ca3c2f",
+      "dimensions": {
+        "width": 317,
+        "height": 311
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/Group3@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/Group3@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 17915,
+      "sha256": "c15cef9843592fbcabcccbf33ca3891f02e15e2b9d163485d1ec8932add5f016",
+      "dimensions": {
+        "width": 475,
+        "height": 466
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/Group4.png",
+      "outputPath": "migration-assets/paco-app/icons/Group4.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 13034,
+      "sha256": "bacaea2bfbc89c4551d8a63b69bef4348f0562f5a0be876e0290528167d08412",
+      "dimensions": {
+        "width": 369,
+        "height": 454
+      },
+      "referencedBy": [
+        "src/app/init-app/landing-introduction/landing-introduction.page.html"
+      ],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/Group4@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/Group4@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 8736,
+      "sha256": "186d80fba8d10f256c0f444284fc115db90a82c1c46a4b99d35d57e9c51691ea",
+      "dimensions": {
+        "width": 246,
+        "height": 303
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/Group4@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/Group4@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 13034,
+      "sha256": "bacaea2bfbc89c4551d8a63b69bef4348f0562f5a0be876e0290528167d08412",
+      "dimensions": {
+        "width": 369,
+        "height": 454
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/IMG_PC.pdf",
+      "outputPath": "migration-assets/paco-app/documents/IMG_PC.pdf",
+      "category": "documents",
+      "extension": "pdf",
+      "sizeBytes": 24764,
+      "sha256": "61b3c862d0502114efd9f9e33fc28ebdf2226c81f5621a46a992cf569119ffc9",
+      "dimensions": null,
+      "referencedBy": [],
+      "usage": "Onboarding / login / activacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/IMG_PC3.png",
+      "outputPath": "migration-assets/paco-app/icons/IMG_PC3.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 16535,
+      "sha256": "62f78d9bef495bc87ced8266a4e9987c462eecb7a78adf730b89f83d095647ab",
+      "dimensions": {
+        "width": 416,
+        "height": 437
+      },
+      "referencedBy": [
+        "src/app/init-app/landing-introduction/landing-introduction.page.html"
+      ],
+      "usage": "Onboarding / login / activacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/IMG_PC3@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/IMG_PC3@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 9643,
+      "sha256": "8e2111274615ed1642fd20787738f449df0fa2a76686b87af04a066368c10140",
+      "dimensions": {
+        "width": 278,
+        "height": 292
+      },
+      "referencedBy": [],
+      "usage": "Onboarding / login / activacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/IMG_PC3@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/IMG_PC3@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 16535,
+      "sha256": "62f78d9bef495bc87ced8266a4e9987c462eecb7a78adf730b89f83d095647ab",
+      "dimensions": {
+        "width": 416,
+        "height": 437
+      },
+      "referencedBy": [],
+      "usage": "Onboarding / login / activacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/IMG_PC4.png",
+      "outputPath": "migration-assets/paco-app/icons/IMG_PC4.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 13480,
+      "sha256": "883bf29bc878cb20253e8c924eab25f0d225a2d085e385aa13422b22c616e4f0",
+      "dimensions": {
+        "width": 438,
+        "height": 476
+      },
+      "referencedBy": [
+        "src/app/init-app/landing-introduction/landing-introduction.page.html"
+      ],
+      "usage": "Onboarding / login / activacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/IMG_PC4@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/IMG_PC4@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 8169,
+      "sha256": "5be6a786de7afdaf984630b3d705354c5d77060a3fa2b6118fd8e99dc6c35bb1",
+      "dimensions": {
+        "width": 292,
+        "height": 317
+      },
+      "referencedBy": [],
+      "usage": "Onboarding / login / activacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/IMG_PC4@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/IMG_PC4@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 13480,
+      "sha256": "883bf29bc878cb20253e8c924eab25f0d225a2d085e385aa13422b22c616e4f0",
+      "dimensions": {
+        "width": 438,
+        "height": 476
+      },
+      "referencedBy": [],
+      "usage": "Onboarding / login / activacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/IMG_PC_2.png",
+      "outputPath": "migration-assets/paco-app/icons/IMG_PC_2.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 14974,
+      "sha256": "925bed0300210654eb2ec662b3c09fc535deecd8730e6eeb699bc7e006fbb7ad",
+      "dimensions": {
+        "width": 311,
+        "height": 298
+      },
+      "referencedBy": [
+        "src/app/init-app/confirmation-user/confirmation-user.page.html"
+      ],
+      "usage": "Onboarding / login / activacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/IMG_PC_2@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/IMG_PC_2@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 8866,
+      "sha256": "84e4b0df88287b473732849bd8922ec7866df107b7f638f6a75ba5eb30d09c4e",
+      "dimensions": {
+        "width": 311,
+        "height": 298
+      },
+      "referencedBy": [],
+      "usage": "Onboarding / login / activacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/IMG_PC_2@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/IMG_PC_2@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 13333,
+      "sha256": "214ddee1aba6f1c433d0f896f1895b8c9304fb48f3ac05db50304779def9260b",
+      "dimensions": {
+        "width": 466,
+        "height": 447
+      },
+      "referencedBy": [],
+      "usage": "Onboarding / login / activacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/IMG_PC_error.png",
+      "outputPath": "migration-assets/paco-app/icons/IMG_PC_error.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 12204,
+      "sha256": "96d6446ef147e80c886f22d2a7fc626d60c9318614cb1281f25b7117b93e5760",
+      "dimensions": {
+        "width": 326,
+        "height": 272
+      },
+      "referencedBy": [
+        "src/app/errors/register-account-error/register-account-error.page.html"
+      ],
+      "usage": "Onboarding / login / activacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/IMG_PC_error@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/IMG_PC_error@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 7849,
+      "sha256": "02053157681ba943812887508c5f7cf319806f267fe2c629417ecff274c671d5",
+      "dimensions": {
+        "width": 325,
+        "height": 271
+      },
+      "referencedBy": [],
+      "usage": "Onboarding / login / activacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/IMG_PC_error@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/IMG_PC_error@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 11710,
+      "sha256": "cef21ed2c5065d84e5abb4ed5188c79e5485d589f9d88b1fd89a53d3543924cb",
+      "dimensions": {
+        "width": 487,
+        "height": 406
+      },
+      "referencedBy": [],
+      "usage": "Onboarding / login / activacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/Mask Group@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/Mask_Group@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 27251,
+      "sha256": "924972231eac8406d6fb49425ae41fa80c979ab769fef52fcd90d24417345293",
+      "dimensions": {
+        "width": 120,
+        "height": 120
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/Mask Group@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/Mask_Group@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 54014,
+      "sha256": "9d0f36f3201e6602f4e553900ea22dcfde8083ad9710413ff01f1525370265c3",
+      "dimensions": {
+        "width": 180,
+        "height": 180
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/Mask-Group.png",
+      "outputPath": "migration-assets/paco-app/icons/Mask-Group.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 8496,
+      "sha256": "56901b099e4964bfb2603c11af3671aec859a7351126f197c72fd7dc7eb2a18d",
+      "dimensions": {
+        "width": 60,
+        "height": 60
+      },
+      "referencedBy": [
+        "src/app/components/home-menu/home-menu.component.html",
+        "src/app/home/message-note/message-note.page.html"
+      ],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/alo.png",
+      "outputPath": "migration-assets/paco-app/icons/alo.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1451,
+      "sha256": "6b5a4880add8352d218e2a08626f7c1e3fee03e57785a7147ab2ef0a64626f3b",
+      "dimensions": {
+        "width": 37,
+        "height": 26
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/btn_drc.png",
+      "outputPath": "migration-assets/paco-app/icons/btn_drc.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 272,
+      "sha256": "300de911464c42dbedb129dddaf97a8a25f1b0346b33a937a548fdabe2135b7f",
+      "dimensions": {
+        "width": 17,
+        "height": 17
+      },
+      "referencedBy": [
+        "src/app/errors/register-account-error/register-account-error.page.html",
+        "src/app/init-app/active-account/active-account.page.html",
+        "src/app/init-app/confirm-pin/confirm-pin.page.html",
+        "src/app/init-app/confirmation-user/confirmation-user.page.html",
+        "src/app/init-app/landing-introduction/landing-introduction.page.html",
+        "src/app/init-app/log-in/log-in.page.html",
+        "src/app/init-app/make-password/make-password.page.html",
+        "src/app/init-app/recover-password/recover-password.page.html",
+        "src/app/init-app/restore-password/restore-password.page.html",
+        "src/app/init-app/review-mail-pin/review-mail-pin.page.html",
+        "src/app/init-app/send-pin/send-pin.page.html"
+      ],
+      "usage": "Onboarding / login / activacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/btn_drc@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/btn_drc@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 470,
+      "sha256": "58a2b07f13229ed775d7354944f314a0bd75be0480f0d52ae76c52f18d625584",
+      "dimensions": {
+        "width": 34,
+        "height": 34
+      },
+      "referencedBy": [],
+      "usage": "Onboarding / login / activacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/btn_drc@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/btn_drc@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 717,
+      "sha256": "d8c15a71e4b0dc8f01678253463334763efc3aaaf5d4b0093f6bb9f5015f6aed",
+      "dimensions": {
+        "width": 51,
+        "height": 51
+      },
+      "referencedBy": [],
+      "usage": "Onboarding / login / activacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/card_Visa.png",
+      "outputPath": "migration-assets/paco-app/icons/card_Visa.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 23536,
+      "sha256": "681a2dc331412cb00cc38616b90404700890515956630fa9a56df9d91a45ba49",
+      "dimensions": {
+        "width": 357,
+        "height": 207
+      },
+      "referencedBy": [
+        "src/app/modules/payroll-advance/modals/card-select/card-select.component.html"
+      ],
+      "usage": "Adelanto / pagos / confirmaciones"
+    },
+    {
+      "sourcePath": "src/assets/icon/card_Visa@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/card_Visa@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 71606,
+      "sha256": "d6de0d9c311cfb967dc646780d35b07ad6955e3b0b461f8a13c53a050b6eeef4",
+      "dimensions": {
+        "width": 715,
+        "height": 414
+      },
+      "referencedBy": [],
+      "usage": "Adelanto / pagos / confirmaciones"
+    },
+    {
+      "sourcePath": "src/assets/icon/card_Visa@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/card_Visa@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 145845,
+      "sha256": "e79db2cce407c427a907437252691e7db255ba78c88591d4a711fab831725d5a",
+      "dimensions": {
+        "width": 1072,
+        "height": 621
+      },
+      "referencedBy": [],
+      "usage": "Adelanto / pagos / confirmaciones"
+    },
+    {
+      "sourcePath": "src/assets/icon/card_account.png",
+      "outputPath": "migration-assets/paco-app/icons/card_account.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 23995,
+      "sha256": "b47639c8cb599498f636815f923ffebe4d6ec6c9425c9a09f7bfb63f6494da96",
+      "dimensions": {
+        "width": 357,
+        "height": 207
+      },
+      "referencedBy": [
+        "src/app/modules/payroll-advance/modals/card-select/card-select.component.html"
+      ],
+      "usage": "Adelanto / pagos / confirmaciones"
+    },
+    {
+      "sourcePath": "src/assets/icon/card_account@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/card_account@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 73143,
+      "sha256": "645a9ff6efbdb7f97d5f57ab4385a7b38ce1d4e9012f78e78caf9a606d68cab7",
+      "dimensions": {
+        "width": 714,
+        "height": 414
+      },
+      "referencedBy": [],
+      "usage": "Adelanto / pagos / confirmaciones"
+    },
+    {
+      "sourcePath": "src/assets/icon/card_account@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/card_account@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 133144,
+      "sha256": "569af14bbcc50ab5eb1ca498729525768f28bbaf2843bc1a3241bade8f192118",
+      "dimensions": {
+        "width": 1071,
+        "height": 621
+      },
+      "referencedBy": [],
+      "usage": "Adelanto / pagos / confirmaciones"
+    },
+    {
+      "sourcePath": "src/assets/icon/card_mastercard.png",
+      "outputPath": "migration-assets/paco-app/icons/card_mastercard.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 29778,
+      "sha256": "85e970e7a353760785df40473528a35340c9f7719bcfffe0e390c2bb23e9ea1b",
+      "dimensions": {
+        "width": 357,
+        "height": 207
+      },
+      "referencedBy": [
+        "src/app/modules/payroll-advance/modals/card-select/card-select.component.html"
+      ],
+      "usage": "Adelanto / pagos / confirmaciones"
+    },
+    {
+      "sourcePath": "src/assets/icon/card_mastercard@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/card_mastercard@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 88256,
+      "sha256": "9ecf9263919e86c9012e38c48d63849e108da1a76c2b27e4a8e6c05cb83bc1da",
+      "dimensions": {
+        "width": 714,
+        "height": 414
+      },
+      "referencedBy": [],
+      "usage": "Adelanto / pagos / confirmaciones"
+    },
+    {
+      "sourcePath": "src/assets/icon/card_mastercard@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/card_mastercard@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 168015,
+      "sha256": "93488571a1311300dafb8e00dcd10f0b56a804cde495ceb1d8f1b4ae3f20789a",
+      "dimensions": {
+        "width": 1071,
+        "height": 621
+      },
+      "referencedBy": [],
+      "usage": "Adelanto / pagos / confirmaciones"
+    },
+    {
+      "sourcePath": "src/assets/icon/check.png",
+      "outputPath": "migration-assets/paco-app/icons/check.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 27555,
+      "sha256": "d145d1ada9c3c01e6c2e30c28c88d60ff5c96adfc34fa79dc94e53c0cdee32c7",
+      "dimensions": {
+        "width": 600,
+        "height": 600
+      },
+      "referencedBy": [
+        "src/app/init-app/make-password/make-password.page.html"
+      ],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/check@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/check@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 10363,
+      "sha256": "95c2137fa210b4b768154691bdf02a514c5a21d3f4799e5803160abf62073ecf",
+      "dimensions": {
+        "width": 306,
+        "height": 336
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/check@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/check@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 15806,
+      "sha256": "9fc68b9833f1c5f5da08e09a749f5e1c3530aa9b54691f143e907c452e75dec2",
+      "dimensions": {
+        "width": 459,
+        "height": 504
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/doc_list.png",
+      "outputPath": "migration-assets/paco-app/icons/doc_list.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 2522,
+      "sha256": "849ec27477ab6fa005370068ade02baa8c746c7e1ee0dbdbcff062eb0de9fdd2",
+      "dimensions": {
+        "width": 104,
+        "height": 112
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/doc_list@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/doc_list@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 5143,
+      "sha256": "bc746006e821775adcfda44132167a2ff426faff818f0047e6ecab83441ef804",
+      "dimensions": {
+        "width": 208,
+        "height": 223
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/doc_list@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/doc_list@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 7888,
+      "sha256": "9950e7b48cded1cf0f055b57f9858a4220ea9e1a786fa26865bcb73d30b4a9f5",
+      "dimensions": {
+        "width": 312,
+        "height": 334
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/favicon.png",
+      "outputPath": "migration-assets/paco-app/branding/platform-icons/favicon.png",
+      "category": "branding/platform-icons",
+      "extension": "png",
+      "sizeBytes": 930,
+      "sha256": "e820db45563316ad63b8557a3cb9a681a9f59faf899c250393113fcbe885d2cd",
+      "dimensions": {
+        "width": 64,
+        "height": 64
+      },
+      "referencedBy": [
+        "src/index.html"
+      ],
+      "usage": "Branding de app"
+    },
+    {
+      "sourcePath": "src/assets/icon/grid.png",
+      "outputPath": "migration-assets/paco-app/icons/grid.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 243,
+      "sha256": "ab5a63c69c96c1a401ea628f92cb978ae22d00b0a98398b4cccbd7e10a71c9ed",
+      "dimensions": {
+        "width": 48,
+        "height": 48
+      },
+      "referencedBy": [
+        "src/app/modules/refill/list/list.page.ts"
+      ],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/grid_selected.png",
+      "outputPath": "migration-assets/paco-app/icons/grid_selected.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 571,
+      "sha256": "5f4705f075df1465038994c05b2a7420f637460f7f96a1a690aa5cc27e6fb6b8",
+      "dimensions": {
+        "width": 48,
+        "height": 48
+      },
+      "referencedBy": [
+        "src/app/modules/refill/list/list.page.ts"
+      ],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/header-icon-white.png",
+      "outputPath": "migration-assets/paco-app/icons/header-icon-white.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 16023,
+      "sha256": "57e9e2cf697a491fe1ac4d609fdd7e8bf7c69198464f8b39652295379625170e",
+      "dimensions": {
+        "width": 142,
+        "height": 45
+      },
+      "referencedBy": [
+        "src/app/home/dashboard/dashboard.page.html"
+      ],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/header-icon.png",
+      "outputPath": "migration-assets/paco-app/icons/header-icon.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 150609,
+      "sha256": "666289ea6e6a45010e10fab571fa587b7bdd442f6736bca4ecd33581312a34eb",
+      "dimensions": {
+        "width": 1209,
+        "height": 415
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/home-icons/PACO.png",
+      "outputPath": "migration-assets/paco-app/icons/PACO.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 53632,
+      "sha256": "b37f2b361761c7e03852efaf1df67db71b38bff0573f1feaf986c4b94d9d6f99",
+      "dimensions": {
+        "width": 684,
+        "height": 210
+      },
+      "referencedBy": [
+        "src/app/home/dashboard/dashboard.page.html"
+      ],
+      "usage": "Accesos del dashboard"
+    },
+    {
+      "sourcePath": "src/assets/icon/home-icons/PACO@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/PACO@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 53632,
+      "sha256": "b37f2b361761c7e03852efaf1df67db71b38bff0573f1feaf986c4b94d9d6f99",
+      "dimensions": {
+        "width": 684,
+        "height": 210
+      },
+      "referencedBy": [],
+      "usage": "Accesos del dashboard"
+    },
+    {
+      "sourcePath": "src/assets/icon/home-icons/PACO@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/PACO@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 96793,
+      "sha256": "6fdb48d2d0054db97c0e92268ee7e99b3e6c3308a663cf0ffbf3e0508e57181e",
+      "dimensions": {
+        "width": 1026,
+        "height": 315
+      },
+      "referencedBy": [],
+      "usage": "Accesos del dashboard"
+    },
+    {
+      "sourcePath": "src/assets/icon/home-icons/cell.png",
+      "outputPath": "migration-assets/paco-app/icons/cell.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 32501,
+      "sha256": "8847a7a30d1d2b1209d730bb74bbda1ec043eae33cc604eacd94159ef1da0eb1",
+      "dimensions": {
+        "width": 200,
+        "height": 200
+      },
+      "referencedBy": [
+        "src/app/home/dashboard/dashboard.page.html"
+      ],
+      "usage": "Accesos del dashboard"
+    },
+    {
+      "sourcePath": "src/assets/icon/home-icons/discount.png",
+      "outputPath": "migration-assets/paco-app/icons/discount.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 35017,
+      "sha256": "bc3c2937d3a33cca0a965ea464e41eef2637fd5deea445a5bc9f96dd33c6210b",
+      "dimensions": {
+        "width": 200,
+        "height": 200
+      },
+      "referencedBy": [
+        "src/app/home/dashboard/dashboard.page.html"
+      ],
+      "usage": "Accesos del dashboard"
+    },
+    {
+      "sourcePath": "src/assets/icon/home-icons/doctor.png",
+      "outputPath": "migration-assets/paco-app/icons/doctor.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 33095,
+      "sha256": "35a580c25c2a8eb3a834008831620a661ce1ff6ed5de54b8c6efc7c73368784e",
+      "dimensions": {
+        "width": 200,
+        "height": 200
+      },
+      "referencedBy": [
+        "src/app/home/dashboard/dashboard.page.html"
+      ],
+      "usage": "Accesos del dashboard"
+    },
+    {
+      "sourcePath": "src/assets/icon/home-icons/guard.png",
+      "outputPath": "migration-assets/paco-app/icons/guard.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 33337,
+      "sha256": "c33f1381575f1e23b96020c242fa7e1641189dca368ee57bd980811ae4456814",
+      "dimensions": {
+        "width": 200,
+        "height": 200
+      },
+      "referencedBy": [
+        "src/app/home/dashboard/dashboard.page.html"
+      ],
+      "usage": "Accesos del dashboard"
+    },
+    {
+      "sourcePath": "src/assets/icon/home-icons/megaphone.png",
+      "outputPath": "migration-assets/paco-app/icons/megaphone.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 30551,
+      "sha256": "83983fc65e3e41b011c2b695deda5edf47c4d443e12cce212feccced2e2126de",
+      "dimensions": {
+        "width": 200,
+        "height": 200
+      },
+      "referencedBy": [
+        "src/app/home/dashboard/dashboard.page.html"
+      ],
+      "usage": "Accesos del dashboard"
+    },
+    {
+      "sourcePath": "src/assets/icon/home-icons/message.png",
+      "outputPath": "migration-assets/paco-app/icons/message.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 35741,
+      "sha256": "a63b9a3f84f9f8b7a84804e5c5b9f68b08bea87afe0215f813120f8d88eba0f4",
+      "dimensions": {
+        "width": 200,
+        "height": 200
+      },
+      "referencedBy": [
+        "src/app/home/dashboard/dashboard.page.html"
+      ],
+      "usage": "Accesos del dashboard"
+    },
+    {
+      "sourcePath": "src/assets/icon/home-icons/money.png",
+      "outputPath": "migration-assets/paco-app/icons/money.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 6094,
+      "sha256": "7d53c52328a50b8727f94804872a5c54d39b8b5116166458a50bb9fb461e8013",
+      "dimensions": {
+        "width": 190,
+        "height": 190
+      },
+      "referencedBy": [
+        "src/app/home/dashboard/dashboard.page.html"
+      ],
+      "usage": "Accesos del dashboard"
+    },
+    {
+      "sourcePath": "src/assets/icon/home-icons/question.png",
+      "outputPath": "migration-assets/paco-app/icons/question.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 40631,
+      "sha256": "769c25b5516547159a9ab486d96956d62bc5fd565907b77728bbcd94468b9661",
+      "dimensions": {
+        "width": 200,
+        "height": 200
+      },
+      "referencedBy": [
+        "src/app/home/dashboard/dashboard.page.html"
+      ],
+      "usage": "Accesos del dashboard"
+    },
+    {
+      "sourcePath": "src/assets/icon/home-icons/tournament.png",
+      "outputPath": "migration-assets/paco-app/icons/tournament.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 2647,
+      "sha256": "6a1247c6d1f790100633b8821ca43e2ca322577541178743c899ade369f735d0",
+      "dimensions": {
+        "width": 80,
+        "height": 72
+      },
+      "referencedBy": [],
+      "usage": "Accesos del dashboard"
+    },
+    {
+      "sourcePath": "src/assets/icon/home-icons/trophy.png",
+      "outputPath": "migration-assets/paco-app/icons/trophy.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 36835,
+      "sha256": "0d690328048f98b8ad74884d3af0ec32bf0a4af9cc4a7003538ee85957e3b00d",
+      "dimensions": {
+        "width": 200,
+        "height": 200
+      },
+      "referencedBy": [
+        "src/app/home/dashboard/dashboard.page.html"
+      ],
+      "usage": "Accesos del dashboard"
+    },
+    {
+      "sourcePath": "src/assets/icon/home-icons/wallet.png",
+      "outputPath": "migration-assets/paco-app/icons/wallet.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 32110,
+      "sha256": "0b083cbe25bc239c60dcc5fcfe4f0e5cc131419de27f0a6a2034ed4a0e9dcc5d",
+      "dimensions": {
+        "width": 200,
+        "height": 200
+      },
+      "referencedBy": [
+        "src/app/home/dashboard/dashboard.page.html"
+      ],
+      "usage": "Accesos del dashboard"
+    },
+    {
+      "sourcePath": "src/assets/icon/iconMain.png",
+      "outputPath": "migration-assets/paco-app/icons/iconMain.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 15845,
+      "sha256": "cafb89eb4d73cb0b3a4b406d860b9ace852a626b1409ba1eeb6ce39bf3a70cea",
+      "dimensions": {
+        "width": 333,
+        "height": 468
+      },
+      "referencedBy": [
+        "src/app/init-app/active-account/active-account.page.html",
+        "src/app/init-app/log-in/log-in.page.html"
+      ],
+      "usage": "Onboarding / login / activacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/iconMain@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/iconMain@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 10078,
+      "sha256": "f001497d354ee12c4f6e13b16a87fd97b86f9d5cc6e10a5bb08a5d6a8c76b960",
+      "dimensions": {
+        "width": 222,
+        "height": 312
+      },
+      "referencedBy": [],
+      "usage": "Onboarding / login / activacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/iconMain@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/iconMain@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 15880,
+      "sha256": "ec31bcc65567e682d2e9e688263bb7ff149cfcfe96257b3ca5ea6061ce0f1363",
+      "dimensions": {
+        "width": 334,
+        "height": 468
+      },
+      "referencedBy": [],
+      "usage": "Onboarding / login / activacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/iusacell.png",
+      "outputPath": "migration-assets/paco-app/icons/iusacell.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1572,
+      "sha256": "3caae77e882851ae5fb2971e3e4dd1820c73dd9635fd9abc4a32eda201dbefae",
+      "dimensions": {
+        "width": 50,
+        "height": 15
+      },
+      "referencedBy": [],
+      "usage": "Recargas"
+    },
+    {
+      "sourcePath": "src/assets/icon/list.png",
+      "outputPath": "migration-assets/paco-app/icons/list.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 279,
+      "sha256": "14d2da1bbe117a355c7042e3e5cbc8d32708dfa8ad8fd22cc6c3494d8ba89ce3",
+      "dimensions": {
+        "width": 48,
+        "height": 48
+      },
+      "referencedBy": [
+        "src/app/modules/refill/list/list.page.ts"
+      ],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/list_selected.png",
+      "outputPath": "migration-assets/paco-app/icons/list_selected.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 642,
+      "sha256": "4578dc183a8b679d024004443e9c647acaffbf38a866446e6d39c412fc1beb18",
+      "dimensions": {
+        "width": 48,
+        "height": 48
+      },
+      "referencedBy": [
+        "src/app/modules/refill/list/list.page.ts"
+      ],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/mail.png",
+      "outputPath": "migration-assets/paco-app/icons/mail.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 2551,
+      "sha256": "07fa6c20effcc6325fc7817e035a249d61aab5d4d84d4743668f1c04eef76d01",
+      "dimensions": {
+        "width": 103,
+        "height": 102
+      },
+      "referencedBy": [
+        "src/app/modals/message-send-modal/message-send-modal.component.html",
+        "src/app/modules/payroll-advance/modals/send-payment/send-payment.component.html"
+      ],
+      "usage": "Adelanto / pagos / confirmaciones"
+    },
+    {
+      "sourcePath": "src/assets/icon/mas_recarga.png",
+      "outputPath": "migration-assets/paco-app/icons/mas_recarga.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1504,
+      "sha256": "511c125181e36b65061d09659ba28328f0e57b0ae03ea8dd01a1c25822113cc0",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Recargas"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/circle.png",
+      "outputPath": "migration-assets/paco-app/icons/circle.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 432,
+      "sha256": "f27cbde0d0f1d3155f6e3e3e204628637a206108964e6c4c7a223c46b385d3a8",
+      "dimensions": {
+        "width": 19,
+        "height": 19
+      },
+      "referencedBy": [
+        "src/app/components/home-menu/home-menu.component.html"
+      ],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/circle@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/circle@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 777,
+      "sha256": "1b74783328956807450601c0cf616983874d07983c0aa64e3862199530792394",
+      "dimensions": {
+        "width": 38,
+        "height": 38
+      },
+      "referencedBy": [],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/circle@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/circle@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1192,
+      "sha256": "41198189b34fb56df226bb80b18432406b87318b4efca8d0e7dc413a780a97b2",
+      "dimensions": {
+        "width": 57,
+        "height": 57
+      },
+      "referencedBy": [],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/config.png",
+      "outputPath": "migration-assets/paco-app/icons/config.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 417,
+      "sha256": "9aef18218ba7c4c61bfa8005819982b01b12b5b1975bfa416492a649bdc818b3",
+      "dimensions": {
+        "width": 19,
+        "height": 19
+      },
+      "referencedBy": [
+        "src/app/components/home-menu/home-menu.component.html"
+      ],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/config@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/config@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 841,
+      "sha256": "989109e8da2fea24c624f501ad5d025bf66c10df5d5d904b3259083d66d09686",
+      "dimensions": {
+        "width": 38,
+        "height": 38
+      },
+      "referencedBy": [],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/config@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/config@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1175,
+      "sha256": "c25e53ede6fd5713511d10715b4518c2a52cdad337261526f28c2c07051f3f1b",
+      "dimensions": {
+        "width": 57,
+        "height": 57
+      },
+      "referencedBy": [],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/doc.png",
+      "outputPath": "migration-assets/paco-app/icons/doc.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 261,
+      "sha256": "e13aa59b17dbfabcfdddf18b9b46ffecfe2a6777644156d34ed9994627416fca",
+      "dimensions": {
+        "width": 17,
+        "height": 21
+      },
+      "referencedBy": [
+        "src/app/components/home-menu/home-menu.component.html"
+      ],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/doc@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/doc@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 380,
+      "sha256": "a2f569a5adcbe760639d4cf1d89c973306d6202ec33ac15e17d75532b9345383",
+      "dimensions": {
+        "width": 34,
+        "height": 42
+      },
+      "referencedBy": [],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/doc@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/doc@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 522,
+      "sha256": "0cc6be663e0460db3145e8ef1810d8c836627a74134076c4adcf80ba54928ff6",
+      "dimensions": {
+        "width": 51,
+        "height": 63
+      },
+      "referencedBy": [],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/exclamacion.png",
+      "outputPath": "migration-assets/paco-app/icons/exclamacion.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 400,
+      "sha256": "c659fa2338a30392559d16e112ab879782cec20977eee1feb91b24b7ea6f4e45",
+      "dimensions": {
+        "width": 20,
+        "height": 19
+      },
+      "referencedBy": [
+        "src/app/components/home-menu/home-menu.component.html"
+      ],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/exclamacion@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/exclamacion@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 694,
+      "sha256": "4583317aef7ade5b31f71495d0d36a0b899acf96feb150308aaf29fc08365cce",
+      "dimensions": {
+        "width": 40,
+        "height": 38
+      },
+      "referencedBy": [],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/exclamacion@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/exclamacion@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 965,
+      "sha256": "70932170f16838cc34ac04b89d492bcac551ad0ad05393eb2a723bf515eda3c1",
+      "dimensions": {
+        "width": 60,
+        "height": 57
+      },
+      "referencedBy": [],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/house.png",
+      "outputPath": "migration-assets/paco-app/icons/house.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 266,
+      "sha256": "00cc40a87425e42a4ee1337b455cf9fadfca62e60921eb311461b3975604b99a",
+      "dimensions": {
+        "width": 21,
+        "height": 18
+      },
+      "referencedBy": [
+        "src/app/components/home-menu/home-menu.component.html"
+      ],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/house@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/house@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 412,
+      "sha256": "b915a9cf06f0491585b5c98c54dced3147cded175ae4770de427622944f7089b",
+      "dimensions": {
+        "width": 42,
+        "height": 36
+      },
+      "referencedBy": [],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/house@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/house@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 519,
+      "sha256": "dcb0bdee4201d9aaa1243d80e9e4f42ec369bb908700a11b193ad80047b8304c",
+      "dimensions": {
+        "width": 63,
+        "height": 54
+      },
+      "referencedBy": [],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/messages.png",
+      "outputPath": "migration-assets/paco-app/icons/messages.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 337,
+      "sha256": "9dbe346cb44eddda01116bf8a46eab1235a05a85017178e22ac438744587b730",
+      "dimensions": {
+        "width": 16,
+        "height": 16
+      },
+      "referencedBy": [
+        "src/app/components/home-menu/home-menu.component.html",
+        "src/app/modals/notifications-home-modal/notifications-home-modal.component.html"
+      ],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/messages@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/messages@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 459,
+      "sha256": "898b3dc8f93763165a1349c92692c5afd1313494f13f7b0135a67cb9d7207434",
+      "dimensions": {
+        "width": 31,
+        "height": 31
+      },
+      "referencedBy": [],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/messages@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/messages@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 582,
+      "sha256": "918564d56457569a9216dd7b206f2fe275692a0f5bf9bb559ff8e32b49fff5ee",
+      "dimensions": {
+        "width": 46,
+        "height": 46
+      },
+      "referencedBy": [],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/paper.png",
+      "outputPath": "migration-assets/paco-app/icons/paper.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 248,
+      "sha256": "8b0408f155319728f3399ddca8032c43f3478b0458e5472f4e17d3b9f78faced",
+      "dimensions": {
+        "width": 19,
+        "height": 21
+      },
+      "referencedBy": [
+        "src/app/components/home-menu/home-menu.component.html"
+      ],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/paper@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/paper@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 337,
+      "sha256": "baf70018d73f1d86598289c1a7220aa5f71b03dd30432ca8a19c0d097e2806b0",
+      "dimensions": {
+        "width": 38,
+        "height": 42
+      },
+      "referencedBy": [],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/paper@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/paper@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 474,
+      "sha256": "bf5e56edfbd8d76ba17b8882ca1b51b63c25388c9183accdab5db3b0297275e8",
+      "dimensions": {
+        "width": 57,
+        "height": 63
+      },
+      "referencedBy": [],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/question.png",
+      "outputPath": "migration-assets/paco-app/icons/question__2.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 429,
+      "sha256": "66f3c85eef6e8f51e47e504344f988de7fccfa081e6539765f2572f4ea898c2b",
+      "dimensions": {
+        "width": 19,
+        "height": 19
+      },
+      "referencedBy": [
+        "src/app/components/home-menu/home-menu.component.html",
+        "src/app/modals/notifications-home-modal/notifications-home-modal.component.html"
+      ],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/question@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/question@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 726,
+      "sha256": "3508c4050f545ac0581649ae28ca93199afd2feadd4720d5e4dba3758a1da8ae",
+      "dimensions": {
+        "width": 38,
+        "height": 38
+      },
+      "referencedBy": [],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/question@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/question@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1079,
+      "sha256": "58927675e37ef791115c29bd73997bc8188802e13a2a7b49ea14f3bf511a5016",
+      "dimensions": {
+        "width": 57,
+        "height": 57
+      },
+      "referencedBy": [],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/rotate.png",
+      "outputPath": "migration-assets/paco-app/icons/rotate.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 381,
+      "sha256": "5f918e979c56f9862740af97790b131d59a506567b7d26db513e25c232e94869",
+      "dimensions": {
+        "width": 16,
+        "height": 15
+      },
+      "referencedBy": [
+        "src/app/home/search/search.page.html"
+      ],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/rotate@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/rotate@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 598,
+      "sha256": "6827ec452edf833608080aa48438ccb296493364809f6c07918440ec94773aa3",
+      "dimensions": {
+        "width": 32,
+        "height": 30
+      },
+      "referencedBy": [],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/rotate@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/rotate@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 759,
+      "sha256": "686ee7549490425a2ce1ed2bfb6980ce287d41cfde224b5b946182499e4b98b6",
+      "dimensions": {
+        "width": 47,
+        "height": 44
+      },
+      "referencedBy": [],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/tournament.png",
+      "outputPath": "migration-assets/paco-app/icons/tournament__2.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 417,
+      "sha256": "01805f1eedfe4895ec75f05d821d34b4a19b94f889c5e005d9c034ce46911457",
+      "dimensions": {
+        "width": 22,
+        "height": 19
+      },
+      "referencedBy": [
+        "src/app/components/home-menu/home-menu.component.html"
+      ],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/tournament@2x.png",
+      "outputPath": "migration-assets/paco-app/icons/tournament@2x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 777,
+      "sha256": "62f471a5de9282091f24f8e2145358f5842d441205e5a8b4b15cab6aaec96851",
+      "dimensions": {
+        "width": 43,
+        "height": 38
+      },
+      "referencedBy": [],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/menu-icons/tournament@3x.png",
+      "outputPath": "migration-assets/paco-app/icons/tournament@3x.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1169,
+      "sha256": "b2a42ee3b95771e42d38ade23b386643a697a3b1872959f791e56200ac0bce9d",
+      "dimensions": {
+        "width": 65,
+        "height": 57
+      },
+      "referencedBy": [],
+      "usage": "Menu lateral / navegacion"
+    },
+    {
+      "sourcePath": "src/assets/icon/message.png",
+      "outputPath": "migration-assets/paco-app/icons/message__2.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 7774,
+      "sha256": "33f1470021bc089f058b54aeec0e3b7e9c7b4fe3ee2d70ddff6d94b0b9bc947b",
+      "dimensions": {
+        "width": 260,
+        "height": 260
+      },
+      "referencedBy": [
+        "src/app/modals/message-available/message-available.component.html"
+      ],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/movistar.png",
+      "outputPath": "migration-assets/paco-app/icons/movistar.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1396,
+      "sha256": "e65802a23d25a689bd3734a303b10ae81f3f506a10aa5d1a27f67a7fc5fcb7d7",
+      "dimensions": {
+        "width": 31,
+        "height": 30
+      },
+      "referencedBy": [],
+      "usage": "Recargas"
+    },
+    {
+      "sourcePath": "src/assets/icon/refills/aire.png",
+      "outputPath": "migration-assets/paco-app/icons/aire.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1007,
+      "sha256": "c4903ab9ceae19dbbfba0f1f79cf6161bb3f9e93f7865ddf71f432117c7d6649",
+      "dimensions": {
+        "width": 20,
+        "height": 36
+      },
+      "referencedBy": [
+        "src/app/modules/refill/choose-type/choose-type.page.html"
+      ],
+      "usage": "Recargas"
+    },
+    {
+      "sourcePath": "src/assets/icon/refills/datos.png",
+      "outputPath": "migration-assets/paco-app/icons/datos.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1040,
+      "sha256": "21456b4583ca960e5279c31fec9b4eac48d2df679c7503b242fde88bedd77a09",
+      "dimensions": {
+        "width": 28,
+        "height": 36
+      },
+      "referencedBy": [
+        "src/app/modules/refill/choose-type/choose-type.page.html"
+      ],
+      "usage": "Recargas"
+    },
+    {
+      "sourcePath": "src/assets/icon/search.svg",
+      "outputPath": "migration-assets/paco-app/icons/search.svg",
+      "category": "icons",
+      "extension": "svg",
+      "sizeBytes": 835,
+      "sha256": "f9c1ff815c8878268566414bab5b1e77de5d026fb3679e9d1ccc6b57956ba9f5",
+      "dimensions": {
+        "width": "19",
+        "height": "19",
+        "viewBox": "0 0 19 19"
+      },
+      "referencedBy": [
+        "src/app/modules/message/communication/communication.page.html",
+        "src/app/modules/refill/list/list.page.html",
+        "src/app/modules/services/pagotelevision/pagotelevision.page.html"
+      ],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/1/AXTEL.png",
+      "outputPath": "migration-assets/paco-app/icons/AXTEL.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1312,
+      "sha256": "8ac110f05d0f0e1f4cb47b3a0e74aef20b866dd173dcb2004fc6305dfac0503a",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/1/BLUE TELECOM.png",
+      "outputPath": "migration-assets/paco-app/icons/BLUE_TELECOM.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1647,
+      "sha256": "5458b074f839bae7d59286013256512a438e605b4652aeff063582fed042a0c1",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/1/Cablemas.png",
+      "outputPath": "migration-assets/paco-app/icons/Cablemas.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 3507,
+      "sha256": "2915fedb12aad7cd56ecd02d10b2258d93c0c6b2bf8d9e959409b9658802d5b6",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/1/DISH.png",
+      "outputPath": "migration-assets/paco-app/icons/DISH.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 2682,
+      "sha256": "77037a84d2635c93765f0d128ffd9d3bb60dae2c121741eea20b751359ea891c",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/1/IZZI.png",
+      "outputPath": "migration-assets/paco-app/icons/IZZI.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 968,
+      "sha256": "017aefd6776a3dbe6ec5a8521a7dd66c0a4395b4cc6633b3b220a1a057f72179",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/1/MEGACABLE.png",
+      "outputPath": "migration-assets/paco-app/icons/MEGACABLE.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 3542,
+      "sha256": "f95d41ad1dac6fa1d621102b84d12b1b1b8efb795475521281e1c3758012d626",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/1/SKY.png",
+      "outputPath": "migration-assets/paco-app/icons/SKY.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 871,
+      "sha256": "083365da33ed770f47c2a14a88b7c688b70e9c6bf7a05503e6f8066e6eeb6c65",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/1/TELMEX.png",
+      "outputPath": "migration-assets/paco-app/icons/TELMEX.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 3713,
+      "sha256": "77f13e2da06fbc0763b3b18a2809a98f32ef0caa972e64ecde80fba5e2aa749b",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/1/TOTALPLAY.png",
+      "outputPath": "migration-assets/paco-app/icons/TOTALPLAY.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 2030,
+      "sha256": "8686e22c3fd36648450a5df3805a4b775e710f5db5f2a8d0d59134f56f2eb2ee",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/1/VeTV.png",
+      "outputPath": "migration-assets/paco-app/icons/VeTV.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1698,
+      "sha256": "c3fe31cbc668fa1d02267c8f584b646383af4e9863308618399ee24d920ed78f",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/2/CFE.png",
+      "outputPath": "migration-assets/paco-app/icons/CFE.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1019,
+      "sha256": "90dba3c192a6ff88d91c1c369874a2d8e7bf896ea98d062556366c9ed2ce0b99",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/2/GASNATURAL.png",
+      "outputPath": "migration-assets/paco-app/icons/GASNATURAL.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1948,
+      "sha256": "6b629d3874a8dd14a8fbe8ee05ddc16a08b284b72a46e8d17e03edc92b4322d0",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/3/IAVEPaseU.png",
+      "outputPath": "migration-assets/paco-app/icons/IAVEPaseU.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 2683,
+      "sha256": "ae99cbf6ab93d778d303bb55ccf338c2b9b31b1bba93f199376ee6ba5f03fc8c",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/3/Televia.png",
+      "outputPath": "migration-assets/paco-app/icons/Televia.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 968,
+      "sha256": "e3318d5f2096665884da9a164684fad157826cc60f3838cd851bff4dea920074",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/4/Blim.png",
+      "outputPath": "migration-assets/paco-app/icons/Blim.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1894,
+      "sha256": "056a5e2e8c5e27845a7db3a67c2de83effd9b99d23f94338f94ab4daddb1f0db",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/4/NINTENDO..png",
+      "outputPath": "migration-assets/paco-app/icons/NINTENDO..png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1395,
+      "sha256": "0679ab165c2b14850cfd8428e51b7fc787367e638f42bec394f749b0e28df0fc",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/4/PlayStation.png",
+      "outputPath": "migration-assets/paco-app/icons/PlayStation.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 898,
+      "sha256": "a821a803ba52a455116a77607cd9d50957ad9d88fc42484bf38beb737f53ffb5",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/4/XBOX.png",
+      "outputPath": "migration-assets/paco-app/icons/XBOX.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 2134,
+      "sha256": "fbc64a6870d6d3dcc0e4ad89d8913b268821d4a71c85ac96dacca3a16bdddaf1",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/5/Gobierno CDMX.png",
+      "outputPath": "migration-assets/paco-app/icons/Gobierno_CDMX.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1257,
+      "sha256": "a48c3f0ac3e480138998eeb7e3e73764fadfb0d4110bc6ef1d4dd315b809dd5a",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/5/Gobiernos Tesorerias y Municipios.png",
+      "outputPath": "migration-assets/paco-app/icons/Gobiernos_Tesorerias_y_Municipios.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1482,
+      "sha256": "750a2ee1ff7d7ce2c96923b135ed40dab515495360b6e6f7206c07e46e8f7fba",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/5/INFONAVIT.png",
+      "outputPath": "migration-assets/paco-app/icons/INFONAVIT.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 2670,
+      "sha256": "1696902f6d54707b302789ec9e7a455c7e9f4722aeb7682008b196feec2e1420",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/5/Naucalpan.png",
+      "outputPath": "migration-assets/paco-app/icons/Naucalpan.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 2488,
+      "sha256": "acd061454de956f26761e44af45857619cffba5c615763c37f3a79578cac8d9e",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/6/AVON.png",
+      "outputPath": "migration-assets/paco-app/icons/AVON.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 550,
+      "sha256": "8c6d048ffdb17f9baa6349de2bd89c8c8b4c18bcb78fd52422a40aa316f60b7b",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/6/FULLER.png",
+      "outputPath": "migration-assets/paco-app/icons/FULLER.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 762,
+      "sha256": "9daa0b76e78272fa3a26e60fd7a1ba04ddc4dfa6e94f81b18ce568cdd29dde39",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/6/ILUSION.png",
+      "outputPath": "migration-assets/paco-app/icons/ILUSION.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1467,
+      "sha256": "993a199c0bbaf665b415befcb7adc60cea0edafdead373e9883a219e3c8a2438",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/6/JAFRA.png",
+      "outputPath": "migration-assets/paco-app/icons/JAFRA.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 2065,
+      "sha256": "0cd8e70d895b2d58ca80e4b3e97f2d8d9b3e6a520405cabe65556a532f3dac13",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/6/LBEL.png",
+      "outputPath": "migration-assets/paco-app/icons/LBEL.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 616,
+      "sha256": "94a1985b75cd73054e560413be672a5e234ddff75809a84497d0afc958aef5e5",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/6/NATURA.png",
+      "outputPath": "migration-assets/paco-app/icons/NATURA.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 2556,
+      "sha256": "a8e1780378897aa3dfeaffcb558dea36085cd3b18c0da59723cd961219cfd3fd",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/6/TUPPERWARE.png",
+      "outputPath": "migration-assets/paco-app/icons/TUPPERWARE.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 1257,
+      "sha256": "cf45a4bae6ed810cf23b0b92b02d541116384291e0c84a0b9780d8366923f899",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/icon/services/6/YVESROCHER.png",
+      "outputPath": "migration-assets/paco-app/icons/YVESROCHER.png",
+      "category": "icons",
+      "extension": "png",
+      "sizeBytes": 2104,
+      "sha256": "00eb63b6c459b2f592c3ff242ef0d4f8e6f148d0d2038fc2f3263b65027acffd",
+      "dimensions": {
+        "width": 50,
+        "height": 50
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/img/dashboard.png",
+      "outputPath": "migration-assets/paco-app/images/dashboard.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 17240,
+      "sha256": "3157605a0a2a92d22406beef2da2fcc1f690912852bcc402b246c6754ce9e985",
+      "dimensions": {
+        "width": 750,
+        "height": 1744
+      },
+      "referencedBy": [
+        "src/global.scss"
+      ],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/board-slide-1.png",
+      "outputPath": "migration-assets/paco-app/images/board-slide-1.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 13480,
+      "sha256": "883bf29bc878cb20253e8c924eab25f0d225a2d085e385aa13422b22c616e4f0",
+      "dimensions": {
+        "width": 438,
+        "height": 476
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/board-slide-2.png",
+      "outputPath": "migration-assets/paco-app/images/board-slide-2.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 16535,
+      "sha256": "62f78d9bef495bc87ced8266a4e9987c462eecb7a78adf730b89f83d095647ab",
+      "dimensions": {
+        "width": 416,
+        "height": 437
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/board-slide-3.png",
+      "outputPath": "migration-assets/paco-app/images/board-slide-3.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 17915,
+      "sha256": "c15cef9843592fbcabcccbf33ca3891f02e15e2b9d163485d1ec8932add5f016",
+      "dimensions": {
+        "width": 475,
+        "height": 466
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/board-slide-4.png",
+      "outputPath": "migration-assets/paco-app/images/board-slide-4.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 13034,
+      "sha256": "bacaea2bfbc89c4551d8a63b69bef4348f0562f5a0be876e0290528167d08412",
+      "dimensions": {
+        "width": 369,
+        "height": 454
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/comunicacion/btn_react_dislike.png",
+      "outputPath": "migration-assets/paco-app/images/btn_react_dislike.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 15092,
+      "sha256": "d49c2c32aa528ce1c540c2248ff02af64471edbf6b46067ea3e84805049fe0d4",
+      "dimensions": {
+        "width": 62,
+        "height": 62
+      },
+      "referencedBy": [
+        "src/app/modals/message/message.component.html",
+        "src/app/modules/message/mensaje/mensaje.page.html"
+      ],
+      "usage": "Comunicacion interna"
+    },
+    {
+      "sourcePath": "src/assets/imgs/comunicacion/btn_react_like.png",
+      "outputPath": "migration-assets/paco-app/images/btn_react_like.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 16871,
+      "sha256": "39250951bdb4af21290cee9a78a27d89d971846dea30f30c747ba7db840d56d5",
+      "dimensions": {
+        "width": 62,
+        "height": 62
+      },
+      "referencedBy": [
+        "src/app/modals/message/message.component.html",
+        "src/app/modules/message/mensaje/mensaje.page.html"
+      ],
+      "usage": "Comunicacion interna"
+    },
+    {
+      "sourcePath": "src/assets/imgs/comunicacion/clock.png",
+      "outputPath": "migration-assets/paco-app/images/clock.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 26505,
+      "sha256": "653ba2162e8054231d9f46b5b5bcfdbdd36d024f0b68a7382243198efedabf04",
+      "dimensions": {
+        "width": 80,
+        "height": 80
+      },
+      "referencedBy": [
+        "src/app/modals/message/message.component.html",
+        "src/app/modules/message/communication/communication.page.html",
+        "src/app/modules/message/mensaje/mensaje.page.html"
+      ],
+      "usage": "Comunicacion interna"
+    },
+    {
+      "sourcePath": "src/assets/imgs/comunicacion/dislike.png",
+      "outputPath": "migration-assets/paco-app/images/dislike.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 17514,
+      "sha256": "7f68dae86b3f5bfacc4ce102235ff420c0ef29922d89a782ac20be685ba98f00",
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "referencedBy": [
+        "src/app/modules/message/communication/communication.page.html"
+      ],
+      "usage": "Comunicacion interna"
+    },
+    {
+      "sourcePath": "src/assets/imgs/comunicacion/doc-icon.png",
+      "outputPath": "migration-assets/paco-app/images/doc-icon.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 695,
+      "sha256": "5a24012c6568ac27b97ce8656da2522601fc67b0048a788d13ef0c4ea7496747",
+      "dimensions": {
+        "width": 54,
+        "height": 62
+      },
+      "referencedBy": [
+        "src/app/modals/message/message.component.html",
+        "src/app/modules/message/mensaje/mensaje.page.html"
+      ],
+      "usage": "Comunicacion interna"
+    },
+    {
+      "sourcePath": "src/assets/imgs/comunicacion/like.png",
+      "outputPath": "migration-assets/paco-app/images/like.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 20251,
+      "sha256": "6f0002b2df2e58ef78acd0483081331060505d11752b82d83c9c5d109dab89f9",
+      "dimensions": {
+        "width": 80,
+        "height": 80
+      },
+      "referencedBy": [
+        "src/app/modules/message/communication/communication.page.html"
+      ],
+      "usage": "Comunicacion interna"
+    },
+    {
+      "sourcePath": "src/assets/imgs/comunicacion/paper-clip.png",
+      "outputPath": "migration-assets/paco-app/images/paper-clip.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 22012,
+      "sha256": "8e23da5ef719eb55c994cf7c2b8c762f4587ea44164f87f1cf7b2d65109d51e4",
+      "dimensions": {
+        "width": 80,
+        "height": 80
+      },
+      "referencedBy": [
+        "src/app/modules/message/communication/communication.page.html"
+      ],
+      "usage": "Comunicacion interna"
+    },
+    {
+      "sourcePath": "src/assets/imgs/comunicacion/place.png",
+      "outputPath": "migration-assets/paco-app/images/place.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 439977,
+      "sha256": "98eb73c2893595db5bad84c70ee77ffb7083e1f821ae712e6a47a207ca0f9911",
+      "dimensions": {
+        "width": 603,
+        "height": 356
+      },
+      "referencedBy": [],
+      "usage": "Comunicacion interna"
+    },
+    {
+      "sourcePath": "src/assets/imgs/comunicacion/user.jpg",
+      "outputPath": "migration-assets/paco-app/images/user.jpg",
+      "category": "images",
+      "extension": "jpg",
+      "sizeBytes": 37365,
+      "sha256": "ca11c5d2c8c8b2b89cd7ee8d37c1cde8a5cd8da3d2f3994a8d77bb7e1dfb1fcb",
+      "dimensions": {
+        "width": 400,
+        "height": 500
+      },
+      "referencedBy": [
+        "src/app/modules/message/communication/communication.page.html",
+        "src/app/modules/survey/encumain/encumain.page.html"
+      ],
+      "usage": "Comunicacion interna"
+    },
+    {
+      "sourcePath": "src/assets/imgs/encuestas/bein.png",
+      "outputPath": "migration-assets/paco-app/images/bein.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 24557,
+      "sha256": "e407846725eb876967634ca9df5bc09772f53d5c2f24398b32f89a3d3a30ab30",
+      "dimensions": {
+        "width": 601,
+        "height": 567
+      },
+      "referencedBy": [
+        "src/app/modules/survey/bienvenida/bienvenida.page.html"
+      ],
+      "usage": "Encuestas"
+    },
+    {
+      "sourcePath": "src/assets/imgs/encuestas/blank.png",
+      "outputPath": "migration-assets/paco-app/images/blank.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 5031,
+      "sha256": "c2575c846fc6bfff85364978e7c15be9c5b06f7f5e9484dd8cd1c0537a910e9e",
+      "dimensions": {
+        "width": 837,
+        "height": 360
+      },
+      "referencedBy": [
+        "src/app/modules/survey/multichoicesix/multichoicesix.page.html"
+      ],
+      "usage": "Encuestas"
+    },
+    {
+      "sourcePath": "src/assets/imgs/encuestas/final.png",
+      "outputPath": "migration-assets/paco-app/images/final.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 8174,
+      "sha256": "b043b13081f2bd8fc036cd8a86d8184573a6f6ce4fe418fc9b6915332dadd4d6",
+      "dimensions": {
+        "width": 275,
+        "height": 323
+      },
+      "referencedBy": [
+        "src/app/modules/survey/finalizer/finalizer.page.html"
+      ],
+      "usage": "Encuestas"
+    },
+    {
+      "sourcePath": "src/assets/imgs/encuestas/smiley-1.png",
+      "outputPath": "migration-assets/paco-app/images/smiley-1.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 86278,
+      "sha256": "8f509cbcf83b4fba06e6d8ec94a2d210fa19bf113656ce0d18916095a7862423",
+      "dimensions": {
+        "width": 315,
+        "height": 315
+      },
+      "referencedBy": [
+        "src/app/modules/survey/multichoicetwo/multichoicetwo.page.html"
+      ],
+      "usage": "Encuestas"
+    },
+    {
+      "sourcePath": "src/assets/imgs/encuestas/smiley-2.png",
+      "outputPath": "migration-assets/paco-app/images/smiley-2.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 85942,
+      "sha256": "1dfe729bf13a74cf8796061c62ae4224cf0494afbe7328c8e00a818ee545fb2b",
+      "dimensions": {
+        "width": 315,
+        "height": 315
+      },
+      "referencedBy": [
+        "src/app/modules/survey/multichoicetwo/multichoicetwo.page.html"
+      ],
+      "usage": "Encuestas"
+    },
+    {
+      "sourcePath": "src/assets/imgs/encuestas/smiley-3.png",
+      "outputPath": "migration-assets/paco-app/images/smiley-3.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 86266,
+      "sha256": "0390a0159d633899bc662efc5b157de6a211588e8731541f79c18cbe21a71d41",
+      "dimensions": {
+        "width": 315,
+        "height": 315
+      },
+      "referencedBy": [
+        "src/app/modules/survey/multichoicetwo/multichoicetwo.page.html"
+      ],
+      "usage": "Encuestas"
+    },
+    {
+      "sourcePath": "src/assets/imgs/encuestas/wink.png",
+      "outputPath": "migration-assets/paco-app/images/wink.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 66452,
+      "sha256": "b23845b1155963f16a5bbbdaf3803aade65362026d90657054d118ae9b24513a",
+      "dimensions": {
+        "width": 1020,
+        "height": 303
+      },
+      "referencedBy": [
+        "src/app/modules/survey/encumain/encumain.page.html"
+      ],
+      "usage": "Encuestas"
+    },
+    {
+      "sourcePath": "src/assets/imgs/h-1.png",
+      "outputPath": "migration-assets/paco-app/images/h-1.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 35495,
+      "sha256": "01f5338538b38fa47a5d2013970a3c7ac55962eb458964583c8ed3bcaebddfda",
+      "dimensions": {
+        "width": 200,
+        "height": 200
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/h-10.png",
+      "outputPath": "migration-assets/paco-app/images/h-10.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 36835,
+      "sha256": "0d690328048f98b8ad74884d3af0ec32bf0a4af9cc4a7003538ee85957e3b00d",
+      "dimensions": {
+        "width": 200,
+        "height": 200
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/h-2.png",
+      "outputPath": "migration-assets/paco-app/images/h-2.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 32501,
+      "sha256": "8847a7a30d1d2b1209d730bb74bbda1ec043eae33cc604eacd94159ef1da0eb1",
+      "dimensions": {
+        "width": 200,
+        "height": 200
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/h-3.png",
+      "outputPath": "migration-assets/paco-app/images/h-3.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 32110,
+      "sha256": "0b083cbe25bc239c60dcc5fcfe4f0e5cc131419de27f0a6a2034ed4a0e9dcc5d",
+      "dimensions": {
+        "width": 200,
+        "height": 200
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/h-4.png",
+      "outputPath": "migration-assets/paco-app/images/h-4.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 35017,
+      "sha256": "bc3c2937d3a33cca0a965ea464e41eef2637fd5deea445a5bc9f96dd33c6210b",
+      "dimensions": {
+        "width": 200,
+        "height": 200
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/h-5.png",
+      "outputPath": "migration-assets/paco-app/images/h-5.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 33095,
+      "sha256": "35a580c25c2a8eb3a834008831620a661ce1ff6ed5de54b8c6efc7c73368784e",
+      "dimensions": {
+        "width": 200,
+        "height": 200
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/h-6.png",
+      "outputPath": "migration-assets/paco-app/images/h-6.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 33337,
+      "sha256": "c33f1381575f1e23b96020c242fa7e1641189dca368ee57bd980811ae4456814",
+      "dimensions": {
+        "width": 200,
+        "height": 200
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/h-7.png",
+      "outputPath": "migration-assets/paco-app/images/h-7.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 35741,
+      "sha256": "a63b9a3f84f9f8b7a84804e5c5b9f68b08bea87afe0215f813120f8d88eba0f4",
+      "dimensions": {
+        "width": 200,
+        "height": 200
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/h-8.png",
+      "outputPath": "migration-assets/paco-app/images/h-8.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 40631,
+      "sha256": "769c25b5516547159a9ab486d96956d62bc5fd565907b77728bbcd94468b9661",
+      "dimensions": {
+        "width": 200,
+        "height": 200
+      },
+      "referencedBy": [
+        "src/app/modules/survey/encunhay/encunhay.page.html"
+      ],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/h-9.png",
+      "outputPath": "migration-assets/paco-app/images/h-9.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 30551,
+      "sha256": "83983fc65e3e41b011c2b695deda5edf47c4d443e12cce212feccced2e2126de",
+      "dimensions": {
+        "width": 200,
+        "height": 200
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/home-bg.png",
+      "outputPath": "migration-assets/paco-app/images/home-bg.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 63039,
+      "sha256": "686a4573ba5e18a275c0b1de95aa1348e8badec1518765730916fb530f921609",
+      "dimensions": {
+        "width": 1080,
+        "height": 1920
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/home-chat.png",
+      "outputPath": "migration-assets/paco-app/images/home-chat.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 53632,
+      "sha256": "b37f2b361761c7e03852efaf1df67db71b38bff0573f1feaf986c4b94d9d6f99",
+      "dimensions": {
+        "width": 684,
+        "height": 210
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/ic_1.png",
+      "outputPath": "migration-assets/paco-app/images/ic_1.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 412,
+      "sha256": "b915a9cf06f0491585b5c98c54dced3147cded175ae4770de427622944f7089b",
+      "dimensions": {
+        "width": 42,
+        "height": 36
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/ic_2.png",
+      "outputPath": "migration-assets/paco-app/images/ic_2.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 777,
+      "sha256": "1b74783328956807450601c0cf616983874d07983c0aa64e3862199530792394",
+      "dimensions": {
+        "width": 38,
+        "height": 38
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/ic_3.png",
+      "outputPath": "migration-assets/paco-app/images/ic_3.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 337,
+      "sha256": "baf70018d73f1d86598289c1a7220aa5f71b03dd30432ca8a19c0d097e2806b0",
+      "dimensions": {
+        "width": 38,
+        "height": 42
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/ic_4.png",
+      "outputPath": "migration-assets/paco-app/images/ic_4.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 380,
+      "sha256": "a2f569a5adcbe760639d4cf1d89c973306d6202ec33ac15e17d75532b9345383",
+      "dimensions": {
+        "width": 34,
+        "height": 42
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/ic_5.png",
+      "outputPath": "migration-assets/paco-app/images/ic_5.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 459,
+      "sha256": "898b3dc8f93763165a1349c92692c5afd1313494f13f7b0135a67cb9d7207434",
+      "dimensions": {
+        "width": 31,
+        "height": 31
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/ic_6.png",
+      "outputPath": "migration-assets/paco-app/images/ic_6.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 777,
+      "sha256": "62f471a5de9282091f24f8e2145358f5842d441205e5a8b4b15cab6aaec96851",
+      "dimensions": {
+        "width": 43,
+        "height": 38
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/ic_7.png",
+      "outputPath": "migration-assets/paco-app/images/ic_7.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 726,
+      "sha256": "3508c4050f545ac0581649ae28ca93199afd2feadd4720d5e4dba3758a1da8ae",
+      "dimensions": {
+        "width": 38,
+        "height": 38
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/ic_8.png",
+      "outputPath": "migration-assets/paco-app/images/ic_8.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 694,
+      "sha256": "4583317aef7ade5b31f71495d0d36a0b899acf96feb150308aaf29fc08365cce",
+      "dimensions": {
+        "width": 40,
+        "height": 38
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/ic_9.png",
+      "outputPath": "migration-assets/paco-app/images/ic_9.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 1175,
+      "sha256": "c25e53ede6fd5713511d10715b4518c2a52cdad337261526f28c2c07051f3f1b",
+      "dimensions": {
+        "width": 57,
+        "height": 57
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/img-logo.png",
+      "outputPath": "migration-assets/paco-app/images/img-logo.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 10030,
+      "sha256": "52e3da632b01eb6da95338c40354738118f96bb5b39c9b348f7b8128c5a747b6",
+      "dimensions": {
+        "width": 525,
+        "height": 210
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/login-confirm.png",
+      "outputPath": "migration-assets/paco-app/images/login-confirm.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 13333,
+      "sha256": "214ddee1aba6f1c433d0f896f1895b8c9304fb48f3ac05db50304779def9260b",
+      "dimensions": {
+        "width": 466,
+        "height": 447
+      },
+      "referencedBy": [],
+      "usage": "Onboarding / login / activacion"
+    },
+    {
+      "sourcePath": "src/assets/imgs/logo.png",
+      "outputPath": "migration-assets/paco-app/images/logo.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 15845,
+      "sha256": "cafb89eb4d73cb0b3a4b406d860b9ace852a626b1409ba1eeb6ce39bf3a70cea",
+      "dimensions": {
+        "width": 333,
+        "height": 468
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/ast.png",
+      "outputPath": "migration-assets/paco-app/images/ast.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 181536,
+      "sha256": "4a8be662bc7dd4511b45ef053878495655d8b2701f06d96a862c41b277d3e93a",
+      "dimensions": {
+        "width": 861,
+        "height": 486
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/b-1.png",
+      "outputPath": "migration-assets/paco-app/images/b-1.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 22314,
+      "sha256": "99a7c822c831ead8aaad372a7f8bf98b1e4692b6807e774f9d8849a8b3093d79",
+      "dimensions": {
+        "width": 180,
+        "height": 180
+      },
+      "referencedBy": [
+        "src/app/modules/services/pagodemain/pagodemain.page.html"
+      ],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/b-2.png",
+      "outputPath": "migration-assets/paco-app/images/b-2.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 29739,
+      "sha256": "825aca51d22fd6bff74ee93e2d58292dc5e07af9947478ca3778d50f8e25b160",
+      "dimensions": {
+        "width": 180,
+        "height": 180
+      },
+      "referencedBy": [
+        "src/app/modules/services/pagodemain/pagodemain.page.html"
+      ],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/b-3.png",
+      "outputPath": "migration-assets/paco-app/images/b-3.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 21063,
+      "sha256": "d8b9af0cbdbbff66972e7176ac0afa1e46d61463e7fae0ebc6015bce2b57bad6",
+      "dimensions": {
+        "width": 180,
+        "height": 180
+      },
+      "referencedBy": [
+        "src/app/modules/services/pagodemain/pagodemain.page.html"
+      ],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/b-4.png",
+      "outputPath": "migration-assets/paco-app/images/b-4.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 20587,
+      "sha256": "b3ed4f602627a2c28c63b094c47aadcb9a740104d43aa04e1340c92738a1c608",
+      "dimensions": {
+        "width": 180,
+        "height": 180
+      },
+      "referencedBy": [
+        "src/app/modules/services/pagodemain/pagodemain.page.html"
+      ],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/b-5.png",
+      "outputPath": "migration-assets/paco-app/images/b-5.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 36395,
+      "sha256": "f29d359d6517c7036401210fbe521c1a70c340e53d67f3178b5dc6f275344b9f",
+      "dimensions": {
+        "width": 180,
+        "height": 180
+      },
+      "referencedBy": [
+        "src/app/modules/services/pagodemain/pagodemain.page.html"
+      ],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/b-6.png",
+      "outputPath": "migration-assets/paco-app/images/b-6.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 20137,
+      "sha256": "afc1fe78f5244472006c50b97d5f0eeb775dfc8175c8dff746b2a95fe6fb4470",
+      "dimensions": {
+        "width": 180,
+        "height": 180
+      },
+      "referencedBy": [
+        "src/app/modules/services/pagodemain/pagodemain.page.html"
+      ],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/camera.png",
+      "outputPath": "migration-assets/paco-app/images/camera.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 1069,
+      "sha256": "554fa0bdafe015eea772e9f15994fea04a21cb1fd8613c26e101afd39c76bfce",
+      "dimensions": {
+        "width": 60,
+        "height": 52
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/cat_1.png",
+      "outputPath": "migration-assets/paco-app/images/cat_1.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 48411,
+      "sha256": "0e9b6fe9485a620949035610d38543bd26a56cb555f191fb2d11ad9553bcd099",
+      "dimensions": {
+        "width": 241,
+        "height": 241
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/cat_2.png",
+      "outputPath": "migration-assets/paco-app/images/cat_2.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 51346,
+      "sha256": "a4a52a26cc38dd0e95c43f086b623ab7c617925c635edbddee63910041c79031",
+      "dimensions": {
+        "width": 241,
+        "height": 241
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/cat_3.png",
+      "outputPath": "migration-assets/paco-app/images/cat_3.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 46906,
+      "sha256": "664a94acb06bc3db242afd340a773aae1f9c5f069391286a463b73590e4b1261",
+      "dimensions": {
+        "width": 241,
+        "height": 241
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/cat_4.png",
+      "outputPath": "migration-assets/paco-app/images/cat_4.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 49495,
+      "sha256": "92c2a79d32f042ca26bd1ff351702b15dd41dcd834d2e5951491ec8f3b05a2b2",
+      "dimensions": {
+        "width": 241,
+        "height": 241
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/cat_5.png",
+      "outputPath": "migration-assets/paco-app/images/cat_5.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 49845,
+      "sha256": "af24c3273b08385a2390b52dadddf1099466345636a72fd8841155db9f4b7a3d",
+      "dimensions": {
+        "width": 241,
+        "height": 241
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/message.png",
+      "outputPath": "migration-assets/paco-app/images/message.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 6921,
+      "sha256": "97f6fa0a915677a8ed6109507643ee81e5d226e75336968e0a46cb5e79d75c6a",
+      "dimensions": {
+        "width": 309,
+        "height": 305
+      },
+      "referencedBy": [
+        "src/app/modules/services/messagenotify/messagenotify.page.html"
+      ],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/tab-1-dark.png",
+      "outputPath": "migration-assets/paco-app/images/tab-1-dark.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 642,
+      "sha256": "4578dc183a8b679d024004443e9c647acaffbf38a866446e6d39c412fc1beb18",
+      "dimensions": {
+        "width": 48,
+        "height": 48
+      },
+      "referencedBy": [
+        "src/app/modules/services/pagotelevision/pagotelevision.page.html"
+      ],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/tab-1-light.png",
+      "outputPath": "migration-assets/paco-app/images/tab-1-light.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 548,
+      "sha256": "5c91b849eb748da9e71493ca9dd36405e7b5dc04f8eb21feec3b48b27e687cfe",
+      "dimensions": {
+        "width": 48,
+        "height": 48
+      },
+      "referencedBy": [
+        "src/app/modules/services/pagotelevision/pagotelevision.page.html"
+      ],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/tab-2-dark.png",
+      "outputPath": "migration-assets/paco-app/images/tab-2-dark.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 571,
+      "sha256": "5f4705f075df1465038994c05b2a7420f637460f7f96a1a690aa5cc27e6fb6b8",
+      "dimensions": {
+        "width": 48,
+        "height": 48
+      },
+      "referencedBy": [
+        "src/app/modules/services/pagotelevision/pagotelevision.page.html"
+      ],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/tab-2-light.png",
+      "outputPath": "migration-assets/paco-app/images/tab-2-light.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 243,
+      "sha256": "ab5a63c69c96c1a401ea628f92cb978ae22d00b0a98398b4cccbd7e10a71c9ed",
+      "dimensions": {
+        "width": 48,
+        "height": 48
+      },
+      "referencedBy": [
+        "src/app/modules/services/pagotelevision/pagotelevision.page.html"
+      ],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/tv-1.png",
+      "outputPath": "migration-assets/paco-app/images/tv-1.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 24011,
+      "sha256": "ca77986f600c01c802bd416cf8ec8b52e07cd6f1259b9402d34ea745625a4134",
+      "dimensions": {
+        "width": 180,
+        "height": 180
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/tv-2.png",
+      "outputPath": "migration-assets/paco-app/images/tv-2.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 42555,
+      "sha256": "28143cd30a488bae6ab2931a5afde63aa8114982b3a6f07e82230601b1d9cc23",
+      "dimensions": {
+        "width": 180,
+        "height": 180
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/tv-3.png",
+      "outputPath": "migration-assets/paco-app/images/tv-3.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 34187,
+      "sha256": "67ee088313e54ff23d6c8bd646fd1ff31d08fca059b2316674eedb271e61d95c",
+      "dimensions": {
+        "width": 180,
+        "height": 180
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/tv-4.png",
+      "outputPath": "migration-assets/paco-app/images/tv-4.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 29573,
+      "sha256": "50d3c57958f882cb21872ac8b9e2e3f2d7fe1f5a6bb5c76c63c36b8f67fb025c",
+      "dimensions": {
+        "width": 180,
+        "height": 180
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/tv-5.png",
+      "outputPath": "migration-assets/paco-app/images/tv-5.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 20589,
+      "sha256": "3258a2cbf8a88a33c5f0dd8f986db527508442edb834ccc7a8230d4abca36bd1",
+      "dimensions": {
+        "width": 180,
+        "height": 180
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/pagodeservicio/tv-6.png",
+      "outputPath": "migration-assets/paco-app/images/tv-6.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 24111,
+      "sha256": "9c2ce061c3e90ee00b9ba3d6f4e1846fec28b77bd075157b1d6ebb146398e98d",
+      "dimensions": {
+        "width": 180,
+        "height": 180
+      },
+      "referencedBy": [],
+      "usage": "Pago de servicios"
+    },
+    {
+      "sourcePath": "src/assets/imgs/person.png",
+      "outputPath": "migration-assets/paco-app/images/person.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 54014,
+      "sha256": "9d0f36f3201e6602f4e553900ea22dcfde8083ad9710413ff01f1525370265c3",
+      "dimensions": {
+        "width": 180,
+        "height": 180
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/reg-pass.png",
+      "outputPath": "migration-assets/paco-app/images/reg-pass.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 27555,
+      "sha256": "d145d1ada9c3c01e6c2e30c28c88d60ff5c96adfc34fa79dc94e53c0cdee32c7",
+      "dimensions": {
+        "width": 600,
+        "height": 600
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/search-icon.png",
+      "outputPath": "migration-assets/paco-app/images/search-icon.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 19331,
+      "sha256": "d7fb2b34ceb92fc8ca65575ddef2645827c8a6ee3e65b4d767894de38d4b14b2",
+      "dimensions": {
+        "width": 55,
+        "height": 55
+      },
+      "referencedBy": [
+        "src/app/modules/message/communication/communication.page.html"
+      ],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/imgs/text-logo.png",
+      "outputPath": "migration-assets/paco-app/images/text-logo.png",
+      "category": "images",
+      "extension": "png",
+      "sizeBytes": 17752,
+      "sha256": "59539c07b3591fd58cc86869db8a71df8c52421c95c7e2eb035191992a878c63",
+      "dimensions": {
+        "width": 289,
+        "height": 112
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    },
+    {
+      "sourcePath": "src/assets/shapes.svg",
+      "outputPath": "migration-assets/paco-app/images/shapes.svg",
+      "category": "images",
+      "extension": "svg",
+      "sizeBytes": 1176,
+      "sha256": "cf1b68281716f452dd620f81fd31d98bfef7dd521b8098433710bda7a32918f2",
+      "dimensions": {
+        "width": "350",
+        "height": "140",
+        "viewBox": null
+      },
+      "referencedBy": [],
+      "usage": "Asset visual general"
+    }
+  ],
+  "duplicateGroups": [
+    {
+      "sha256": "0b083cbe25bc239c60dcc5fcfe4f0e5cc131419de27f0a6a2034ed4a0e9dcc5d",
+      "sourcePaths": [
+        "src/assets/icon/home-icons/wallet.png",
+        "src/assets/imgs/h-3.png"
+      ]
+    },
+    {
+      "sha256": "0d690328048f98b8ad74884d3af0ec32bf0a4af9cc4a7003538ee85957e3b00d",
+      "sourcePaths": [
+        "src/assets/icon/home-icons/trophy.png",
+        "src/assets/imgs/h-10.png"
+      ]
+    },
+    {
+      "sha256": "14340f0d282d5792be5243afaccde8581df7cfe1603acd854b7f3b252724edc1",
+      "sourcePaths": [
+        "resources/android/splash/drawable-port-mdpi-screen.png",
+        "resources/ios/splash/Default~iphone.png"
+      ]
+    },
+    {
+      "sha256": "1656b70be52d8e629c66c959d58f83f20199a21114f5a91b3ac79ad6afb39569",
+      "sourcePaths": [
+        "resources/android/icon/drawable-xxhdpi-icon.png",
+        "resources/ios/icon/icon-72@2x.png"
+      ]
+    },
+    {
+      "sha256": "1b74783328956807450601c0cf616983874d07983c0aa64e3862199530792394",
+      "sourcePaths": [
+        "src/assets/icon/menu-icons/circle@2x.png",
+        "src/assets/imgs/ic_2.png"
+      ]
+    },
+    {
+      "sha256": "1bc584c7933a16d006ba3aec129d61ec662c8d2b0a34622496097da0e906e6d7",
+      "sourcePaths": [
+        "resources/android/icon/drawable-mdpi-icon.png",
+        "resources/ios/icon/icon-24@2x.png"
+      ]
+    },
+    {
+      "sha256": "214ddee1aba6f1c433d0f896f1895b8c9304fb48f3ac05db50304779def9260b",
+      "sourcePaths": [
+        "src/assets/icon/IMG_PC_2@3x.png",
+        "src/assets/imgs/login-confirm.png"
+      ]
+    },
+    {
+      "sha256": "3508c4050f545ac0581649ae28ca93199afd2feadd4720d5e4dba3758a1da8ae",
+      "sourcePaths": [
+        "src/assets/icon/menu-icons/question@2x.png",
+        "src/assets/imgs/ic_7.png"
+      ]
+    },
+    {
+      "sha256": "35a580c25c2a8eb3a834008831620a661ce1ff6ed5de54b8c6efc7c73368784e",
+      "sourcePaths": [
+        "src/assets/icon/home-icons/doctor.png",
+        "src/assets/imgs/h-5.png"
+      ]
+    },
+    {
+      "sha256": "36defe305e04a29e1283848c761efa8e2fdb51c057b039266fd9cb1e572085ba",
+      "sourcePaths": [
+        "resources/ios/icon/icon-20@3x.png",
+        "resources/ios/icon/icon-60.png"
+      ]
+    },
+    {
+      "sha256": "4578dc183a8b679d024004443e9c647acaffbf38a866446e6d39c412fc1beb18",
+      "sourcePaths": [
+        "src/assets/icon/list_selected.png",
+        "src/assets/imgs/pagodeservicio/tab-1-dark.png"
+      ]
+    },
+    {
+      "sha256": "4583317aef7ade5b31f71495d0d36a0b899acf96feb150308aaf29fc08365cce",
+      "sourcePaths": [
+        "src/assets/icon/menu-icons/exclamacion@2x.png",
+        "src/assets/imgs/ic_8.png"
+      ]
+    },
+    {
+      "sha256": "4d16a36fb5f2b4f581cc69a55f5a728fc12f470619f32cca085a38db6687eb02",
+      "sourcePaths": [
+        "resources/ios/icon/icon-29@3x.png",
+        "resources/ios/icon/icon-small@3x.png"
+      ]
+    },
+    {
+      "sha256": "5f2ee81b1e8ce389cf0b3a5e3137fbd1339e5f929b361ec5dadcbb6ae747d64d",
+      "sourcePaths": [
+        "resources/ios/icon/icon-29@2x.png",
+        "resources/ios/icon/icon-small@2x.png"
+      ]
+    },
+    {
+      "sha256": "5f4705f075df1465038994c05b2a7420f637460f7f96a1a690aa5cc27e6fb6b8",
+      "sourcePaths": [
+        "src/assets/icon/grid_selected.png",
+        "src/assets/imgs/pagodeservicio/tab-2-dark.png"
+      ]
+    },
+    {
+      "sha256": "62f471a5de9282091f24f8e2145358f5842d441205e5a8b4b15cab6aaec96851",
+      "sourcePaths": [
+        "src/assets/icon/menu-icons/tournament@2x.png",
+        "src/assets/imgs/ic_6.png"
+      ]
+    },
+    {
+      "sha256": "62f78d9bef495bc87ced8266a4e9987c462eecb7a78adf730b89f83d095647ab",
+      "sourcePaths": [
+        "src/assets/icon/IMG_PC3.png",
+        "src/assets/icon/IMG_PC3@3x.png",
+        "src/assets/imgs/board-slide-2.png"
+      ]
+    },
+    {
+      "sha256": "734b3221a59712035b2a654ae44cccbbbcb0467d1a7be200c022c59e1ea9c7b6",
+      "sourcePaths": [
+        "resources/ios/icon/icon-20@2x.png",
+        "resources/ios/icon/icon-40.png"
+      ]
+    },
+    {
+      "sha256": "769c25b5516547159a9ab486d96956d62bc5fd565907b77728bbcd94468b9661",
+      "sourcePaths": [
+        "src/assets/icon/home-icons/question.png",
+        "src/assets/imgs/h-8.png"
+      ]
+    },
+    {
+      "sha256": "7aafe53ce73ec323b15b159252b1c26a5384bcead0ef16ccc369719f33cdd487",
+      "sourcePaths": [
+        "resources/ios/icon/icon-40@3x.png",
+        "resources/ios/icon/icon-60@2x.png"
+      ]
+    },
+    {
+      "sha256": "7eb53606bbfdc6beb291ddad738ab5f8644b1931db03859a15375f26cbf5985e",
+      "sourcePaths": [
+        "resources/android/icon/drawable-hdpi-icon.png",
+        "resources/ios/icon/icon-72.png"
+      ]
+    },
+    {
+      "sha256": "83983fc65e3e41b011c2b695deda5edf47c4d443e12cce212feccced2e2126de",
+      "sourcePaths": [
+        "src/assets/icon/home-icons/megaphone.png",
+        "src/assets/imgs/h-9.png"
+      ]
+    },
+    {
+      "sha256": "83da3386f6a014b49ae28f0b9f00b923978622d0ac64347c433f67a5547eb8a1",
+      "sourcePaths": [
+        "resources/ios/icon/icon-29.png",
+        "resources/ios/icon/icon-small.png"
+      ]
+    },
+    {
+      "sha256": "883bf29bc878cb20253e8c924eab25f0d225a2d085e385aa13422b22c616e4f0",
+      "sourcePaths": [
+        "src/assets/icon/IMG_PC4.png",
+        "src/assets/icon/IMG_PC4@3x.png",
+        "src/assets/imgs/board-slide-1.png"
+      ]
+    },
+    {
+      "sha256": "8847a7a30d1d2b1209d730bb74bbda1ec043eae33cc604eacd94159ef1da0eb1",
+      "sourcePaths": [
+        "src/assets/icon/home-icons/cell.png",
+        "src/assets/imgs/h-2.png"
+      ]
+    },
+    {
+      "sha256": "898b3dc8f93763165a1349c92692c5afd1313494f13f7b0135a67cb9d7207434",
+      "sourcePaths": [
+        "src/assets/icon/menu-icons/messages@2x.png",
+        "src/assets/imgs/ic_5.png"
+      ]
+    },
+    {
+      "sha256": "9d0f36f3201e6602f4e553900ea22dcfde8083ad9710413ff01f1525370265c3",
+      "sourcePaths": [
+        "src/assets/icon/Mask Group@3x.png",
+        "src/assets/imgs/person.png"
+      ]
+    },
+    {
+      "sha256": "a2f569a5adcbe760639d4cf1d89c973306d6202ec33ac15e17d75532b9345383",
+      "sourcePaths": [
+        "src/assets/icon/menu-icons/doc@2x.png",
+        "src/assets/imgs/ic_4.png"
+      ]
+    },
+    {
+      "sha256": "a63b9a3f84f9f8b7a84804e5c5b9f68b08bea87afe0215f813120f8d88eba0f4",
+      "sourcePaths": [
+        "src/assets/icon/home-icons/message.png",
+        "src/assets/imgs/h-7.png"
+      ]
+    },
+    {
+      "sha256": "ab5a63c69c96c1a401ea628f92cb978ae22d00b0a98398b4cccbd7e10a71c9ed",
+      "sourcePaths": [
+        "src/assets/icon/grid.png",
+        "src/assets/imgs/pagodeservicio/tab-2-light.png"
+      ]
+    },
+    {
+      "sha256": "b37f2b361761c7e03852efaf1df67db71b38bff0573f1feaf986c4b94d9d6f99",
+      "sourcePaths": [
+        "src/assets/icon/home-icons/PACO.png",
+        "src/assets/icon/home-icons/PACO@2x.png",
+        "src/assets/imgs/home-chat.png"
+      ]
+    },
+    {
+      "sha256": "b915a9cf06f0491585b5c98c54dced3147cded175ae4770de427622944f7089b",
+      "sourcePaths": [
+        "src/assets/icon/menu-icons/house@2x.png",
+        "src/assets/imgs/ic_1.png"
+      ]
+    },
+    {
+      "sha256": "bacaea2bfbc89c4551d8a63b69bef4348f0562f5a0be876e0290528167d08412",
+      "sourcePaths": [
+        "src/assets/icon/Group4.png",
+        "src/assets/icon/Group4@3x.png",
+        "src/assets/imgs/board-slide-4.png"
+      ]
+    },
+    {
+      "sha256": "baf70018d73f1d86598289c1a7220aa5f71b03dd30432ca8a19c0d097e2806b0",
+      "sourcePaths": [
+        "src/assets/icon/menu-icons/paper@2x.png",
+        "src/assets/imgs/ic_3.png"
+      ]
+    },
+    {
+      "sha256": "bc3c2937d3a33cca0a965ea464e41eef2637fd5deea445a5bc9f96dd33c6210b",
+      "sourcePaths": [
+        "src/assets/icon/home-icons/discount.png",
+        "src/assets/imgs/h-4.png"
+      ]
+    },
+    {
+      "sha256": "c15cef9843592fbcabcccbf33ca3891f02e15e2b9d163485d1ec8932add5f016",
+      "sourcePaths": [
+        "src/assets/icon/Group3.png",
+        "src/assets/icon/Group3@3x.png",
+        "src/assets/imgs/board-slide-3.png"
+      ]
+    },
+    {
+      "sha256": "c25e53ede6fd5713511d10715b4518c2a52cdad337261526f28c2c07051f3f1b",
+      "sourcePaths": [
+        "src/assets/icon/menu-icons/config@3x.png",
+        "src/assets/imgs/ic_9.png"
+      ]
+    },
+    {
+      "sha256": "c33f1381575f1e23b96020c242fa7e1641189dca368ee57bd980811ae4456814",
+      "sourcePaths": [
+        "src/assets/icon/home-icons/guard.png",
+        "src/assets/imgs/h-6.png"
+      ]
+    },
+    {
+      "sha256": "cafb89eb4d73cb0b3a4b406d860b9ace852a626b1409ba1eeb6ce39bf3a70cea",
+      "sourcePaths": [
+        "src/assets/icon/iconMain.png",
+        "src/assets/imgs/logo.png"
+      ]
+    },
+    {
+      "sha256": "d145d1ada9c3c01e6c2e30c28c88d60ff5c96adfc34fa79dc94e53c0cdee32c7",
+      "sourcePaths": [
+        "src/assets/icon/check.png",
+        "src/assets/imgs/reg-pass.png"
+      ]
+    }
+  ],
+  "missingReferencedAssets": [],
+  "thirdPartyAssetSets": [
+    {
+      "source": "node_modules/ionicons/dist/ionicons/svg",
+      "configuredIn": "angular.json",
+      "note": "Conjunto de iconos de dependencia Ionicons; no es asset propio versionado del repo."
+    }
+  ]
+}

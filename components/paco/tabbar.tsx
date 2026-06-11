@@ -1,6 +1,6 @@
-// Barra de navegacion inferior sticky. Cinco posiciones: accesos directos a
+// Dock de navegacion inferior flotante. Cinco posiciones: accesos directos a
 // los hubs de uso diario y "Mas" para abrir el menu completo. Material glass
-// con hairline superior, icono Phosphor fill cuando esta activo y pildora
+// con blur real en web, icono Phosphor fill cuando esta activo y pildora
 // indicadora que desliza con spring (misma fisica que Segmented).
 
 import { useEffect, useRef, useState } from "react";
@@ -48,26 +48,50 @@ export function PacoTabBar() {
   if (!loggedIn || surveyBlocked) return null;
   if (hiddenExact.includes(pathname) || isConversation(pathname)) return null;
 
+  const dockGlassStyle =
+    Platform.OS === "web"
+      ? ({
+          backdropFilter: "saturate(180%) blur(28px)",
+          WebkitBackdropFilter: "saturate(180%) blur(28px)",
+          boxShadow: "0 22px 54px rgba(32, 44, 137, 0.22), 0 6px 18px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255,255,255,0.78)",
+        } as object)
+      : ({
+          shadowColor: "#202C89",
+          shadowOffset: { width: 0, height: 18 },
+          shadowOpacity: 0.22,
+          shadowRadius: 28,
+          elevation: 18,
+        } as object);
+
+  const dockContainerStyle =
+    Platform.OS === "web"
+      ? ({ position: "fixed", left: 0, right: 0, bottom: 8, zIndex: 9999 } as object)
+      : ({ position: "absolute", left: 0, right: 0, bottom: 8, zIndex: 9999, elevation: 999 } as object);
+
   return (
-    <View
-      onLayout={(event) => setWidth(event.nativeEvent.layout.width)}
-      style={Platform.OS === "web" ? ({ backdropFilter: "blur(18px)" } as object) : null}
-      className="relative flex-row border-t border-slate-900/10 bg-white/85 px-1 pb-5 pt-2"
-    >
+    <View pointerEvents="box-none" style={dockContainerStyle} className="items-center px-4">
+      <View
+        onLayout={(event) => setWidth(event.nativeEvent.layout.width - 12)}
+        style={dockGlassStyle}
+        className="relative w-full max-w-md flex-row overflow-hidden rounded-[20px] border border-white/70 bg-white/55 p-1.5"
+      >
       {segment > 0 ? (
         <Animated.View
           style={{
             pointerEvents: "none",
             position: "absolute",
             top: 6,
-            left: 0,
+            bottom: 6,
+            left: 6,
             width: segment,
-            alignItems: "center",
+            borderRadius: 16,
+            backgroundColor: "rgba(255,255,255,0.82)",
+            borderWidth: 1,
+            borderColor: "rgba(255,255,255,0.9)",
+            boxShadow: Platform.OS === "web" ? "0 8px 22px rgba(32, 44, 137, 0.14)" : undefined,
             transform: [{ translateX: slide }],
           }}
-        >
-          <View className="h-1 w-9 rounded-full bg-brand-500" />
-        </Animated.View>
+        />
       ) : null}
 
       {tabs.map((tab, index) => {
@@ -81,15 +105,16 @@ export function PacoTabBar() {
             onPress={() => {
               if (!active) router.replace(tab.href);
             }}
-            className="min-h-12 flex-1 items-center justify-center gap-1 pt-1.5 active:opacity-60"
+            className="min-h-[58px] flex-1 items-center justify-center gap-0.5 rounded-2xl active:opacity-60"
           >
-            <tab.icon size={23} color={active ? "#2F42CB" : "#64748b"} weight={active ? "fill" : "bold"} />
+            <tab.icon size={22} color={active ? "#2F42CB" : "#64748b"} weight={active ? "fill" : "bold"} />
             <Text className={active ? "text-[10px] font-bold text-brand-600" : "text-[10px] font-semibold text-slate-500"}>
               {tab.label}
             </Text>
           </Pressable>
         );
       })}
+      </View>
     </View>
   );
 }

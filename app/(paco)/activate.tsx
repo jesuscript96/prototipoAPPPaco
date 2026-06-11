@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import { Phone, Send } from "@/components/paco/glyphs";
-import { Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
+import { illustrationAssets } from "@/components/paco/assets";
 import { Button, Card, Field, InlineAlert, Screen } from "@/components/paco/layout";
 import { SuccessCard } from "@/components/paco/ui";
 import { mockSendActivation } from "@/lib/paco-api";
@@ -38,6 +39,7 @@ export default function ActivateScreen() {
         <SuccessCard
           title="Solicitud enviada"
           description={`Enviamos la solicitud de activación para el número ${phone || "registrado"}. Recibirás un SMS con tu liga de activación en los próximos minutos.`}
+          image={illustrationAssets.success}
         >
           <View className="w-full gap-2 pt-2">
             <Button onPress={() => router.replace("/(paco)/login")}>Ir a iniciar sesión</Button>
@@ -48,6 +50,10 @@ export default function ActivateScreen() {
         </SuccessCard>
       ) : (
         <>
+          <Card className="items-center gap-2">
+            <Image source={illustrationAssets.activation} resizeMode="contain" style={{ width: 190, height: 126 }} />
+            <Text className="text-center text-sm font-semibold text-slate-600">Validación rápida con el teléfono registrado por RH.</Text>
+          </Card>
           <Card className="gap-4">
             <View className="flex-row items-center gap-3">
               <View className="h-12 w-12 items-center justify-center rounded-2xl bg-brand-50">

@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { MessageCircle, PiggyBank, ReceiptText, Smartphone, Wallet } from "@/components/paco/glyphs";
-import { ScrollView, Text, View } from "react-native";
+import { Image, ScrollView, Text, View } from "react-native";
+import { financeAssets, illustrationAssets, moduleAssets } from "@/components/paco/assets";
 import { Button, Card, EmptyState, Screen, Section } from "@/components/paco/layout";
 import { ChatBubble, ChatComposer, ListGroup, Row, Segmented, SelectChip, StackedBar, mxn } from "@/components/paco/ui";
 import { Shimmer, useAnimatedNumber, useFakeLoad } from "@/components/paco/motion";
@@ -78,6 +79,7 @@ export default function ExpensesScreen() {
       description="Adeudos por retener en tu siguiente nómina y el historial de movimientos hechos desde Paco."
     >
       <Card className="gap-1 bg-ink">
+        <Image source={financeAssets.cardSent} resizeMode="contain" style={{ alignSelf: "flex-end", width: 150, height: 64 }} />
         <Text className="text-xs font-bold uppercase tracking-[1px] text-white/70">Total de adeudos</Text>
         <Text className="text-4xl font-bold tracking-tight text-white">{mxn(Math.round(animatedDebt))}</Text>
         <Text className="text-sm text-white/80">{totalDebt > 0 ? "Se retendrá en la nómina del 15 de junio de 2026." : "No tienes adeudos pendientes."}</Text>
@@ -100,7 +102,7 @@ export default function ExpensesScreen() {
             ))}
           </View>
         ) : debts.length === 0 ? (
-          <EmptyState title="$0 en adeudos" description="Cuando solicites un adelanto o pago con cargo a nómina, aparecerá aquí." icon={PiggyBank} />
+          <EmptyState title="$0 en adeudos" description="Cuando solicites un adelanto o pago con cargo a nómina, aparecerá aquí." icon={PiggyBank} image={moduleAssets.expenses} />
         ) : (
           <ListGroup>
             {debts.map((m) => (
@@ -134,7 +136,7 @@ export default function ExpensesScreen() {
           </Section>
 
           {filtered.length === 0 ? (
-            <EmptyState title="Sin movimientos" description="No hay gastos con los filtros seleccionados. Prueba otro periodo o tipo." icon={PiggyBank} />
+            <EmptyState title="Sin movimientos" description="No hay gastos con los filtros seleccionados. Prueba otro periodo o tipo." icon={PiggyBank} image={illustrationAssets.empty} />
           ) : (
             <>
               <Section title="Resumen por tipo de gasto">
@@ -176,7 +178,7 @@ export default function ExpensesScreen() {
           {waMessages.length === 0 ? (
             <Card className="items-center gap-3 py-6">
               <View className="h-14 w-14 items-center justify-center rounded-[14px] bg-emerald-500/15">
-                <MessageCircle size={24} color="#059669" strokeWidth={2} />
+                <Image source={moduleAssets.support} resizeMode="contain" style={{ width: 36, height: 36 }} />
               </View>
               <Text className="text-center text-sm leading-5 text-slate-600">
                 Te conectaremos con el WhatsApp de soporte Paco con un mensaje preparado: “necesito ayuda”.
