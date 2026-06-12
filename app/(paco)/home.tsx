@@ -45,10 +45,39 @@ function MandatorySurveyLock() {
   const router = useRouter();
   const mandatory = surveys.find((s) => s.mandatory);
   return (
-    <View className="flex-1 justify-center px-5 pb-28 pt-4">
-      <GlassSurface variant="elevated" radius={20} className="items-center gap-4 p-6 shadow-pop">
-        <View style={{ borderColor: vibrants.warning.border, backgroundColor: "rgba(255, 255, 255, 0.55)" }} className="h-20 w-20 items-center justify-center rounded-[18px] border">
-          <Lock size={34} color={vibrants.warning.accent} strokeWidth={2.2} />
+    <View className="flex-1 justify-center px-6 pb-28 pt-4">
+      {/* Bloqueo transparente: sin tarjeta, el candado va sobre una manchita
+          ámbar y el botón navy sostiene el contraste sobre el canvas. */}
+      <View className="items-center gap-4">
+        <View className="h-24 w-24 items-center justify-center">
+          <View
+            pointerEvents="none"
+            style={{
+              position: "absolute",
+              width: 88,
+              height: 88,
+              left: 2,
+              top: 6,
+              backgroundColor: "rgba(184, 134, 11, 0.16)",
+              borderTopLeftRadius: 54,
+              borderTopRightRadius: 42,
+              borderBottomRightRadius: 50,
+              borderBottomLeftRadius: 44,
+            }}
+          />
+          <View
+            pointerEvents="none"
+            style={{
+              position: "absolute",
+              width: 26,
+              height: 26,
+              right: -2,
+              bottom: 2,
+              borderRadius: 13,
+              backgroundColor: "rgba(241, 194, 50, 0.20)",
+            }}
+          />
+          <Lock size={40} color={vibrants.warning.accent} strokeWidth={2.2} />
         </View>
         <Text className="text-center text-2xl font-bold tracking-tight text-ink-body">Tienes una encuesta obligatoria</Text>
         <Text className="text-center text-[15px] leading-6 text-ink-muted">
@@ -62,7 +91,7 @@ function MandatorySurveyLock() {
             {mandatory?.questions.length ?? 0} preguntas · {mandatory?.due}
           </Text>
         </View>
-      </GlassSurface>
+      </View>
     </View>
   );
 }

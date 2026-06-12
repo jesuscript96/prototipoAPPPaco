@@ -46,7 +46,7 @@ export default function HelpScreen() {
                   {open ? <ChevronUp size={18} color="#64748b" /> : <ChevronDown size={18} color="#64748b" />}
                 </Pressable>
                 {open ? (
-                  <View className="gap-2 rounded-2xl border border-separator bg-white/40 p-3">
+                  <View className="gap-2 border-t border-separator pt-3">
                     <Text className="text-sm font-semibold text-slate-700">{topic.detail}</Text>
                     <Text className="text-sm leading-5 text-slate-600">
                       Encuentra la guía paso a paso en el portal. Si tu duda persiste, levanta un ticket y el equipo técnico te

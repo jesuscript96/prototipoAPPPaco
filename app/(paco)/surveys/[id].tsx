@@ -3,7 +3,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { ChevronLeft, FileQuestion } from "@/components/paco/glyphs";
 import { Image, Pressable, Text, TextInput, View } from "react-native";
 import { peopleAssets } from "@/components/paco/assets";
-import { Button, Card, EmptyState, Screen, glassTextAreaClass } from "@/components/paco/layout";
+import { Button, EmptyState, Screen, glassTextAreaClass } from "@/components/paco/layout";
 import { WizardStep } from "@/components/paco/wizard-step";
 import { RadioOption, SelectChip, StepHeader, SuccessCard, cn } from "@/components/paco/ui";
 import { MorphButton, type MorphStatus } from "@/components/paco/motion";
@@ -39,6 +39,7 @@ export default function SurveyRunnerScreen() {
     return (
       <Screen>
         <SuccessCard
+          transparent
           title="¡Encuesta enviada!"
           description={
             survey.mandatory
@@ -135,8 +136,10 @@ export default function SurveyRunnerScreen() {
       <WizardStep stepKey={`${survey.id}-${index}`}>
       <StepHeader step={index + 1} total={total} title={`Pregunta ${index + 1} de ${total}`} subtitle={survey.title} />
 
-      <Card className="gap-4">
-        <Image source={question.kind === "scale" ? peopleAssets.surveyWink : peopleAssets.surveyWelcome} resizeMode="contain" style={{ alignSelf: "center", width: 110, height: 70 }} />
+      {/* La pregunta va transparente sobre el canvas: solo el StepHeader lleva
+          fondo; las opciones (radio/chips/escala) sostienen su propio contraste. */}
+      <View style={{ marginTop: 28 }} className="gap-4 px-1">
+        <Image source={question.kind === "scale" ? peopleAssets.surveyWink : peopleAssets.surveyWelcome} resizeMode="contain" style={{ alignSelf: "center", width: 150, height: 96 }} />
         <Text className="text-lg font-bold leading-7 text-ink-body">{question.text}</Text>
 
         {question.kind === "yesno" ? (
@@ -197,7 +200,7 @@ export default function SurveyRunnerScreen() {
             className={cn(glassTextAreaClass, "min-h-28")}
           />
         ) : null}
-      </Card>
+      </View>
 
       {question.kind === "open" ? (
         index < total - 1 ? (

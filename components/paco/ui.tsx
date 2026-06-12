@@ -208,7 +208,7 @@ export function SelectChip({ label, active, onPress }: { label: string; active: 
       onPress={onPress}
       className={cn(
         "min-h-10 justify-center rounded-[10px] border px-3.5 py-2",
-        active ? "border-navy bg-navy" : "border-white/80 bg-white/50",
+        active ? "border-navy bg-navy" : "border-white/90 bg-white/60",
       )}
     >
       <Text className={cn("text-[13px] font-semibold", active ? "text-white" : "text-slate-600")}>{label}</Text>
@@ -224,7 +224,7 @@ export function RadioOption({ label, helper, selected, onPress }: { label: strin
       onPress={onPress}
       className={cn(
         "flex-row items-start gap-3 rounded-xl border p-3.5",
-        selected ? "border-navy/80 bg-white/60 shadow-card" : "border-white/80 bg-white/50",
+        selected ? "border-navy/80 bg-white/70 shadow-card" : "border-white/90 bg-white/60",
       )}
     >
       <View className={cn("mt-0.5 h-[22px] w-[22px] items-center justify-center rounded-full border-2", selected ? "border-navy" : "border-slate-300")}>
@@ -396,9 +396,22 @@ export function MoneyRow({ label, value, strong }: { label: string; value: strin
   );
 }
 
-export function SuccessCard({ title, description, children, image }: { title: string; description: string; children?: ReactNode; image?: ImageSourcePropType }) {
-  return (
-    <GlassSurface material="thick" tint="success" radius={16} className="items-center gap-3 p-6">
+export function SuccessCard({
+  title,
+  description,
+  children,
+  image,
+  transparent,
+}: {
+  title: string;
+  description: string;
+  children?: ReactNode;
+  image?: ImageSourcePropType;
+  /** Sin tarjeta: el contenido va directo sobre el canvas. */
+  transparent?: boolean;
+}) {
+  const content = (
+    <>
       <ConfettiBurst />
       <PopIn>
         <View style={{ backgroundColor: vibrants.success.accent }} className="h-16 w-16 items-center justify-center rounded-full shadow-card">
@@ -408,6 +421,15 @@ export function SuccessCard({ title, description, children, image }: { title: st
       <Text className="text-center text-xl font-bold tracking-tight text-label-primary">{title}</Text>
       <Text className="text-center text-sm leading-6 text-label-secondary">{description}</Text>
       {children}
+    </>
+  );
+
+  if (transparent) {
+    return <View className="items-center gap-3 px-4 py-6">{content}</View>;
+  }
+  return (
+    <GlassSurface material="thick" tint="success" radius={16} className="items-center gap-3 p-6">
+      {content}
     </GlassSurface>
   );
 }

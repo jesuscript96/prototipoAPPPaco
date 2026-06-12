@@ -2,7 +2,7 @@ import { useRouter } from "expo-router";
 import { ClipboardCheck } from "@/components/paco/glyphs";
 import { Image, Text, View } from "react-native";
 import { peopleAssets } from "@/components/paco/assets";
-import { Badge, Button, Card, EmptyState, Screen } from "@/components/paco/layout";
+import { Badge, Button, EmptyState, Screen } from "@/components/paco/layout";
 import { surveys } from "@/mock/paco";
 import { vibrants } from "@/theme/tokens";
 import { usePacoStore } from "@/store/paco-store";
@@ -26,11 +26,13 @@ export default function SurveysScreen() {
         />
       ) : null}
 
-      <View className="gap-3">
-        {surveys.map((survey) => {
+      {/* Tarjetas transparentes: el contenido va directo sobre el canvas,
+          separado por hairlines; botones y badges sostienen el contraste. */}
+      <View className="gap-6">
+        {surveys.map((survey, index) => {
           const done = completedSurveyIds.includes(survey.id);
           return (
-            <Card key={survey.id} className="gap-3">
+            <View key={survey.id} className={index > 0 ? "gap-3 border-t border-separator px-1 pt-6" : "gap-3 px-1"}>
               <Image source={survey.mandatory ? peopleAssets.surveyWelcome : peopleAssets.surveyWink} resizeMode="contain" style={{ alignSelf: "flex-end", width: 70, height: 54 }} />
               <View className="flex-row items-start justify-between gap-2">
                 <Text className="flex-1 text-lg font-bold text-slate-950">{survey.title}</Text>
@@ -52,7 +54,7 @@ export default function SurveysScreen() {
                   {survey.mandatory ? "Responder ahora (bloqueante)" : "Ver encuesta"}
                 </Button>
               )}
-            </Card>
+            </View>
           );
         })}
       </View>

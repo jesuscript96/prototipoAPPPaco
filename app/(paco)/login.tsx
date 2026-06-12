@@ -3,12 +3,16 @@ import { useRouter } from "expo-router";
 import { AlertTriangle, Eye, EyeOff, LogIn } from "@/components/paco/glyphs";
 import { Image, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { brandAssets } from "@/components/paco/assets";
-import { Ambient, glassInputClass, glassInputRowClass } from "@/components/paco/layout";
-import { GlassSurface } from "@/components/paco/glass";
+import { Ambient } from "@/components/paco/layout";
 import { MorphButton, ShakeView, type MorphStatus } from "@/components/paco/motion";
 import { HelpFab } from "@/components/paco/ui";
 import { mockLogin } from "@/lib/paco-api";
 import { usePacoStore } from "@/store/paco-store";
+
+// El form va directo sobre el canvas (sin tarjeta glass): los inputs suben de
+// opacidad y llevan sombra para sostener el contraste por sí solos.
+const inputClass = "min-h-[50px] rounded-xl border border-white/95 bg-white/80 px-4 font-sans text-base text-slate-950 shadow-card";
+const inputRowClass = "flex-row items-center rounded-xl border border-white/95 bg-white/80 pr-2 shadow-card";
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -52,15 +56,12 @@ export default function LoginScreen() {
           </View>
           <Image source={brandAssets.textLogo} resizeMode="contain" style={{ width: 110, height: 36 }} />
           <Text className="text-[27px] font-bold tracking-tight text-slate-950">Inicia sesión</Text>
-          <Text className="text-center text-sm leading-6 text-slate-500">
-            Acceso exclusivo para colaboradores registrados por tu empresa en el panel Paco.
-          </Text>
         </View>
 
-        <GlassSurface variant="elevated" className="gap-4 p-5 shadow-pop">
+        <View className="gap-4 px-1">
           <ShakeView trigger={error} className="gap-4">
           <View className="gap-1.5">
-            <Text className="text-[13px] font-semibold text-slate-600">Teléfono o correo</Text>
+            <Text className="text-[13px] font-bold text-slate-700">Teléfono o correo</Text>
             <TextInput
               value={identifier}
               onChangeText={setIdentifier}
@@ -68,12 +69,12 @@ export default function LoginScreen() {
               keyboardType="email-address"
               placeholder="correo@empresa.mx o 10 dígitos"
               placeholderTextColor="#94a3b8"
-              className={glassInputClass}
+              className={inputClass}
             />
           </View>
           <View className="gap-1.5">
-            <Text className="text-[13px] font-semibold text-slate-600">Contraseña</Text>
-            <View className={glassInputRowClass}>
+            <Text className="text-[13px] font-bold text-slate-700">Contraseña</Text>
+            <View className={inputRowClass}>
               <TextInput
                 value={password}
                 onChangeText={setPassword}
@@ -111,14 +112,14 @@ export default function LoginScreen() {
             </Pressable>
           </View>
 
-          <View className="rounded-xl bg-slate-900/5 p-3">
-            <Text className="text-xs leading-4 text-slate-500">
+          <View className="rounded-xl border border-white/70 bg-white/45 p-3">
+            <Text className="text-xs leading-4 text-slate-600">
               Modo demo: cualquier contraseña de 4+ caracteres inicia sesión. Escribe "error" para ver la alerta de
               credenciales incorrectas.
             </Text>
           </View>
           </ShakeView>
-        </GlassSurface>
+        </View>
       </ScrollView>
 
       <HelpFab onPress={() => router.push("/(paco)/help")} />
