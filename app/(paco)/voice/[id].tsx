@@ -1,9 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowLeft, MessagesSquare } from "@/components/paco/glyphs";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { Button, EmptyState, Screen } from "@/components/paco/layout";
+import { GlassConversationFooter, GlassConversationHeader, GlassIconButton } from "@/components/paco/glass";
 import { ChatBubble, ChatComposer, StatusDot } from "@/components/paco/ui";
+import { TypingIndicator } from "@/components/paco/motion";
 import { usePacoStore } from "@/store/paco-store";
 
 const rhReplies = [
@@ -18,6 +20,7 @@ export default function VoiceChatScreen() {
   const { voiceReports, sendVoiceMessage, receiveRhReply, markVoiceRead, showToast } = usePacoStore();
   const report = voiceReports.find((r) => r.id === id);
   const replyIndex = useRef(0);
+  const [rhTyping, setRhTyping] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
 
   useEffect(() => {
@@ -37,21 +40,22 @@ export default function VoiceChatScreen() {
     sendVoiceMessage(report.id, text);
     const reply = rhReplies[replyIndex.current % rhReplies.length] ?? rhReplies[0]!;
     replyIndex.current += 1;
-    setTimeout(() => receiveRhReply(report.id, reply), 1800);
+    // RH "escribe" antes de responder: typing 500ms despues, respuesta a los 2.1s.
+    setTimeout(() => setRhTyping(true), 500);
+    setTimeout(() => {
+      receiveRhReply(report.id, reply);
+      setRhTyping(false);
+    }, 2100);
     setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 100);
   };
 
   return (
     <View className="flex-1 bg-canvas">
-      <View className="gap-2 border-b border-slate-200 bg-white px-4 pb-3 pt-12">
+      <GlassConversationHeader>
         <View className="flex-row items-center gap-3">
-          <Pressable
-            accessibilityLabel="Regresar"
-            onPress={() => router.back()}
-            className="h-10 w-10 items-center justify-center rounded-full bg-slate-100 active:bg-slate-200"
-          >
-            <ArrowLeft size={18} color="#1E1E1E" />
-          </Pressable>
+          <GlassIconButton label="Regresar" onPress={() => router.back()}>
+            <ArrowLeft size={18} color="#004080" />
+          </GlassIconButton>
           <View className="flex-1">
             <Text className="text-base font-bold text-slate-950" numberOfLines={1}>
               {report.folio} · {report.title}
@@ -63,7 +67,7 @@ export default function VoiceChatScreen() {
           </View>
           <StatusDot status={report.status} />
         </View>
-      </View>
+      </GlassConversationHeader>
 
       <ScrollView
         ref={scrollRef}
@@ -78,7 +82,8 @@ export default function VoiceChatScreen() {
         {report.messages.map((message) => (
           <ChatBubble key={message.id} {...message} />
         ))}
-        {report.status !== "Atendido" ? (
+        {rhTyping ? <TypingIndicator /> : null}
+        {!rhTyping && report.status !== "Atendido" ? (
           <View className="items-center">
             <Text className="text-[10px] font-semibold text-slate-400">
               {report.status === "Pendiente" ? "Esperando primera respuesta de RH…" : "RH está dando seguimiento a tu caso…"}
@@ -87,7 +92,7 @@ export default function VoiceChatScreen() {
         ) : null}
       </ScrollView>
 
-      <View className="border-t border-slate-200 bg-white px-4 py-3">
+      <GlassConversationFooter>
         <ChatComposer
           onSend={send}
           onAttach={() => {
@@ -95,7 +100,7 @@ export default function VoiceChatScreen() {
             showToast("Foto tomada y enviada a RH (simulado).");
           }}
         />
-      </View>
+      </GlassConversationFooter>
     </View>
   );
 }

@@ -3,6 +3,7 @@ import { useRouter } from "expo-router";
 import { Megaphone, MessagesSquare, Plus, Search } from "@/components/paco/glyphs";
 import { TextInput, View } from "react-native";
 import { Button, EmptyState, Screen } from "@/components/paco/layout";
+import { GlassSearchBar } from "@/components/paco/glass";
 import { ListGroup, Row, Segmented, StatusDot } from "@/components/paco/ui";
 import { usePacoStore } from "@/store/paco-store";
 
@@ -30,7 +31,7 @@ export default function VoiceStatusScreen() {
       title="Estatus de voz del colaborador"
       description="Da seguimiento a tus reportes con el semáforo de atención y continúa la conversación con RH."
     >
-      <View className="flex-row items-center gap-2 rounded-2xl border border-slate-200 bg-white px-3">
+      <GlassSearchBar>
         <Search size={18} color="#94a3b8" />
         <TextInput
           value={query}
@@ -39,11 +40,11 @@ export default function VoiceStatusScreen() {
           placeholderTextColor="#94a3b8"
           className="min-h-12 flex-1 text-base text-slate-950"
         />
-      </View>
+      </GlassSearchBar>
 
       <Segmented options={filters} value={filter} onChange={setFilter} />
 
-      <View className="flex-row items-center justify-around rounded-2xl bg-slate-100 px-3 py-2.5">
+      <View className="flex-row items-center justify-around rounded-2xl border border-separator bg-white/55 px-3 py-2.5">
         <StatusDot status="Pendiente" />
         <StatusDot status="En proceso" />
         <StatusDot status="Atendido" />
@@ -64,7 +65,6 @@ export default function VoiceStatusScreen() {
                 key={report.id}
                 icon={Megaphone}
                 iconColor="#CC0000"
-                iconTint="bg-red-50"
                 title={report.title}
                 subtitle={`(${report.categoryName}) · ${report.folio} · ${report.createdAt}${report.anonymous ? " · anónimo" : ""}`}
                 metaSub={report.status}

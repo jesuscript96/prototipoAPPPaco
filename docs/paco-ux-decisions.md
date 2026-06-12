@@ -95,6 +95,15 @@ Iteración final por dirección del cliente: claro, no oscuro; lenguaje de mater
 
 - **Color**: paleta oficial del PDF — Azul Paco #2F42CB (primario), azul medio #5176F3 (informativo/Soporte), naranja #FB4F33 reservado como acento estratégico (punto de no leído, sello CORE), azules claros nube/celeste/bruma como tints y lienzo, carbón #1E1E1E como tinta de CTAs y pizarra #263238 en hover. Énfasis UI del manual: verde 6AA84F, amarillo F1C232, rojo CC0000, violeta 674EA7 (Personas), mora A64D79.
 - **Tipografía**: Lato cargada vía Google Fonts en web (cuerpo 150%); Gordita Bold declarada en `font-display` con fallback a Lato hasta contar con licencia.
+
+## Tipografía 6.0 · Neogrotesca premium (Revolut)
+
+- **Familia**: Inter (`@expo-google-fonts/inter` en nativo, Google Fonts en web) con fallback SF Pro Display en iOS y sistema.
+- **Títulos H1/Hero**: peso Black (`font-black`), tracking negativo (`tracking-display` −1%, `tracking-hero` −2%) para compacidad impactante.
+- **Subtítulos y botones**: peso Medium, tracking neutro; botones ya no usan Bold.
+- **Cuerpo y legales**: Regular/Light, colores antracita (`ink-body` #2B2B2B, `ink-prose` #3D3D3D, `ink-legal` #4A4A4A) — sin negro puro en lectura.
+- **Line-height**: `leading-relaxed` (1.625) en cuerpo; `leading-legal` (1.45) disponible para bloques legales.
+- **Sistema central**: `theme/typography.ts` (`textClass`, `typographyScale`) + `components/paco/typography.tsx` (`PacoText`).
 - **Iconografía**: migración completa a Phosphor Icons weight Bold mediante capa de compatibilidad `components/paco/glyphs.tsx` (resuelve nombres heredados con fallbacks). `react-native-svg` + `phosphor-react-native` instalados.
 - **Densidad Revolut**: nuevo patrón `ListGroup`/`Row` — las colecciones (notificaciones, movimientos, comunicados, estatus de voz, chats, solicitudes, cuentas, recibos) dejan las tarjetas con borde por una lista única con separadores hairline, icono tintado de 36 px, subtítulo de una línea y meta alineada a la derecha (monto en negro, hora/estado en gris).
 - **Storybook**: reescrito como fuente de verdad del sistema (fundamentos con HEX oficiales, componentes vivos, patrones de lista, formularios y una sala de Movimiento con demos reproducibles de cada microinteracción).
@@ -114,3 +123,112 @@ Iteración final por dirección del cliente: claro, no oscuro; lenguaje de mater
 - Se conservan glyphs Phosphor para acciones pequeñas y universales: navegación, búsqueda, descarga, firma, envío, edición, eliminación y controles de formularios.
 - No se replica pixel-perfect la app fuente. Los assets se integran dentro del lenguaje Light Glass vigente para que la app se sienta Paco sin heredar densidad, layout o fricción del Ionic original.
 - Los duplicados y densidades `@2x/@3x` permanecen trazables en `migration-assets/paco-app`; la app consume solo una selección curada para evitar peso y ruido visual.
+
+## Rediseño Visual 5.0 · Navy Glass (superado por Visual 6.0 · Liquid Glass)
+
+Overhaul completo según `docs/paco-glass-visual-overhaul-plan.md`: navy corporativo `#004080` como oscuro primario (heroes, CTAs, badge CORE, tab activo); glass real con `expo-blur` en nativo y `backdrop-filter` en web vía `components/paco/glass.tsx`.
+
+### Tokens y primitives
+
+- **Navy:** `#004080` (DEFAULT), `#003366` (deep), `#0059A8` (soft) en `tailwind.config.js` y `theme/tokens.ts`.
+- **Glass:** `GlassSurface`, `GlassHero`, `GlassDock`, `GlassModuleTile`, `GlassBottomSheet`, `GlassSearchBar`, `GlassConversationHeader/Footer`, `GlassIconButton`, helpers `glassInputClass`, `glassTextAreaClass`, `glassInputRowClass`.
+- **Transversales migrados:** `layout.tsx` (Card→GlassSurface, Button navy), `ui.tsx`, `tabbar.tsx` (GlassDock), `motion.tsx` (MorphButton navy), `kyc.tsx`.
+- **Home:** grid 22 módulos con `GlassModuleTile` (iconos ≥44px, títulos 17px, sin subtítulo visible; subtítulo en `accessibilityLabel`); wallet hero glass; encuesta obligatoria con icono en `GlassSurface`.
+- **Limitación documentada:** máximo ~2 `BlurView` anidados por pantalla; overlays modales usan `bg-navy/40–80` sin blur extra en nativo.
+
+### Registro de cobertura · 47 pantallas
+
+| # | Módulo / ruta | Glass | Navy | Dock N/A | Funcional | Notas |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | `welcome.tsx` | ✅ | ✅ | N/A | ✅ | Permisos + modal glass |
+| 2 | `login.tsx` | ✅ | ✅ | N/A | ✅ | Form GlassSurface |
+| 3 | `activate.tsx` | ✅ | ✅ | N/A | ✅ | Capa automática |
+| 4 | `recover.tsx` | ✅ | ✅ | N/A | ✅ | Capa automática |
+| 5 | `help.tsx` | ✅ | ✅ | N/A | ✅ | GlassHero navy |
+| 6 | `home.tsx` | ✅ | ✅ | ✅ | ✅ | Grid GlassModuleTile |
+| 7 | `menu.tsx` | ✅ | ✅ | ✅ | ✅ | Perfil glass |
+| 8 | `profile.tsx` | ✅ | ✅ | ✅ | ✅ | Hero + sheets glass |
+| 9 | `mood.tsx` | ✅ | ✅ | ✅ | ✅ | Slider/chips |
+| 10 | `mood-charts.tsx` | ✅ | ✅ | ✅ | ✅ | Capa automática |
+| 11 | `celebrations.tsx` | ✅ | ✅ | ✅ | ✅ | Capa automática |
+| 12 | `notifications.tsx` | ✅ | ✅ | ✅ | ✅ | Skeleton GlassSurface |
+| 13 | `advance.tsx` | ✅ | ✅ | ✅ | ✅ | GlassHero + KYC |
+| 14 | `expenses.tsx` | ✅ | ✅ | ✅ | ✅ | GlassHero + skeleton |
+| 15 | `topups.tsx` | ✅ | ✅ | ✅ | ✅ | Operadores glass |
+| 16 | `services.tsx` | ✅ | ✅ | ✅ | ✅ | Overlay navy |
+| 17 | `comms/index.tsx` | ✅ | ✅ | ✅ | ✅ | ListGroup |
+| 18 | `comms/[id].tsx` | ✅ | ✅ | ✅ | ✅ | FileTile |
+| 19 | `surveys/index.tsx` | ✅ | ✅ | ✅ | ✅ | Capa automática |
+| 20 | `surveys/[id].tsx` | ✅ | ✅ | ✅ | ✅ | Chips navy activos |
+| 21 | `voice/index.tsx` | ✅ | ✅ | ✅ | ✅ | Categorías glass |
+| 22 | `voice/status.tsx` | ✅ | ✅ | ✅ | ✅ | GlassSearchBar |
+| 23 | `voice/[id].tsx` | ✅ | ✅ | ✅ | ✅ | Header/footer custom |
+| 24 | `recognitions.tsx` | ✅ | ✅ | ✅ | ✅ | GlassSearchBar |
+| 25 | `requests/index.tsx` | ✅ | ✅ | ✅ | ✅ | Catálogo tiles glass |
+| 26 | `requests/new.tsx` | ✅ | ✅ | ✅ | ✅ | GlassHero wizard |
+| 27 | `requests/[id].tsx` | ✅ | ✅ | ✅ | ✅ | Timeline + comentarios |
+| 28 | `wellness/index.tsx` | ✅ | ✅ | ✅ | ✅ | GlassModuleTile |
+| 29 | `wellness/[id].tsx` | ✅ | ✅ | ✅ | ✅ | GlassSearchBar |
+| 30 | `document-requests.tsx` | ✅ | ✅ | ✅ | ✅ | Visor mock |
+| 31 | `training/index.tsx` | ✅ | ✅ | ✅ | ✅ | Modal GlassSurface |
+| 32 | `training/[courseId]/index.tsx` | ✅ | ✅ | ✅ | ✅ | Lecciones + encuesta |
+| 33 | `training/[courseId]/[lessonId].tsx` | ✅ | ✅ | ✅ | ✅ | Player + checklist |
+| 34 | `corporate-docs.tsx` | ✅ | ✅ | ✅ | ✅ | GlassSearchBar |
+| 35 | `receipts.tsx` | ✅ | ✅ | ✅ | ✅ | GlassHero + sheet |
+| 36 | `sua.tsx` | ✅ | ✅ | ✅ | ✅ | Visor panel |
+| 37 | `onboarding-tasks/index.tsx` | ✅ | ✅ | ✅ | ✅ | Capa automática |
+| 38 | `onboarding-tasks/[id].tsx` | ✅ | ✅ | ✅ | ✅ | glassTextAreaClass |
+| 39 | `pin.tsx` | ✅ | ✅ | ✅ | ✅ | Cupones glass |
+| 40 | `support.tsx` | ✅ | ✅ | ✅ | ✅ | Ticket mock |
+| 41 | `settings/index.tsx` | ✅ | ✅ | ✅ | ✅ | Filas ListGroup |
+| 42 | `settings/password.tsx` | ✅ | ✅ | ✅ | ✅ | glassInputRowClass |
+| 43 | `settings/nip.tsx` | ✅ | ✅ | ✅ | ✅ | PIN boxes glass |
+| 44 | `settings/accounts.tsx` | ✅ | ✅ | ✅ | ✅ | GlassBottomSheet |
+| 45 | `chat/index.tsx` | ✅ | ✅ | ✅ | ✅ | Search + sheet |
+| 46 | `chat/[id].tsx` | ✅ | ✅ | ✅ | ✅ | Conversación custom |
+| 47 | `legal.tsx` | ✅ | ✅ | ✅ | ✅ | Términos mock |
+
+**Shell:** `_layout.tsx` canvas `#F6F8FF` + `GlassDock` tab bar. **Storybook:** `fundamentos.tsx` swatches navy + demos glass.
+
+**Gate QA (2026-06-11):** `npm run typecheck` ✅ · grep anti-patrones `bg-ink|bg-white/75|bg-white/80|border-slate-200 bg-white` en `app/(paco)` y `components/paco` → **0 coincidencias**.
+
+## Visual 6.0 · Liquid Glass (vigente)
+
+Sistema de materiales estilo Apple aplicado globalmente: 5 grosores de vidrio, colores jerárquicos de texto con vibrancy, separación por borde 1px y soporte completo de Reduce Transparency. Sustituye el modelo de 3 variantes glass (`light`/`info`/`elevated`) de Visual 5.0, que se mantiene como mapeo legacy.
+
+### Regla de oro
+
+**El color semántico nunca es relleno; es acento.** Un aviso de éxito ya no es una caja verde: es vidrio `thick` con borde separador, dot/icono verde vibrante y texto jerárquico. El único tinte de fondo permitido es el `wash` (≤8% alpha) y siempre vive encima de un material. El estatus se comunica con icono/dot + borde + texto, nunca solo con color de fondo.
+
+### Tokens (`theme/tokens.ts` + `tailwind.config.js`)
+
+- **`materials` x5:** `ultraThin` (35%/14px), `thin` (50%/18px), `regular` (65%/24px), `thick` (78%/28px), `ultraThick` (90%/32px) — cada uno con alpha web, alpha de overlay nativo, blur, intensity de expo-blur y `fallback` opaco. Más `materialsDark` (regular/thick navy) para hero, toast y chips activos.
+- **`labels` jerárquicos:** primary `rgba(18,26,41,.96)`, secondary `.66`, tertiary `.42`, quaternary `.26` + `labelsOnDark`. Expuestos en Tailwind como `text-label-*` y `text-label-dark-*`. Al ser rgba sobre el vidrio, el texto absorbe el fondo (vibrancy simulada coherente en RN).
+- **`separators`:** `separator` (hairline rgba), `opaqueSeparator` (#C8D2E0, Reduce Transparency), `glassEdge` (highlight superior). Todo contenedor glass lleva borde 1px.
+- **`vibrants`:** por tono (`success/warning/danger/info/neutral`) → `accent` (glifo/dot/texto), `wash` (≤8% fondo sobre material) y `border` (~20-24%). Reemplazan a `semantic` y al viejo mapa `tones` como rellenos.
+
+### Motor (`components/paco/glass.tsx`)
+
+- `GlassSurface material="ultraThin|thin|regular|thick|ultraThick" tint="none|success|…"`; mapeo legacy `light→regular`, `info→regular+info`, `elevated→thick`.
+- Asignación por superficie: dock=`thick`, sheets/modales=`ultraThick`, search/inputs=`thin`, cards=`regular`, hero/toast=`materialsDark`.
+- `GlassDarkSurface` nuevo para superficies navy (hero, ToastHost).
+- Burbujas de icono (`IconBubble`, `AssetIconBubble`, `Row`, `OptionCard`): vidrio thin neutro (`border-separator` + `bg-white/55`); el color del dominio vive en el glifo, no en el fondo.
+
+### Reduce Transparency (`components/paco/a11y.ts`)
+
+- Triple fuente: API iOS (`AccessibilityInfo.isReduceTransparencyEnabled` + listener), media query web `prefers-reduced-transparency` y toggle demo en Configuración → Accesibilidad (Android no expone la preferencia del sistema; limitación documentada).
+- Activo: cada material rinde su `fallback` opaco sin blur, el borde pasa a `opaqueSeparator`. `useReduceMotion` ahora también escucha `AccessibilityInfo` en nativo.
+
+### Primitives migrados
+
+- `InlineAlert`: glass `thick` + tint + dot de acento + labels (caso del screenshot de adelanto resuelto).
+- `Badge`: píldora translúcida + dot + `label-primary`, sin fondo tintado.
+- `Card`: el bypass de glass quedó restringido a fondos de marca (`bg-navy|ink|white`); los tintes semánticos ya no escapan al material.
+- `SuccessCard`, `SignatureBox`, `FileTile` descargado, `LiquidButton` done, KYC pasos completados, pills "Listo"/adeudo/permisos: borde vibrante + dot/icono acento sobre blanco translúcido, sin rellenos.
+- Tipografía: `textClass`/`textColors` migrados a labels jerárquicos → vibrancy en toda la app de golpe.
+
+### Barrido y gate
+
+Barrido completo de `app/(paco)` (32 archivos, ~98 tintados) — burbujas, pills, callouts verdes de confirmación, pasos seleccionados, press feedback. **Gate (2026-06-11):** `rg "bg-(emerald|amber|red|green|violet|rose|orange)-(50|100)|bg-(emerald|amber|red|green|violet|brand|slate)-[45]00/1[05]?"` en `app/(paco)` y `components/paco` → **0 coincidencias** · `npm run typecheck` ✅.
+
+**Storybook:** `fundamentos.tsx` con secciones Materiales (5 grosores), Colores jerárquicos, Capa de separación, Acentos vibrantes (InlineAlert x5 tonos) y demo en vivo de Reduce Transparency.

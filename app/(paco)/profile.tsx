@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Camera, FileText, Pencil, Save, Upload, X } from "@/components/paco/glyphs";
 import { Modal, Pressable, Text, TextInput, View } from "react-native";
-import { Badge, Button, Card, Divider, Screen, Section } from "@/components/paco/layout";
+import { Badge, Button, Card, Divider, glassInputClass, Screen, Section } from "@/components/paco/layout";
+import { GlassBottomSheet, GlassHero } from "@/components/paco/glass";
 import { cn } from "@/components/paco/ui";
+import { LiquidButton } from "@/components/paco/motion";
 import { simulate } from "@/lib/paco-api";
 import { employee } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
@@ -30,7 +32,7 @@ function EditableRow({
             onChangeText={setDraft}
             autoCapitalize="none"
             keyboardType={keyboard}
-            className="min-h-11 flex-1 rounded-2xl border border-brand-300 bg-white px-3 text-sm text-slate-950"
+            className={cn(glassInputClass, "min-h-11 flex-1 text-sm")}
           />
           <Pressable
             accessibilityLabel={`Guardar ${label}`}
@@ -48,7 +50,7 @@ function EditableRow({
               setDraft(value);
               setEditing(false);
             }}
-            className="h-11 w-11 items-center justify-center rounded-xl bg-slate-100"
+            className="h-11 w-11 items-center justify-center rounded-xl border border-separator bg-white/55"
           >
             <X size={16} color="#64748b" />
           </Pressable>
@@ -62,7 +64,7 @@ function EditableRow({
               setDraft(value);
               setEditing(true);
             }}
-            className="h-10 w-10 items-center justify-center rounded-xl bg-slate-100"
+            className="h-10 w-10 items-center justify-center rounded-xl border border-separator bg-white/55"
           >
             <Pencil size={14} color="#2F42CB" />
           </Pressable>
@@ -75,14 +77,7 @@ function EditableRow({
 export default function ProfileScreen() {
   const store = usePacoStore();
   const [contractOpen, setContractOpen] = useState(false);
-  const [uploadingCv, setUploadingCv] = useState(false);
 
-  const uploadCv = async () => {
-    setUploadingCv(true);
-    await simulate(null, 1100);
-    store.uploadCv();
-    setUploadingCv(false);
-  };
 
   const fields: [string, string][] = [
     ["Nombre completo", employee.name],
@@ -103,13 +98,9 @@ export default function ProfileScreen() {
 
   return (
     <Screen title="Mi expediente" description="Información sincronizada desde el panel de tu empresa. Solo correo y teléfono son editables desde la app.">
-      <Card className="gap-4 overflow-hidden bg-ink p-5">
+      <GlassHero eyebrow="Tarjeta digital de colaborador" title={employee.name} subtitle={employee.role}>
         <View className="flex-row items-start justify-between">
-          <View>
-            <Text className="text-xs font-bold uppercase tracking-[2px] text-white/60">Tarjeta digital de colaborador</Text>
-            <Text className="mt-2 text-xl font-bold text-white">{employee.name}</Text>
-            <Text className="text-sm text-white/80">{employee.role}</Text>
-          </View>
+          <View className="flex-1" />
           <Pressable
             accessibilityLabel="Foto de perfil"
             onPress={store.setProfilePhoto}
@@ -136,23 +127,39 @@ export default function ProfileScreen() {
             <Text className="text-[7px] font-bold text-slate-500">PACO-ID-{employee.employeeNumber}</Text>
           </View>
         </View>
-      </Card>
+      </GlassHero>
 
       <Section title="Contrato y documentos">
         <Card className="gap-3">
           <Button icon={FileText} variant="outline" onPress={() => setContractOpen(true)}>
             Abrir contrato laboral (PDF)
           </Button>
-          <Button icon={Upload} variant={store.cvUploaded ? "secondary" : "outline"} loading={uploadingCv} onPress={uploadCv}>
-            {store.cvUploaded ? "Currículum cargado" : "Subir currículum"}
-          </Button>
-          <Button
-            icon={Upload}
-            variant={store.contractUploaded ? "secondary" : "outline"}
-            onPress={store.uploadContract}
-          >
-            {store.contractUploaded ? "Contrato firmado cargado" : "Subir contrato firmado"}
-          </Button>
+          <LiquidButton
+            idleLabel="Subir currículum"
+            busyLabel="Subiendo archivo…"
+            doneLabel="Currículum cargado"
+            idleIcon={Upload}
+            done={store.cvUploaded}
+            tone="brand"
+            onPress={async () => {
+              if (store.cvUploaded) return;
+              await simulate(null, 1100);
+              store.uploadCv();
+            }}
+          />
+          <LiquidButton
+            idleLabel="Subir contrato firmado"
+            busyLabel="Subiendo archivo…"
+            doneLabel="Contrato firmado cargado"
+            idleIcon={Upload}
+            done={store.contractUploaded}
+            tone="brand"
+            onPress={async () => {
+              if (store.contractUploaded) return;
+              await simulate(null, 900);
+              store.uploadContract();
+            }}
+          />
         </Card>
       </Section>
 
@@ -176,9 +183,8 @@ export default function ProfileScreen() {
       </Section>
 
       <Modal transparent visible={contractOpen} animationType="slide" onRequestClose={() => setContractOpen(false)}>
-        <View className="flex-1 justify-end bg-black/40">
-          <View className="max-h-[80%] rounded-t-[20px] bg-white p-5">
-            <View className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-slate-300" />
+        <View className="flex-1 justify-end bg-navy/40">
+          <GlassBottomSheet>
             <Text className="text-center text-xs font-bold uppercase tracking-[2px] text-slate-400">Visor PDF · Contrato laboral</Text>
             <View className="mt-4 gap-3 rounded-2xl border border-slate-200 p-4">
               <Text className="text-center text-sm font-bold text-slate-950">CONTRATO INDIVIDUAL DE TRABAJO POR TIEMPO INDETERMINADO</Text>
@@ -193,7 +199,7 @@ export default function ProfileScreen() {
             <View className="pt-4">
               <Button onPress={() => setContractOpen(false)}>Cerrar visor</Button>
             </View>
-          </View>
+          </GlassBottomSheet>
         </View>
       </Modal>
     </Screen>

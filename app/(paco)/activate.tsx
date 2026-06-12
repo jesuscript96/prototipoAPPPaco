@@ -56,7 +56,7 @@ export default function ActivateScreen() {
           </Card>
           <Card className="gap-4">
             <View className="flex-row items-center gap-3">
-              <View className="h-12 w-12 items-center justify-center rounded-2xl bg-brand-50">
+              <View className="h-12 w-12 items-center justify-center rounded-2xl border border-separator bg-white/55">
                 <Phone size={22} color="#2F42CB" />
               </View>
               <Text className="flex-1 text-sm leading-5 text-slate-600">

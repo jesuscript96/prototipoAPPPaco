@@ -5,6 +5,7 @@ import { Image, Text, View } from "react-native";
 import { illustrationAssets } from "@/components/paco/assets";
 import { Badge, Button, Card, Field, InlineAlert, Screen, Section } from "@/components/paco/layout";
 import { ChatBubble, ChatComposer } from "@/components/paco/ui";
+import { MorphButton, TypingIndicator, type MorphStatus } from "@/components/paco/motion";
 import { simulate } from "@/lib/paco-api";
 import { botReplies, company, employee } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
@@ -17,7 +18,8 @@ export default function SupportScreen() {
   const [phone, setPhone] = useState(store.phone);
   const [query, setQuery] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [creating, setCreating] = useState(false);
+  const [createStatus, setCreateStatus] = useState<MorphStatus>("idle");
+  const [botTyping, setBotTyping] = useState(false);
   const botIndex = useRef(0);
 
   const createTicket = async () => {
@@ -30,17 +32,22 @@ export default function SupportScreen() {
       return;
     }
     setError(null);
-    setCreating(true);
+    setCreateStatus("loading");
     await simulate(null, 1100);
-    store.createTicket(query.trim());
-    setCreating(false);
+    setCreateStatus("success");
+    // El check del boton se asienta y despues aparece la conversacion.
+    setTimeout(() => store.createTicket(query.trim()), 750);
   };
 
   const sendMessage = (text: string) => {
     store.sendTicketMessage(text);
     const reply = botReplies[botIndex.current % botReplies.length] ?? botReplies[0]!;
     botIndex.current += 1;
-    setTimeout(() => store.receiveBotReply(reply), 1600);
+    setTimeout(() => setBotTyping(true), 400);
+    setTimeout(() => {
+      store.receiveBotReply(reply);
+      setBotTyping(false);
+    }, 1900);
   };
 
   return (
@@ -48,7 +55,7 @@ export default function SupportScreen() {
       title="Soporte técnico"
       description={`Canales para resolver problemas del aplicativo. Chat en vivo operado por ${company.chatProvider}.`}
     >
-      <Card className="items-center gap-2 bg-brand-50">
+      <Card className="items-center gap-2">
         <Image source={illustrationAssets.support} resizeMode="contain" style={{ width: 150, height: 94 }} />
         <Text className="text-center text-sm font-semibold text-brand-700">Soporte Paco con ticket, bot y escalamiento a agente humano.</Text>
       </Card>
@@ -70,7 +77,7 @@ export default function SupportScreen() {
       {!store.ticketCreated ? (
         <Section title="Chatea con nosotros ahora" description="Sin conversaciones activas. Completa el formulario para abrir un ticket.">
           <Card className="items-center gap-2 py-5">
-            <View className="h-14 w-14 items-center justify-center rounded-[14px] bg-brand-100">
+            <View className="h-14 w-14 items-center justify-center rounded-[14px] border border-separator bg-white/55">
               <Image source={illustrationAssets.support} resizeMode="contain" style={{ width: 42, height: 42 }} />
             </View>
             <Text className="text-center text-sm leading-5 text-slate-600">
@@ -90,9 +97,14 @@ export default function SupportScreen() {
               placeholder="Describe el problema que tienes con la app…"
               error={error ?? undefined}
             />
-            <Button icon={Send} loading={creating} onPress={createTicket}>
-              Iniciar chat y crear ticket
-            </Button>
+            <MorphButton
+              label="Iniciar chat y crear ticket"
+              loadingLabel="Abriendo ticket…"
+              successLabel="Ticket creado"
+              icon={Send}
+              status={createStatus}
+              onPress={createTicket}
+            />
           </Card>
         </Section>
       ) : (
@@ -105,6 +117,7 @@ export default function SupportScreen() {
             {store.ticketMessages.map((message) => (
               <ChatBubble key={message.id} {...message} />
             ))}
+            {botTyping ? <TypingIndicator /> : null}
             <ChatComposer onSend={sendMessage} placeholder="Escribe tu mensaje al soporte…" />
           </Card>
           {!store.escalated ? (

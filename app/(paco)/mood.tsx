@@ -1,18 +1,20 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useRouter } from "expo-router";
 import { BarChart3, ChevronLeft } from "@/components/paco/glyphs";
 import { Image, Pressable, Text, View } from "react-native";
 import { assetForMoodScore, illustrationAssets } from "@/components/paco/assets";
 import { Button, Card, Screen, Section } from "@/components/paco/layout";
 import { SelectChip, StepHeader, SuccessCard, cn } from "@/components/paco/ui";
+import { WizardStep } from "@/components/paco/wizard-step";
 import { simulate } from "@/lib/paco-api";
+import { scheduleWizardAdvance } from "@/lib/wizard-flow";
 import { baseFeelings, extraFeelings, moodFactors, moodLevels } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
 
 const levelForScore = (score: number) =>
   moodLevels.reduce((best, level) => (Math.abs(level.score - score) < Math.abs(best.score - score) ? level : best), moodLevels[0]);
 
-function MoodSlider({ value, onChange }: { value: number; onChange: (value: number) => void }) {
+function MoodSlider({ value, onChange, onCommit }: { value: number; onChange: (value: number) => void; onCommit?: (value: number) => void }) {
   const segments = 21;
   const level = levelForScore(value);
   return (
@@ -32,7 +34,10 @@ function MoodSlider({ value, onChange }: { value: number; onChange: (value: numb
             <Pressable
               key={index}
               accessibilityLabel={`Nivel ${segmentValue} de 100`}
-              onPress={() => onChange(segmentValue)}
+              onPress={() => {
+                onChange(segmentValue);
+                onCommit?.(segmentValue);
+              }}
               className="h-9 flex-1 justify-center"
             >
               <View
@@ -60,12 +65,22 @@ export default function MoodScreen() {
   const [factors, setFactors] = useState<string[]>([]);
   const [showMoreFeelings, setShowMoreFeelings] = useState(false);
   const [saving, setSaving] = useState(false);
-
-  const toggle = (list: string[], setList: (next: string[]) => void, item: string) =>
-    setList(list.includes(item) ? list.filter((x) => x !== item) : [...list, item]);
+  const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const todayEntry = useMemo(() => moodEntries.find((entry) => entry.dateLabel.startsWith("Hoy")), [moodEntries]);
   const feelingOptions = showMoreFeelings ? [...baseFeelings, ...extraFeelings] : [...baseFeelings];
+
+  const scheduleFeelingsAdvance = (count: number) => {
+    if (advanceTimer.current) clearTimeout(advanceTimer.current);
+    if (count === 0) return;
+    advanceTimer.current = scheduleWizardAdvance(() => setStep(3), 520);
+  };
+
+  const scheduleFactorsSave = (count: number) => {
+    if (advanceTimer.current) clearTimeout(advanceTimer.current);
+    if (count === 0) return;
+    advanceTimer.current = scheduleWizardAdvance(() => void save(), 520);
+  };
 
   const save = async () => {
     setSaving(true);
@@ -161,22 +176,34 @@ export default function MoodScreen() {
       </Pressable>
 
       {step === 1 ? (
-        <>
+        <WizardStep stepKey="mood-score">
           <StepHeader step={1} total={3} title="Elige cómo te has sentido hoy" subtitle="Desliza o toca la barra: el avatar cambia contigo." />
           <Card className="py-6">
-            <MoodSlider value={score} onChange={setScore} />
+            <MoodSlider
+              value={score}
+              onChange={setScore}
+              onCommit={() => scheduleWizardAdvance(() => setStep(2))}
+            />
           </Card>
-          <Button onPress={() => setStep(2)}>Siguiente</Button>
-        </>
+        </WizardStep>
       ) : null}
 
       {step === 2 ? (
-        <>
+        <WizardStep stepKey="mood-feelings">
           <StepHeader step={2} total={3} title="¿Qué describe lo que sientes?" subtitle="Selecciona una o varias etiquetas." />
           <Card className="gap-3">
             <View className="flex-row flex-wrap gap-2">
               {feelingOptions.map((feeling) => (
-                <SelectChip key={feeling} label={feeling} active={feelings.includes(feeling)} onPress={() => toggle(feelings, setFeelings, feeling)} />
+                <SelectChip
+                  key={feeling}
+                  label={feeling}
+                  active={feelings.includes(feeling)}
+                  onPress={() => {
+                    const next = feelings.includes(feeling) ? feelings.filter((x) => x !== feeling) : [...feelings, feeling];
+                    setFeelings(next);
+                    scheduleFeelingsAdvance(next.length);
+                  }}
+                />
               ))}
             </View>
             {!showMoreFeelings ? (
@@ -185,26 +212,30 @@ export default function MoodScreen() {
               </Button>
             ) : null}
           </Card>
-          <Button onPress={() => setStep(3)} disabled={feelings.length === 0}>
-            Siguiente {feelings.length > 0 ? `(${feelings.length})` : ""}
-          </Button>
-        </>
+        </WizardStep>
       ) : null}
 
       {step === 3 ? (
-        <>
+        <WizardStep stepKey="mood-factors">
           <StepHeader step={3} total={3} title="¿Qué te está afectando más?" subtitle="Factores de influencia: elige tantos como quieras." />
           <Card>
             <View className="flex-row flex-wrap gap-2">
               {moodFactors.map((factor) => (
-                <SelectChip key={factor} label={factor} active={factors.includes(factor)} onPress={() => toggle(factors, setFactors, factor)} />
+                <SelectChip
+                  key={factor}
+                  label={factor}
+                  active={factors.includes(factor)}
+                  onPress={() => {
+                    const next = factors.includes(factor) ? factors.filter((x) => x !== factor) : [...factors, factor];
+                    setFactors(next);
+                    scheduleFactorsSave(next.length);
+                  }}
+                />
               ))}
             </View>
           </Card>
-          <Button loading={saving} onPress={save} disabled={factors.length === 0}>
-            Guardar registro
-          </Button>
-        </>
+          {saving ? <Text className="text-center text-sm font-semibold text-brand-700">Guardando registro…</Text> : null}
+        </WizardStep>
       ) : null}
     </Screen>
   );

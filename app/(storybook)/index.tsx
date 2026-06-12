@@ -15,7 +15,7 @@ export default function StorybookIndex() {
         <Row
           leading={<PencilRuler size={22} color="#2F42CB" weight="bold" />}
           title="Fundamentos"
-          subtitle="Paleta oficial, tipografía Lato/Gordita, radios e iconografía Phosphor"
+          subtitle="Paleta oficial, tipografía Inter neogrotesca, radios e iconografía Phosphor"
           chevron
           onPress={() => router.push("/(storybook)/fundamentos")}
         />

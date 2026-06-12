@@ -4,8 +4,10 @@ import { ChevronLeft, Wallet } from "@/components/paco/glyphs";
 import { Image, Pressable, Text, View } from "react-native";
 import { financeAssets } from "@/components/paco/assets";
 import { Button, Card, Checkbox, Divider, InlineAlert, Screen } from "@/components/paco/layout";
+import { GlassHero } from "@/components/paco/glass";
 import { AmountSlider, MoneyRow, RadioOption, StepHeader, SuccessCard, mxn } from "@/components/paco/ui";
 import { KycFlow } from "@/components/paco/kyc";
+import { MorphButton, type MorphStatus } from "@/components/paco/motion";
 import { simulate } from "@/lib/paco-api";
 import { company, employee } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
@@ -20,7 +22,7 @@ export default function AdvanceScreen() {
   const [amount, setAmount] = useState(300);
   const [accountId, setAccountId] = useState(store.accounts[0]?.id ?? "");
   const [terms, setTerms] = useState(false);
-  const [confirming, setConfirming] = useState(false);
+  const [confirmStatus, setConfirmStatus] = useState<MorphStatus>("idle");
 
   const commission = Math.round(amount * company.advanceCommissionRate);
   const net = amount - commission;
@@ -29,11 +31,12 @@ export default function AdvanceScreen() {
   const isFirstUse = !store.kycDone;
 
   const confirm = async () => {
-    setConfirming(true);
+    setConfirmStatus("loading");
     await simulate(null, 1100);
     store.confirmAdvance(amount, commission, account?.alias ?? "Cuenta principal");
-    setConfirming(false);
-    setStep("success");
+    setConfirmStatus("success");
+    // El check se asienta antes de viajar al comprobante (narrativa 10.6).
+    setTimeout(() => setStep("success"), 750);
   };
 
   const goBack = () => {
@@ -53,14 +56,13 @@ export default function AdvanceScreen() {
 
       {step === "eligibility" ? (
         <>
-          <Card className="gap-3 bg-ink">
+          <GlassHero
+            eyebrow="Servicio core de Paco"
+            title="Adelanta parte de tu sueldo ya devengado"
+            subtitle={`Sin buró, con cobro automático en tu siguiente nómina. Comisión por convenio: ${Math.round(company.advanceCommissionRate * 100)}%.`}
+          >
             <Image source={financeAssets.cardSent} resizeMode="contain" style={{ alignSelf: "flex-end", width: 154, height: 66 }} />
-            <Text className="text-xs font-bold uppercase tracking-[1px] text-white/70">Servicio core de Paco</Text>
-            <Text className="text-2xl font-bold text-white">Adelanta parte de tu sueldo ya devengado</Text>
-            <Text className="text-sm leading-5 text-white/85">
-              Sin buró, con cobro automático en tu siguiente nómina. Comisión por convenio: {Math.round(company.advanceCommissionRate * 100)}%.
-            </Text>
-          </Card>
+          </GlassHero>
 
           {eligible ? (
             <>
@@ -171,9 +173,14 @@ export default function AdvanceScreen() {
             </Pressable>
           </Card>
 
-          <Button disabled={!terms} loading={confirming} onPress={confirm}>
-            Confirmar adelanto
-          </Button>
+          <MorphButton
+            label="Confirmar adelanto"
+            loadingLabel="Dispersando a tu cuenta…"
+            successLabel="Adelanto confirmado"
+            disabled={!terms}
+            status={confirmStatus}
+            onPress={confirm}
+          />
         </>
       ) : null}
 

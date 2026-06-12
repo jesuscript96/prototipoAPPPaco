@@ -3,6 +3,7 @@ import { Medal, Search, Send } from "@/components/paco/glyphs";
 import { Image, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { illustrationAssets, moduleAssets, peopleAssets } from "@/components/paco/assets";
 import { Badge, Button, Card, EmptyState, Field, Screen, Section } from "@/components/paco/layout";
+import { GlassSearchBar } from "@/components/paco/glass";
 import { Segmented, SuccessCard, cn } from "@/components/paco/ui";
 import { simulate } from "@/lib/paco-api";
 import { badgeIcons } from "@/components/paco/icons";
@@ -84,9 +85,9 @@ export default function RecognitionsScreen() {
 
   return (
     <Screen title="Reconoce a tu equipo" description="Envía medallas con los valores de tu organización y consulta tu historial.">
-      <Card className="flex-row items-center gap-3 bg-brand-50">
+      <Card className="flex-row items-center gap-3">
         <Image source={moduleAssets.recognitions} resizeMode="contain" style={{ width: 58, height: 58 }} />
-        <Text className="flex-1 text-sm font-semibold leading-5 text-brand-700">Celebra comportamientos visibles con medallas y notificaciones internas.</Text>
+        <Text className="flex-1 text-sm font-semibold leading-5 text-label-primary">Celebra comportamientos visibles con medallas y notificaciones internas.</Text>
       </Card>
       <Segmented options={["Reconocer", "Mis reconocimientos"]} value={tab} onChange={setTab} />
 
@@ -101,33 +102,33 @@ export default function RecognitionsScreen() {
                   onPress={() => setBadgeId(item.id)}
                   className={cn(
                     "w-32 items-center gap-2 rounded-2xl border px-3 py-4",
-                    badgeId === item.id ? "border-brand-500 bg-brand-50" : "border-slate-200 bg-white",
+                    badgeId === item.id ? "border-navy bg-white/70" : "border-white/80 bg-white/50",
                   )}
                 >
                   {(() => {
                     const BadgeIcon = badgeIcons[item.id] ?? Medal;
                     return (
-                      <View className={cn("h-14 w-14 items-center justify-center rounded-full", badgeId === item.id ? "bg-ink" : "bg-slate-100")}>
+                      <View className={cn("h-14 w-14 items-center justify-center rounded-full", badgeId === item.id ? "bg-navy" : "border border-separator bg-white/55")}>
                         <BadgeIcon size={24} color={badgeId === item.id ? "#fff" : "#64748b"} strokeWidth={2} />
                       </View>
                     );
                   })()}
-                  <Text className={cn("text-center text-xs font-bold", badgeId === item.id ? "text-brand-700" : "text-slate-700")} numberOfLines={2}>
+                  <Text className={cn("text-center text-xs font-bold", badgeId === item.id ? "text-navy" : "text-label-secondary")} numberOfLines={2}>
                     {item.name}
                   </Text>
                 </Pressable>
               ))}
             </ScrollView>
-            <Card className="bg-brand-50">
-              <Text className="text-sm leading-5 text-slate-700">
-                <Text className="font-bold">{badge.name}: </Text>
+            <Card>
+              <Text className="text-sm leading-5 text-label-secondary">
+                <Text className="font-bold text-label-primary">{badge.name}: </Text>
                 {badge.description}
               </Text>
             </Card>
           </Section>
 
           <Section title="2. ¿A quién le envías este reconocimiento?">
-            <View className="flex-row items-center gap-2 rounded-2xl border border-slate-200 bg-white px-3">
+            <GlassSearchBar>
               <Search size={18} color="#94a3b8" />
               <TextInput
                 value={query}
@@ -136,9 +137,9 @@ export default function RecognitionsScreen() {
                 placeholderTextColor="#94a3b8"
                 className="min-h-12 flex-1 text-base text-slate-950"
               />
-            </View>
+            </GlassSearchBar>
             {person ? (
-              <Card className="flex-row items-center gap-3 border-brand-200 bg-brand-50">
+              <Card className="flex-row items-center gap-3">
                 <View className="h-10 w-10 items-center justify-center rounded-full bg-brand-500">
                   <Text className="text-sm font-bold text-white">
                     {person
@@ -148,7 +149,7 @@ export default function RecognitionsScreen() {
                       .slice(0, 2)}
                   </Text>
                 </View>
-                <Text className="flex-1 text-sm font-bold text-brand-700">Se enviará a: {person}</Text>
+                <Text className="flex-1 text-sm font-bold text-label-primary">Se enviará a: {person}</Text>
                 <Pressable accessibilityRole="button" onPress={() => setPerson(null)} className="min-h-10 justify-center">
                   <Text className="text-xs font-bold text-slate-500">Cambiar</Text>
                 </Pressable>
@@ -160,9 +161,9 @@ export default function RecognitionsScreen() {
                     key={coworker.id}
                     accessibilityRole="button"
                     onPress={() => setPerson(coworker.name)}
-                    className="flex-row items-center gap-3 rounded-2xl border border-slate-200 bg-white p-3 active:bg-brand-50"
+                    className="flex-row items-center gap-3 rounded-2xl border border-white/80 bg-white/50 p-3 active:bg-white/80"
                   >
-                    <View className="h-10 w-10 items-center justify-center rounded-full bg-slate-100">
+                    <View className="h-10 w-10 items-center justify-center rounded-full border border-separator bg-white/55">
                       <Text className="text-sm font-bold text-slate-600">
                         {coworker.name
                           .split(" ")
@@ -216,7 +217,7 @@ export default function RecognitionsScreen() {
                 return (
                   <Card key={item.id} className="gap-2">
                     <View className="flex-row items-center gap-3">
-                      <View className="h-11 w-11 items-center justify-center rounded-full bg-amber-50">
+                      <View className="h-11 w-11 items-center justify-center rounded-full border border-separator bg-white/55">
                         <Image source={peopleAssets.surveyFinal} resizeMode="contain" style={{ width: 28, height: 28 }} />
                       </View>
                       <View className="flex-1">

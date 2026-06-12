@@ -3,7 +3,9 @@ import { FileCheck2, FileDown, FileText } from "@/components/paco/glyphs";
 import { Image, Modal, Pressable, Text, View } from "react-native";
 import { illustrationAssets } from "@/components/paco/assets";
 import { Button, Card, InlineAlert, Screen } from "@/components/paco/layout";
+import { GlassBottomSheet, GlassHero } from "@/components/paco/glass";
 import { ListGroup, Row, SignatureBox } from "@/components/paco/ui";
+import { LiquidButton } from "@/components/paco/motion";
 import { runPhases } from "@/lib/paco-api";
 import { company, employee, seedReceipts } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
@@ -35,15 +37,16 @@ export default function ReceiptsScreen() {
       description={`Consulta, descarga y firma tus CFDI de nómina. La firma digital se procesa con ${company.signatureProvider}.`}
     >
       {pendingIds.length > 0 ? (
-        <Card className="gap-3 bg-ink">
+        <GlassHero
+          title={`Tienes ${pendingIds.length} recibo(s) sin firmar`}
+          subtitle="Puedes firmarlos todos de golpe con tu firma digital registrada."
+        >
           <Image source={illustrationAssets.documents} resizeMode="contain" style={{ alignSelf: "flex-end", width: 86, height: 62 }} />
-          <Text className="text-base font-bold text-white">Tienes {pendingIds.length} recibo(s) sin firmar</Text>
-          <Text className="text-sm text-white/80">Puedes firmarlos todos de golpe con tu firma digital registrada.</Text>
           <Button variant="secondary" icon={FileCheck2} loading={signing === "all"} onPress={() => sign("all")}>
             Firmar todos
           </Button>
           {signing === "all" && phase ? <Text className="text-center text-xs font-semibold text-white/80">{phase}</Text> : null}
-        </Card>
+        </GlassHero>
       ) : (
         <InlineAlert title="Todo firmado" description="No tienes recibos pendientes de firma." tone="success" />
       )}
@@ -57,8 +60,7 @@ export default function ReceiptsScreen() {
             <Row
               key={receipt.id}
               icon={FileText}
-              iconColor={signed ? "#6AA84F" : "#B8860B"}
-              iconTint={signed ? "bg-emerald-50" : "bg-amber-50"}
+              iconColor={signed ? "#2E8B57" : "#B8860B"}
               title={receipt.period}
               subtitle={`Pagado el ${receipt.paidOn}`}
               meta={receipt.net} metaBold
@@ -70,7 +72,7 @@ export default function ReceiptsScreen() {
                   <Pressable
                     accessibilityLabel={`Descargar ${receipt.period}`}
                     onPress={() => downloadFile(downloadedFiles.includes(pdfName) ? xmlName : pdfName)}
-                    className="h-9 w-9 items-center justify-center rounded-[10px] active:bg-slate-100"
+                    className="h-9 w-9 items-center justify-center rounded-[10px] active:bg-white/70"
                   >
                     <FileDown size={16} color="#2F42CB" />
                   </Pressable>
@@ -78,7 +80,7 @@ export default function ReceiptsScreen() {
                     <Pressable
                       accessibilityLabel={`Firmar ${receipt.period}`}
                       onPress={() => sign(receipt.id)}
-                      className="h-9 w-9 items-center justify-center rounded-[10px] active:bg-amber-50"
+                      className="h-9 w-9 items-center justify-center rounded-[10px] active:bg-white/70"
                     >
                       <FileCheck2 size={16} color="#B8860B" />
                     </Pressable>
@@ -92,7 +94,7 @@ export default function ReceiptsScreen() {
 
       <Card className="gap-3">
         <View className="flex-row items-center gap-3">
-          <View className="h-12 w-12 items-center justify-center rounded-2xl bg-amber-50">
+          <View className="h-12 w-12 items-center justify-center rounded-2xl border border-separator bg-white/55">
             <Image source={illustrationAssets.documents} resizeMode="contain" style={{ width: 34, height: 34 }} />
           </View>
           <View className="flex-1">
@@ -100,15 +102,24 @@ export default function ReceiptsScreen() {
             <Text className="text-xs text-slate-500">Constancia emitida por {company.signatureProvider} para tus declaraciones.</Text>
           </View>
         </View>
-        <Button variant={certificateDownloaded ? "secondary" : "outline"} icon={FileDown} onPress={downloadCertificate}>
-          {certificateDownloaded ? "Certificado descargado" : "Descargar certificado"}
-        </Button>
+        <LiquidButton
+          idleLabel="Descargar certificado"
+          busyLabel="Descargando certificado…"
+          doneLabel="Certificado descargado"
+          idleIcon={FileDown}
+          done={certificateDownloaded}
+          tone="brand"
+          onPress={async () => {
+            if (certificateDownloaded) return;
+            await new Promise((resolve) => setTimeout(resolve, 900));
+            downloadCertificate();
+          }}
+        />
       </Card>
 
       <Modal transparent visible={viewing !== null} animationType="slide" onRequestClose={() => setViewing(null)}>
-        <View className="flex-1 justify-end bg-black/40">
-          <View className="max-h-[80%] rounded-t-[20px] bg-white p-5">
-            <View className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-slate-300" />
+        <View className="flex-1 justify-end bg-navy/40">
+          <GlassBottomSheet className="max-h-[80%]">
             <Text className="text-center text-xs font-bold uppercase tracking-[2px] text-slate-400">Visor PDF</Text>
             <Text className="mt-1 text-center text-lg font-bold text-slate-950">Recibo de nómina · {viewingReceipt?.period}</Text>
             <View className="mt-4 gap-2 rounded-2xl border border-slate-200 p-4">
@@ -138,7 +149,7 @@ export default function ReceiptsScreen() {
             <View className="pt-4">
               <Button onPress={() => setViewing(null)}>Cerrar visor</Button>
             </View>
-          </View>
+          </GlassBottomSheet>
         </View>
       </Modal>
     </Screen>

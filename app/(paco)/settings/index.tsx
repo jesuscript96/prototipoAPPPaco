@@ -3,7 +3,7 @@ import { useRouter } from "expo-router";
 import { Camera, ChevronRight, CreditCard, KeyRound, LockKeyhole, LogOut, Mail, Trash2 } from "@/components/paco/glyphs";
 import { Pressable, Text, View } from "react-native";
 import { Button, Card, InlineAlert, Screen, Section } from "@/components/paco/layout";
-import { ConfirmSheet, cn } from "@/components/paco/ui";
+import { ConfirmSheet, ToggleRow, cn } from "@/components/paco/ui";
 import { employee } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
 
@@ -47,7 +47,7 @@ export default function SettingsScreen() {
         <Pressable
           accessibilityLabel="Agregar foto"
           onPress={store.setProfilePhoto}
-          className={cn("h-16 w-16 items-center justify-center rounded-full", store.profilePhotoSet ? "bg-brand-500" : "bg-brand-100")}
+          className={cn("h-16 w-16 items-center justify-center rounded-full", store.profilePhotoSet ? "bg-brand-500" : "border border-separator bg-white/55")}
         >
           {store.profilePhotoSet ? <Text className="text-xl font-bold text-white">{employee.initials}</Text> : <Camera size={22} color="#2F42CB" />}
         </Pressable>
@@ -67,9 +67,9 @@ export default function SettingsScreen() {
               key={row.label}
               accessibilityRole="button"
               onPress={row.onPress}
-              className={cn("flex-row items-center gap-3 px-3 py-3.5 active:bg-slate-50", index < rows.length - 1 && "border-b border-slate-100")}
+              className={cn("flex-row items-center gap-3 px-3 py-3.5 active:bg-white/70", index < rows.length - 1 && "border-b border-separator")}
             >
-              <View className="h-10 w-10 items-center justify-center rounded-xl bg-brand-50">
+              <View className="h-10 w-10 items-center justify-center rounded-xl border border-separator bg-white/55">
                 <row.icon size={18} color="#2F42CB" />
               </View>
               <View className="flex-1">
@@ -87,6 +87,15 @@ export default function SettingsScreen() {
             tone="info"
           />
         ) : null}
+      </Section>
+
+      <Section title="Accesibilidad">
+        <ToggleRow
+          label="Reducir transparencia"
+          helper="Sustituye el efecto vidrio por superficies sólidas con bordes definidos. En iOS también se respeta la preferencia del sistema."
+          value={store.reduceTransparency}
+          onChange={store.setReduceTransparency}
+        />
       </Section>
 
       <Section title="Sesión">

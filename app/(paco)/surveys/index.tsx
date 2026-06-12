@@ -4,6 +4,7 @@ import { Image, Text, View } from "react-native";
 import { peopleAssets } from "@/components/paco/assets";
 import { Badge, Button, Card, EmptyState, Screen } from "@/components/paco/layout";
 import { surveys } from "@/mock/paco";
+import { vibrants } from "@/theme/tokens";
 import { usePacoStore } from "@/store/paco-store";
 
 export default function SurveysScreen() {
@@ -42,8 +43,9 @@ export default function SurveysScreen() {
                 {survey.questions.length} preguntas · {survey.due}
               </Text>
               {done ? (
-                <View className="rounded-2xl bg-green-50 p-3">
-                  <Text className="text-sm font-semibold text-green-800">Respuestas enviadas al panel</Text>
+                <View style={{ borderColor: vibrants.success.border, backgroundColor: vibrants.success.wash }} className="flex-row items-center gap-2 rounded-2xl border p-3">
+                  <View style={{ backgroundColor: vibrants.success.accent }} className="h-2 w-2 rounded-full" />
+                  <Text className="flex-1 text-sm font-semibold text-label-primary">Respuestas enviadas al panel</Text>
                 </View>
               ) : (
                 <Button onPress={() => router.push({ pathname: "/(paco)/surveys/[id]", params: { id: survey.id } })}>

@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useRouter } from "expo-router";
 import { Eye, EyeOff, Save, ShieldCheck } from "@/components/paco/glyphs";
 import { Pressable, Text, TextInput, View } from "react-native";
-import { Button, Card, Screen } from "@/components/paco/layout";
-import { SuccessCard } from "@/components/paco/ui";
+import { Button, Card, glassInputRowClass, Screen } from "@/components/paco/layout";
+import { SuccessCard, cn } from "@/components/paco/ui";
 import { simulate } from "@/lib/paco-api";
 import { usePacoStore } from "@/store/paco-store";
 
@@ -22,7 +22,7 @@ function PasswordField({
   return (
     <View className="gap-2">
       <Text className="text-sm font-bold text-slate-700">{label}</Text>
-      <View className={`flex-row items-center rounded-2xl border bg-white pr-2 ${error ? "border-red-300" : "border-slate-200"}`}>
+      <View className={cn(glassInputRowClass, "pr-2", error ? "border-red-300" : undefined)}>
         <TextInput
           value={value}
           onChangeText={onChangeText}
@@ -82,7 +82,7 @@ export default function PasswordScreen() {
 
   return (
     <Screen title="Cambiar contraseña" description="Usarás tu contraseña para ingresar a la app.">
-      <Card className="items-center gap-2 bg-brand-50 py-6">
+      <Card className="items-center gap-2 py-6">
         <ShieldCheck size={40} color="#2F42CB" />
         <Text className="text-center text-sm leading-5 text-slate-600">
           Combina mayúsculas, minúsculas, números y símbolos para una contraseña fuerte.

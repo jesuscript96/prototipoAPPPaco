@@ -4,9 +4,21 @@ import "@/global.css";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { ActivityIndicator, View } from "react-native";
 import { queryClient } from "@/lib/query-client";
+import { usePacoFonts } from "@/lib/fonts";
 
 export default function RootLayout() {
+  const [fontsLoaded, fontError] = usePacoFonts();
+
+  if (!fontsLoaded && !fontError) {
+    return (
+      <View className="flex-1 items-center justify-center bg-canvas">
+        <ActivityIndicator size="large" color="#2F42CB" />
+      </View>
+    );
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <StatusBar style="dark" />

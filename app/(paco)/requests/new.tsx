@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { CalendarDays, ChevronLeft, FileQuestion } from "@/components/paco/glyphs";
 import { Pressable, Text, TextInput, View } from "react-native";
-import { Button, Card, EmptyState, InlineAlert, Screen } from "@/components/paco/layout";
-import { MoneyRow, RadioOption, SelectChip, StepHeader, SuccessCard } from "@/components/paco/ui";
+import { Button, Card, EmptyState, InlineAlert, Screen, glassTextAreaClass } from "@/components/paco/layout";
+import { GlassHero } from "@/components/paco/glass";
+import { MoneyRow, RadioOption, SelectChip, StepHeader, SuccessCard, cn } from "@/components/paco/ui";
+import { MorphButton, type MorphStatus } from "@/components/paco/motion";
+import { WizardStep } from "@/components/paco/wizard-step";
 import { simulate } from "@/lib/paco-api";
+import { scheduleWizardAdvance } from "@/lib/wizard-flow";
 import { requestTypes } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
 
@@ -21,7 +25,8 @@ export default function NewRequestScreen() {
   const [endDate, setEndDate] = useState<string | null>(null);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [comments, setComments] = useState("");
-  const [sending, setSending] = useState(false);
+  const [sendStatus, setSendStatus] = useState<MorphStatus>("idle");
+  const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   if (!requestType) {
     return (
@@ -38,8 +43,17 @@ export default function NewRequestScreen() {
   const successStep = totalQuestions + 3;
   const totalSteps = totalQuestions + 2; // fechas + preguntas + comentarios
 
+  useEffect(() => {
+    if (step !== 1 || !startDate || !endDate) return;
+    if (advanceTimer.current) clearTimeout(advanceTimer.current);
+    advanceTimer.current = scheduleWizardAdvance(() => setStep(2));
+    return () => {
+      if (advanceTimer.current) clearTimeout(advanceTimer.current);
+    };
+  }, [step, startDate, endDate]);
+
   const submit = async () => {
-    setSending(true);
+    setSendStatus("loading");
     await simulate(null, 1000);
     createRequest({
       typeId: requestType.id,
@@ -51,8 +65,8 @@ export default function NewRequestScreen() {
       comments: comments.trim(),
       stages: ["Etapa 1 · Jefe directo", "Etapa 2 · Recursos Humanos", "Etapa 3 · Registro en nómina"],
     });
-    setSending(false);
-    setStep(successStep);
+    setSendStatus("success");
+    setTimeout(() => setStep(successStep), 700);
   };
 
   if (step === successStep) {
@@ -81,11 +95,11 @@ export default function NewRequestScreen() {
 
       {step === 0 ? (
         <>
-          <Card className="gap-3 bg-ink">
-            <Text className="text-xs font-bold uppercase tracking-[1px] text-white/70">{requestType.category}</Text>
-            <Text className="text-2xl font-bold text-white">{requestType.name}</Text>
-            <Text className="text-sm leading-5 text-white/85">{requestType.description}</Text>
-          </Card>
+          <GlassHero
+            eyebrow={requestType.category}
+            title={requestType.name}
+            subtitle={requestType.description}
+          />
           <InlineAlert
             title="Flujo de aprobación"
             description={`Esta solicitud pasa por 3 etapas de autorización y suele resolverse en ~${requestType.approvalDays} días hábiles. Te notificaremos cada avance.`}
@@ -98,7 +112,7 @@ export default function NewRequestScreen() {
       ) : null}
 
       {step === 1 ? (
-        <>
+        <WizardStep stepKey="dates">
           <StepHeader step={1} total={totalSteps} title="Elige las fechas" subtitle="Selecciona la fecha inicial y la de finalización." />
           <Card className="gap-3">
             <Text className="text-sm font-bold text-slate-700">Fecha inicial</Text>
@@ -114,10 +128,7 @@ export default function NewRequestScreen() {
               ))}
             </View>
           </Card>
-          <Button disabled={!startDate || !endDate} onPress={() => setStep(2)}>
-            Continuar
-          </Button>
-        </>
+        </WizardStep>
       ) : null}
 
       {questionIndex >= 0 && questionIndex < totalQuestions
@@ -126,7 +137,7 @@ export default function NewRequestScreen() {
             if (!question) return null;
             const answer = answers[question.id] ?? "";
             return (
-              <>
+              <WizardStep stepKey={`q-${question.id}`}>
                 <StepHeader
                   step={questionIndex + 2}
                   total={totalSteps}
@@ -134,7 +145,7 @@ export default function NewRequestScreen() {
                   subtitle={requestType.name}
                 />
                 <Card className="gap-4">
-                  <Text className="text-lg font-bold leading-7 text-slate-950">{question.text}</Text>
+                  <Text className="text-lg font-bold leading-7 text-ink-body">{question.text}</Text>
                   {question.kind === "yesno" ? (
                     <View className="gap-2">
                       {["Sí", "No"].map((option) => (
@@ -142,7 +153,10 @@ export default function NewRequestScreen() {
                           key={option}
                           label={option}
                           selected={answer === option}
-                          onPress={() => setAnswers((prev) => ({ ...prev, [question.id]: option }))}
+                          onPress={() => {
+                            setAnswers((prev) => ({ ...prev, [question.id]: option }));
+                            scheduleWizardAdvance(() => setStep(step + 1));
+                          }}
                         />
                       ))}
                     </View>
@@ -154,7 +168,10 @@ export default function NewRequestScreen() {
                           key={option}
                           label={option}
                           selected={answer === option}
-                          onPress={() => setAnswers((prev) => ({ ...prev, [question.id]: option }))}
+                          onPress={() => {
+                            setAnswers((prev) => ({ ...prev, [question.id]: option }));
+                            scheduleWizardAdvance(() => setStep(step + 1));
+                          }}
                         />
                       ))}
                     </View>
@@ -166,14 +183,16 @@ export default function NewRequestScreen() {
                       multiline
                       placeholder="Escribe tu respuesta…"
                       placeholderTextColor="#94a3b8"
-                      className="min-h-24 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-950"
+                      className={cn(glassTextAreaClass, "min-h-24")}
                     />
                   ) : null}
                 </Card>
-                <Button disabled={answer.trim().length === 0} onPress={() => setStep(step + 1)}>
-                  Continuar
-                </Button>
-              </>
+                {question.kind === "open" ? (
+                  <Button disabled={answer.trim().length === 0} onPress={() => setStep(step + 1)}>
+                    Continuar
+                  </Button>
+                ) : null}
+              </WizardStep>
             );
           })()
         : null}
@@ -188,7 +207,7 @@ export default function NewRequestScreen() {
               multiline
               placeholder="Ej. revisión y pruebas…"
               placeholderTextColor="#94a3b8"
-              className="min-h-24 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-950"
+              className={cn(glassTextAreaClass, "min-h-24")}
             />
           </Card>
           <Card className="gap-2">
@@ -200,9 +219,13 @@ export default function NewRequestScreen() {
               <MoneyRow key={q.id} label={q.text.length > 34 ? `${q.text.slice(0, 34)}…` : q.text} value={answers[q.id] ?? "—"} />
             ))}
           </Card>
-          <Button loading={sending} onPress={submit}>
-            Enviar solicitud
-          </Button>
+          <MorphButton
+            label="Enviar solicitud"
+            loadingLabel="Registrando en el panel…"
+            successLabel="Solicitud enviada"
+            status={sendStatus}
+            onPress={submit}
+          />
         </>
       ) : null}
     </Screen>

@@ -69,7 +69,7 @@ export default function OnboardingTasksScreen() {
                     {(() => {
                       const KindIcon = kindIcons[task.kind];
                       return (
-                        <View className="h-11 w-11 items-center justify-center rounded-[12px] bg-brand-100">
+                        <View className="h-11 w-11 items-center justify-center rounded-[12px] border border-separator bg-white/55">
                           <KindIcon size={20} color="#5176F3" strokeWidth={2} />
                         </View>
                       );

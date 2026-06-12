@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { CheckCircle2, FileQuestion, Send } from "@/components/paco/glyphs";
 import { Text, TextInput, View } from "react-native";
-import { Badge, Button, Card, EmptyState, InlineAlert, Screen, Section } from "@/components/paco/layout";
-import { FileTile, RadioOption, StepHeader, SuccessCard } from "@/components/paco/ui";
+import { Badge, Button, Card, EmptyState, InlineAlert, Screen, Section, glassTextAreaClass } from "@/components/paco/layout";
+import { FileTile, RadioOption, StepHeader, SuccessCard, cn } from "@/components/paco/ui";
 import { simulate } from "@/lib/paco-api";
 import { onboardingTasks } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
@@ -122,7 +122,7 @@ export default function OnboardingTaskScreen() {
                     multiline
                     placeholder="Escribe tu respuesta…"
                     placeholderTextColor="#94a3b8"
-                    className="min-h-20 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-950"
+                    className={cn(glassTextAreaClass, "min-h-20")}
                   />
                 ) : null}
               </Card>

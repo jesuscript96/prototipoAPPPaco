@@ -79,24 +79,29 @@ export type Icon = ComponentType<{ size?: number; color?: string; strokeWidth?: 
 
 const join = (...classes: Array<string | false | null | undefined>) => classes.filter(Boolean).join(" ");
 
-// Burbuja de icono estandar del sistema (radio contenido, tinte suave).
+// Burbuja de icono estandar del sistema · Liquid Glass: la burbuja es vidrio
+// thin neutro (borde separador + blanco translúcido); el color del dominio
+// vive en el glifo, nunca en el fondo. El prop `tint` se conserva por
+// compatibilidad pero ya no pinta rellenos semánticos.
+const bubbleGlassClass = "items-center justify-center rounded-[12px] border border-separator bg-white/55";
+
 export function IconBubble({
   icon: IconComponent,
   color,
-  tint,
+  tint: _tint,
   size = 44,
   iconSize = 20,
   className = "",
 }: {
   icon: Icon;
   color: string;
-  tint: string;
+  tint?: string;
   size?: number;
   iconSize?: number;
   className?: string;
 }) {
   return (
-    <View style={{ width: size, height: size }} className={join("items-center justify-center rounded-[12px]", tint, className)}>
+    <View style={{ width: size, height: size }} className={join(bubbleGlassClass, className)}>
       <IconComponent size={iconSize} color={color} strokeWidth={2.1} />
     </View>
   );
@@ -104,7 +109,7 @@ export function IconBubble({
 
 export function AssetIconBubble({
   source,
-  tint = "bg-white/80",
+  tint: _tint,
   size = 44,
   imageSize = 24,
   className = "",
@@ -116,19 +121,20 @@ export function AssetIconBubble({
   className?: string;
 }) {
   return (
-    <View style={{ width: size, height: size }} className={join("items-center justify-center overflow-hidden rounded-[12px]", tint, className)}>
+    <View style={{ width: size, height: size }} className={join(bubbleGlassClass, "overflow-hidden", className)}>
       <Image source={source} resizeMode="contain" style={{ width: imageSize, height: imageSize }} />
     </View>
   );
 }
 
 // ---- Dominios ----
+// `tint` neutro glass: el acento del dominio va solo en `color` (glifo).
 
 export const domainStyles: Record<string, { tint: string; color: string }> = {
-  Finanzas: { tint: "bg-brand-50", color: "#2F42CB" },
-  "Personas y cultura": { tint: "bg-violet-50", color: "#674EA7" },
-  Documentos: { tint: "bg-amber-50", color: "#B8860B" },
-  Soporte: { tint: "bg-brand-100", color: "#5176F3" },
+  Finanzas: { tint: "bg-white/55", color: "#2F42CB" },
+  "Personas y cultura": { tint: "bg-white/55", color: "#674EA7" },
+  Documentos: { tint: "bg-white/55", color: "#B8860B" },
+  Soporte: { tint: "bg-white/55", color: "#5176F3" },
 };
 
 export const moduleIcons: Record<string, Icon> = {

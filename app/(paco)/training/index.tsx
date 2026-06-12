@@ -4,6 +4,7 @@ import { CheckCircle2, Download, GraduationCap, Search, WifiOff } from "@/compon
 import { Image, Modal, Pressable, Text, TextInput, View } from "react-native";
 import { illustrationAssets, moduleAssets } from "@/components/paco/assets";
 import { Badge, Button, Card, EmptyState, Progress, Screen } from "@/components/paco/layout";
+import { GlassSearchBar, GlassSurface } from "@/components/paco/glass";
 import { Segmented } from "@/components/paco/ui";
 import { runPhases } from "@/lib/paco-api";
 import { courseProgress, courseStatus } from "@/lib/paco-training";
@@ -46,7 +47,7 @@ export default function TrainingScreen() {
       title="Capacitaciones"
       description="Cursos asignados por tu empresa. Los cursos offline se descargan para avanzar sin conexión y sincronizar después."
     >
-      <View className="flex-row items-center gap-2 rounded-2xl border border-slate-200 bg-white px-3">
+      <GlassSearchBar>
         <Search size={18} color="#94a3b8" />
         <TextInput
           value={query}
@@ -55,21 +56,21 @@ export default function TrainingScreen() {
           placeholderTextColor="#94a3b8"
           className="min-h-12 flex-1 text-base text-slate-950"
         />
-      </View>
+      </GlassSearchBar>
 
       <Segmented options={tabs} value={tab} onChange={setTab} />
 
       {store.pendingSync.length > 0 ? (
-        <Card className="gap-2 border-amber-200 bg-amber-50">
+        <GlassSurface material="thick" tint="warning" radius={16} className="gap-2 p-4 shadow-card">
           <View className="flex-row items-center gap-2">
             <WifiOff size={16} color="#B8860B" />
-            <Text className="flex-1 text-sm font-bold text-amber-800">Avance offline sin sincronizar</Text>
+            <Text className="flex-1 text-sm font-bold text-label-primary">Avance offline sin sincronizar</Text>
           </View>
-          <Text className="text-xs text-amber-700">Tu progreso se guardó en el dispositivo. Al recuperar conexión se enviará al panel.</Text>
+          <Text className="text-xs text-label-secondary">Tu progreso se guardó en el dispositivo. Al recuperar conexión se enviará al panel.</Text>
           <Button variant="outline" onPress={() => store.pendingSync.forEach((id) => store.syncCourse(id))}>
             Simular recuperar conexión y sincronizar
           </Button>
-        </Card>
+        </GlassSurface>
       ) : null}
 
       {filtered.length === 0 ? (
@@ -87,7 +88,7 @@ export default function TrainingScreen() {
             return (
               <Card key={course.id} className="gap-3">
                 <View className="flex-row items-start gap-3">
-                  <View className="h-12 w-12 items-center justify-center rounded-[12px] bg-brand-50">
+                  <View className="h-12 w-12 items-center justify-center rounded-[12px] border border-separator bg-white/55">
                     <Image source={moduleAssets.training} resizeMode="contain" style={{ width: 30, height: 30 }} />
                   </View>
                   <View className="flex-1 gap-1">
@@ -122,8 +123,8 @@ export default function TrainingScreen() {
       )}
 
       <Modal transparent visible={downloadModal !== null} animationType="fade" onRequestClose={() => !downloading && setDownloadModal(null)}>
-        <View className="flex-1 items-center justify-center bg-black/50 px-6">
-          <View className="w-full max-w-sm gap-3 rounded-2xl bg-white p-6">
+        <View className="flex-1 items-center justify-center bg-navy/50 px-6">
+          <GlassSurface variant="light" radius={16} className="w-full max-w-sm gap-3 p-6">
             {downloading ? (
               <>
                 <Text className="text-center text-lg font-bold text-slate-950">Descargando “{downloadModal?.title}”</Text>
@@ -133,7 +134,7 @@ export default function TrainingScreen() {
             ) : (
               <>
                 <View className="items-center">
-                  <View className="h-14 w-14 items-center justify-center rounded-2xl bg-brand-50">
+                  <View className="h-14 w-14 items-center justify-center rounded-2xl border border-separator bg-white/55">
                     <Image source={illustrationAssets.training} resizeMode="contain" style={{ width: 40, height: 40 }} />
                   </View>
                 </View>
@@ -158,7 +159,7 @@ export default function TrainingScreen() {
                 <Text className="text-sm font-bold text-green-700">Descarga completada</Text>
               </View>
             ) : null}
-          </View>
+          </GlassSurface>
         </View>
       </Modal>
     </Screen>

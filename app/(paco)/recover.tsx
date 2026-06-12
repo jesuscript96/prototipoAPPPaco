@@ -49,7 +49,7 @@ export default function RecoverScreen() {
             <Image source={illustrationAssets.password} resizeMode="contain" style={{ width: 178, height: 112 }} />
           </View>
           <View className="flex-row items-center gap-3">
-            <View className="h-12 w-12 items-center justify-center rounded-2xl bg-brand-50">
+            <View className="h-12 w-12 items-center justify-center rounded-2xl border border-separator bg-white/55">
               <KeyRound size={22} color="#2F42CB" />
             </View>
             <Text className="flex-1 text-sm leading-5 text-slate-600">

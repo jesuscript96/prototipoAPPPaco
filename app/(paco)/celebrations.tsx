@@ -60,7 +60,7 @@ export default function CelebrationsScreen() {
             return (
               <Card key={item.id} className="gap-3">
                 <View className="flex-row items-center gap-3">
-                  <View className={item.type === "Cumpleaños" ? "h-11 w-11 items-center justify-center rounded-[12px] bg-violet-50" : "h-11 w-11 items-center justify-center rounded-[12px] bg-amber-50"}>
+                  <View className="h-11 w-11 items-center justify-center rounded-[12px] border border-separator bg-white/55">
                     <Image source={moduleAssets.celebrations} resizeMode="contain" style={{ width: 28, height: 28 }} />
                   </View>
                   <View className="flex-1">
@@ -70,7 +70,7 @@ export default function CelebrationsScreen() {
                     </Text>
                   </View>
                   {item.years ? (
-                    <View className="h-12 w-12 items-center justify-center rounded-full border-2 border-amber-400 bg-amber-50">
+                    <View className="h-12 w-12 items-center justify-center rounded-full border-2 border-amber-400 bg-white/55">
                       <Text className="text-base font-bold text-amber-700">{item.years}</Text>
                       <Text className="text-[8px] font-bold uppercase text-amber-600">años</Text>
                     </View>

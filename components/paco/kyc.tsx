@@ -2,10 +2,11 @@
 // selfie y validacion. Se reutiliza en adelanto de nomina y pago de servicios.
 
 import { useState } from "react";
-import { Camera, ShieldCheck } from "@/components/paco/glyphs";
+import { Camera, Check, ShieldCheck } from "@/components/paco/glyphs";
 import { Pressable, Text, View } from "react-native";
 import { Button, Card, InlineAlert } from "@/components/paco/layout";
 import { cn } from "@/components/paco/ui";
+import { vibrants } from "@/theme/tokens";
 import { runPhases } from "@/lib/paco-api";
 import { kycIcons } from "@/components/paco/icons";
 import { company, kycSteps } from "@/mock/paco";
@@ -31,12 +32,12 @@ export function KycFlow({ onDone }: { onDone: () => void }) {
   return (
     <Card className="gap-4">
       <View className="flex-row items-center gap-3">
-        <View className="h-12 w-12 items-center justify-center rounded-2xl bg-amber-50">
-          <ShieldCheck size={22} color="#B8860B" />
+        <View className="h-12 w-12 items-center justify-center rounded-2xl border border-separator bg-white/55">
+          <ShieldCheck size={22} color={vibrants.warning.accent} />
         </View>
         <View className="flex-1">
-          <Text className="text-base font-bold text-slate-950">Verificación de identidad</Text>
-          <Text className="text-sm text-slate-500">{company.kycProvider} · requerida por la pasarela de pagos</Text>
+          <Text className="text-base font-bold text-label-primary">Verificación de identidad</Text>
+          <Text className="text-sm text-label-secondary">{company.kycProvider} · requerida por la pasarela de pagos</Text>
         </View>
       </View>
 
@@ -49,28 +50,33 @@ export function KycFlow({ onDone }: { onDone: () => void }) {
               accessibilityRole="button"
               onPress={() => capture(step.id)}
               disabled={verifying}
+              style={done ? { borderColor: vibrants.success.border, backgroundColor: "rgba(255, 255, 255, 0.55)" } : undefined}
               className={cn(
                 "flex-row items-center gap-3 rounded-2xl border p-3",
-                done ? "border-green-300 bg-green-50" : "border-slate-200 bg-white",
+                !done && "border-white/80 bg-white/50",
               )}
             >
               {(() => {
                 const StepIcon = kycIcons[step.id] ?? Camera;
                 return (
-                  <View className="h-10 w-10 items-center justify-center rounded-[10px] bg-amber-50">
-                    <StepIcon size={18} color="#B8860B" strokeWidth={2.1} />
+                  <View className="h-10 w-10 items-center justify-center rounded-[10px] border border-separator bg-white/55">
+                    <StepIcon size={18} color={done ? vibrants.success.accent : vibrants.warning.accent} strokeWidth={2.1} />
                   </View>
                 );
               })()}
               <View className="flex-1">
-                <Text className={cn("text-sm font-bold", done ? "text-green-800" : "text-slate-900")}>{step.title}</Text>
-                <Text className="text-xs leading-4 text-slate-500">{done ? "Captura lista" : step.description}</Text>
+                <Text className="text-sm font-bold text-label-primary">{step.title}</Text>
+                <Text className="text-xs leading-4 text-label-secondary">{done ? "Captura lista" : step.description}</Text>
               </View>
-              {!done ? (
-                <View className="h-10 w-10 items-center justify-center rounded-xl bg-brand-50">
+              {done ? (
+                <View style={{ backgroundColor: vibrants.success.accent }} className="h-6 w-6 items-center justify-center rounded-full">
+                  <Check size={13} color="#fff" strokeWidth={3} />
+                </View>
+              ) : (
+                <View className="h-10 w-10 items-center justify-center rounded-xl border border-separator bg-white/55">
                   <Camera size={18} color="#2F42CB" />
                 </View>
-              ) : null}
+              )}
             </Pressable>
           );
         })}

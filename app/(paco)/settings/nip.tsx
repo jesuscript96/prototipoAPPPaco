@@ -17,7 +17,7 @@ function NipInput({ value, onChangeText, autoFocus }: { value: string; onChangeT
             key={index}
             className={cn(
               "h-14 w-14 items-center justify-center rounded-2xl border-2",
-              index < value.length ? "border-brand-500 bg-brand-50" : "border-slate-200 bg-white",
+              index < value.length ? "border-brand-500 bg-white/70" : "border-white/80 bg-white/50",
             )}
           >
             <Text className="text-2xl font-bold text-brand-700">{index < value.length ? "●" : ""}</Text>
@@ -31,7 +31,7 @@ function NipInput({ value, onChangeText, autoFocus }: { value: string; onChangeT
         maxLength={4}
         autoFocus={autoFocus ?? false}
         caretHidden
-        className="h-12 w-44 rounded-2xl border border-slate-200 bg-white text-center text-base text-transparent"
+        className="h-12 w-44 rounded-2xl border border-white/80 bg-white/50 text-center text-base text-transparent"
       />
       <Text className="text-xs text-slate-400">Escribe los 4 dígitos en el campo de arriba</Text>
     </View>
@@ -99,7 +99,7 @@ export default function NipScreen() {
       <ShakeView trigger={error}>
       <Card className="gap-4 py-8">
         <View className="items-center">
-          <View className="h-12 w-12 items-center justify-center rounded-2xl bg-brand-50">
+          <View className="h-12 w-12 items-center justify-center rounded-2xl border border-separator bg-white/55">
             <KeyRound size={22} color="#2F42CB" />
           </View>
         </View>

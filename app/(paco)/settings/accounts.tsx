@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CreditCard, Landmark, Plus, Trash2 } from "@/components/paco/glyphs";
 import { Modal, Pressable, Text, View } from "react-native";
 import { Button, Field, Screen } from "@/components/paco/layout";
+import { GlassBottomSheet } from "@/components/paco/glass";
 import { ConfirmSheet, ListGroup, Row, Segmented, SelectChip, SheetHeader } from "@/components/paco/ui";
 import { banks } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
@@ -49,7 +50,6 @@ export default function AccountsScreen() {
             key={account.id}
             icon={account.kind === "Tarjeta" ? CreditCard : Landmark}
             iconColor={account.kind === "Tarjeta" ? "#674EA7" : "#2F42CB"}
-            iconTint={account.kind === "Tarjeta" ? "bg-violet-50" : "bg-brand-100"}
             title={account.alias}
             subtitle={`${account.bank} · ${account.masked}`}
             metaSub={account.primary ? "Principal" : undefined}
@@ -59,7 +59,7 @@ export default function AccountsScreen() {
                 <Pressable
                   accessibilityLabel={`Eliminar ${account.alias}`}
                   onPress={() => setRemoving(account.id)}
-                  className="h-8 w-8 items-center justify-center rounded-full active:bg-red-50"
+                  className="h-8 w-8 items-center justify-center rounded-full active:bg-white/70"
                 >
                   <Trash2 size={14} color="#CC0000" />
                 </Pressable>
@@ -74,8 +74,8 @@ export default function AccountsScreen() {
       </Button>
 
       <Modal transparent visible={adding} animationType="slide" onRequestClose={() => setAdding(false)}>
-        <View className="flex-1 justify-end bg-black/40">
-          <View className="rounded-t-[20px] bg-white p-5 pb-8">
+        <View className="flex-1 justify-end bg-navy/40">
+          <GlassBottomSheet>
             <SheetHeader title="Agregar método" onClose={() => setAdding(false)} />
             <View className="gap-4">
               <Segmented options={["Tarjetas", "Cuenta"]} value={kind} onChange={setKind} />
@@ -99,7 +99,7 @@ export default function AccountsScreen() {
               />
               <Button onPress={save}>Agregar</Button>
             </View>
-          </View>
+          </GlassBottomSheet>
         </View>
       </Modal>
 

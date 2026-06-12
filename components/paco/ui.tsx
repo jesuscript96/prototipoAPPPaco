@@ -3,9 +3,10 @@ import { Animated, Image, Modal, Pressable, Text, TextInput, View } from "react-
 import type { ImageSourcePropType } from "react-native";
 import { Check, ChevronRight, Minus, Paperclip, Pause, Play, Plus, Send, X } from "@/components/paco/glyphs";
 import { Button } from "@/components/paco/layout";
+import { GlassDarkSurface, GlassIconButton, GlassSheet, GlassSurface, glassInputClass, glassTextAreaClass } from "@/components/paco/glass";
 import { fileIconFor } from "@/components/paco/icons";
 import { ConfettiBurst, PopIn, PressableScale, Pulse, easeOut } from "@/components/paco/motion";
-import { colors } from "@/theme/tokens";
+import { colors, vibrants } from "@/theme/tokens";
 import { usePacoStore } from "@/store/paco-store";
 
 type Icon = ComponentType<{ size?: number; color?: string; strokeWidth?: number }>;
@@ -47,10 +48,10 @@ export function ToastHost() {
       style={{ opacity, pointerEvents: "none", transform: [{ translateY: lift }] }}
       className="absolute bottom-32 left-5 right-5 items-center"
     >
-      <View className="max-w-full flex-row items-center gap-2 rounded-[14px] bg-ink/95 px-4 py-3 shadow-pop">
+      <GlassDarkSurface material="thick" radius={14} className="max-w-full flex-row items-center gap-2 px-4 py-3 shadow-pop">
         <Check size={15} color="#6AA84F" strokeWidth={3} />
-        <Text className="shrink text-[13px] font-semibold text-white">{toast}</Text>
-      </View>
+        <Text className="shrink text-[13px] font-semibold text-label-dark-primary">{toast}</Text>
+      </GlassDarkSurface>
     </Animated.View>
   );
 }
@@ -62,13 +63,13 @@ export function ToastHost() {
 export function ListGroup({ children, className = "" }: { children: ReactNode; className?: string }) {
   const items = Children.toArray(children).filter(Boolean);
   return (
-    <View className={cn("overflow-hidden rounded-2xl border border-white/80 bg-white/75 shadow-card", className)}>
+    <GlassSurface material="regular" radius={16} className={cn("overflow-hidden shadow-card", className)}>
       {items.map((child, index) => (
-        <View key={index} className={cn(index > 0 && "border-t border-slate-900/5")}>
+        <View key={index} className={cn(index > 0 && "border-t border-separator")}>
           {child}
         </View>
       ))}
-    </View>
+    </GlassSurface>
   );
 }
 
@@ -109,7 +110,7 @@ export function Row({
     <View className="flex-row items-center gap-3 px-4 py-3">
       {leading ??
         (IconComponent ? (
-          <View className={cn("h-9 w-9 items-center justify-center rounded-[10px]", iconTint)}>
+          <View className="h-9 w-9 items-center justify-center rounded-[10px] border border-separator bg-white/55">
             <IconComponent size={17} color={iconColor} />
           </View>
         ) : null)}
@@ -121,7 +122,7 @@ export function Row({
           </Text>
         </View>
         {subtitle ? (
-          <Text className="mt-0.5 text-[12px] leading-4 text-slate-500" numberOfLines={1}>
+          <Text className="mt-0.5 text-[12px] leading-4 text-ink-muted" numberOfLines={1}>
             {subtitle}
           </Text>
         ) : null}
@@ -162,9 +163,11 @@ export function Segmented({ options, value, onChange }: { options: readonly stri
   }, [index, segment, translate]);
 
   return (
-    <View
+    <GlassSurface
+      variant="light"
+      radius={14}
       onLayout={(event) => setWidth(event.nativeEvent.layout.width - 8)}
-      className="relative flex-row rounded-[14px] border border-white/70 bg-slate-900/5 p-1"
+      className="relative flex-row p-1"
     >
       {segment > 0 ? (
         <Animated.View
@@ -191,10 +194,10 @@ export function Segmented({ options, value, onChange }: { options: readonly stri
           onPress={() => onChange(option)}
           className="min-h-10 flex-1 items-center justify-center rounded-[10px] px-2"
         >
-          <Text className={cn("text-center text-[13px] font-bold", option === value ? "text-ink" : "text-slate-500")}>{option}</Text>
+          <Text className={cn("text-center text-[13px] font-bold", option === value ? "text-navy" : "text-slate-600")}>{option}</Text>
         </Pressable>
       ))}
-    </View>
+    </GlassSurface>
   );
 }
 
@@ -205,7 +208,7 @@ export function SelectChip({ label, active, onPress }: { label: string; active: 
       onPress={onPress}
       className={cn(
         "min-h-10 justify-center rounded-[10px] border px-3.5 py-2",
-        active ? "border-ink bg-ink" : "border-white/80 bg-white/70",
+        active ? "border-navy bg-navy" : "border-white/80 bg-white/50",
       )}
     >
       <Text className={cn("text-[13px] font-semibold", active ? "text-white" : "text-slate-600")}>{label}</Text>
@@ -221,11 +224,11 @@ export function RadioOption({ label, helper, selected, onPress }: { label: strin
       onPress={onPress}
       className={cn(
         "flex-row items-start gap-3 rounded-xl border p-3.5",
-        selected ? "border-ink/80 bg-white shadow-card" : "border-white/80 bg-white/60",
+        selected ? "border-navy/80 bg-white/60 shadow-card" : "border-white/80 bg-white/50",
       )}
     >
-      <View className={cn("mt-0.5 h-[22px] w-[22px] items-center justify-center rounded-full border-2", selected ? "border-ink" : "border-slate-300")}>
-        {selected ? <View className="h-2.5 w-2.5 rounded-full bg-ink" /> : null}
+      <View className={cn("mt-0.5 h-[22px] w-[22px] items-center justify-center rounded-full border-2", selected ? "border-navy" : "border-slate-300")}>
+        {selected ? <View className="h-2.5 w-2.5 rounded-full bg-navy" /> : null}
       </View>
       <View className="flex-1">
         <Text className={cn("text-[15px] font-semibold", selected ? "text-ink" : "text-slate-700")}>{label}</Text>
@@ -261,15 +264,15 @@ export function OptionCard({
       onPress={onPress}
       className={cn(
         "flex-row items-center gap-3 rounded-2xl border p-4 shadow-card",
-        selected ? "border-ink/70 bg-white" : "border-white/80 bg-white/75",
+        selected ? "border-navy/70 bg-white/60" : "border-white/80 bg-white/50",
       )}
     >
       {image ? (
-        <View className={cn("h-11 w-11 items-center justify-center rounded-[12px]", iconTint)}>
+        <View className="h-11 w-11 items-center justify-center rounded-[12px] border border-separator bg-white/55">
           <Image source={image} resizeMode="contain" style={{ width: 30, height: 30 }} />
         </View>
       ) : IconComponent ? (
-        <View className={cn("h-11 w-11 items-center justify-center rounded-[12px]", iconTint)}>
+        <View className="h-11 w-11 items-center justify-center rounded-[12px] border border-separator bg-white/55">
           <IconComponent size={20} color={iconColor} strokeWidth={2.1} />
         </View>
       ) : null}
@@ -298,13 +301,13 @@ export function ToggleRow({ label, helper, value, onChange }: { label: string; h
       accessibilityRole="switch"
       accessibilityState={{ checked: value }}
       onPress={() => onChange(!value)}
-      className="flex-row items-center justify-between gap-3 rounded-xl border border-white/80 bg-white/70 p-3.5"
+      className="flex-row items-center justify-between gap-3 rounded-xl border border-white/80 bg-white/50 p-3.5"
     >
       <View className="flex-1">
         <Text className="text-[15px] font-semibold text-slate-800">{label}</Text>
         {helper ? <Text className="mt-0.5 text-[13px] text-slate-500">{helper}</Text> : null}
       </View>
-      <View className={cn("h-7 w-12 justify-center rounded-full px-1", value ? "bg-ink" : "bg-slate-300")}>
+      <View className={cn("h-7 w-12 justify-center rounded-full px-1", value ? "bg-navy" : "bg-slate-300")}>
         <Animated.View
           style={{ transform: [{ translateX: slide.interpolate({ inputRange: [0, 1], outputRange: [0, 20] }) }] }}
           className="h-5 w-5 rounded-full bg-white shadow-card"
@@ -339,23 +342,15 @@ export function AmountSlider({
   return (
     <View className="gap-3">
       <View className="flex-row items-center justify-center gap-3">
-        <Pressable
-          accessibilityLabel="Disminuir monto"
-          onPress={() => onChange(Math.max(min, value - step))}
-          className="h-11 w-11 items-center justify-center rounded-[12px] border border-white/80 bg-white/75 shadow-card active:bg-white"
-        >
-          <Minus size={18} color="#1E1E1E" />
-        </Pressable>
-        <View className="min-w-44 items-center rounded-[16px] bg-ink px-6 py-4 shadow-card">
+        <GlassIconButton label="Disminuir monto" onPress={() => onChange(Math.max(min, value - step))}>
+          <Minus size={18} color="#004080" />
+        </GlassIconButton>
+        <View className="min-w-44 items-center rounded-[16px] bg-navy px-6 py-4 shadow-card">
           <Text className="text-3xl font-bold tracking-tight text-white">{mxn(value)}</Text>
         </View>
-        <Pressable
-          accessibilityLabel="Aumentar monto"
-          onPress={() => onChange(Math.min(max, value + step))}
-          className="h-11 w-11 items-center justify-center rounded-[12px] border border-white/80 bg-white/75 shadow-card active:bg-white"
-        >
-          <Plus size={18} color="#1E1E1E" />
-        </Pressable>
+        <GlassIconButton label="Aumentar monto" onPress={() => onChange(Math.min(max, value + step))}>
+          <Plus size={18} color="#004080" />
+        </GlassIconButton>
       </View>
       <View className="flex-row items-center gap-0.5">
         {Array.from({ length: segments }).map((_, index) => (
@@ -365,7 +360,7 @@ export function AmountSlider({
             onPress={() => setFromIndex(index)}
             className="h-8 flex-1 justify-center"
           >
-            <View className={cn("h-1.5 rounded-full", index / (segments - 1) <= ratio ? "bg-ink" : "bg-slate-900/10")} />
+            <View className={cn("h-1.5 rounded-full", index / (segments - 1) <= ratio ? "bg-navy" : "bg-slate-900/10")} />
           </Pressable>
         ))}
       </View>
@@ -381,16 +376,14 @@ export function AmountSlider({
 
 export function StepHeader({ step, total, title, subtitle }: { step: number; total: number; title: string; subtitle?: string }) {
   return (
-    <View className="gap-1.5 rounded-2xl border border-white/80 bg-white/75 p-4 shadow-card">
-      <Text className="text-[11px] font-bold uppercase tracking-[1.8px] text-brand-600">
-        Paso {step} de {total}
-      </Text>
-      <Text className="text-xl font-bold leading-7 tracking-tight text-slate-950">{title}</Text>
-      {subtitle ? <Text className="text-[13px] leading-5 text-slate-500">{subtitle}</Text> : null}
+    <GlassSurface material="regular" className="gap-1.5 p-4 shadow-card">
+      <Text className="text-[11px] font-bold uppercase tracking-[1.8px] text-navy">Paso {step} de {total}</Text>
+      <Text className="text-xl font-bold leading-7 tracking-tight text-label-primary">{title}</Text>
+      {subtitle ? <Text className="text-[13px] leading-5 text-label-secondary">{subtitle}</Text> : null}
       <View className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-slate-900/10">
-        <View style={{ width: `${Math.round((step / total) * 100)}%` }} className="h-full rounded-full bg-brand-500" />
+        <View style={{ width: `${Math.round((step / total) * 100)}%` }} className="h-full rounded-full bg-navy" />
       </View>
-    </View>
+    </GlassSurface>
   );
 }
 
@@ -405,17 +398,17 @@ export function MoneyRow({ label, value, strong }: { label: string; value: strin
 
 export function SuccessCard({ title, description, children, image }: { title: string; description: string; children?: ReactNode; image?: ImageSourcePropType }) {
   return (
-    <View className="items-center gap-3 overflow-hidden rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-6">
+    <GlassSurface material="thick" tint="success" radius={16} className="items-center gap-3 p-6">
       <ConfettiBurst />
       <PopIn>
-        <View className="h-16 w-16 items-center justify-center rounded-full bg-emerald-500 shadow-card">
+        <View style={{ backgroundColor: vibrants.success.accent }} className="h-16 w-16 items-center justify-center rounded-full shadow-card">
           {image ? <Image source={image} resizeMode="contain" style={{ width: 46, height: 46 }} /> : <Check size={28} color="#fff" strokeWidth={3} />}
         </View>
       </PopIn>
-      <Text className="text-center text-xl font-bold tracking-tight text-slate-950">{title}</Text>
-      <Text className="text-center text-sm leading-6 text-slate-600">{description}</Text>
+      <Text className="text-center text-xl font-bold tracking-tight text-label-primary">{title}</Text>
+      <Text className="text-center text-sm leading-6 text-label-secondary">{description}</Text>
       {children}
-    </View>
+    </GlassSurface>
   );
 }
 
@@ -440,9 +433,9 @@ export function ConfirmSheet({
 }) {
   return (
     <Modal transparent visible={visible} animationType="fade" onRequestClose={onCancel}>
-      <View className="flex-1 items-center justify-center bg-ink/40 px-6">
+      <View className="flex-1 items-center justify-center bg-navy/40 px-6">
         <PopIn>
-          <View className="w-full max-w-sm gap-2.5 rounded-2xl border border-white/80 bg-white/95 p-5 shadow-pop">
+          <GlassSheet className="w-full max-w-sm">
           <Text className="text-lg font-bold tracking-tight text-slate-950">{title}</Text>
           <Text className="text-sm leading-6 text-slate-600">{message}</Text>
           <View className="mt-2 gap-2">
@@ -453,7 +446,7 @@ export function ConfirmSheet({
               Cancelar
             </Button>
           </View>
-          </View>
+          </GlassSheet>
         </PopIn>
       </View>
     </Modal>
@@ -467,18 +460,18 @@ export function ChatBubble({ from, text, mine, time, attachment }: { from: strin
     <View
       className={cn(
         "max-w-[85%] gap-1 rounded-[14px] px-3.5 py-2.5",
-        mine ? "self-end rounded-br-[4px] bg-ink" : "self-start rounded-bl-[4px] border border-white/80 bg-white/85 shadow-card",
+        mine ? "self-end rounded-br-[4px] bg-navy" : "self-start rounded-bl-[4px] border border-white/80 bg-white/55 shadow-card",
       )}
     >
       {!mine ? <Text className="text-[11px] font-bold text-brand-600">{from}</Text> : null}
       {attachment ? (
         <View className={cn("flex-row items-center gap-2 rounded-[10px] p-2", mine ? "bg-white/15" : "bg-slate-900/5")}>
           <Paperclip size={13} color={mine ? "#fff" : colors.muted} />
-          <Text className={cn("text-xs font-semibold", mine ? "text-white" : "text-slate-700")}>{attachment}</Text>
+          <Text className={cn("text-xs font-semibold", mine ? "text-label-dark-primary" : "text-label-primary")}>{attachment}</Text>
         </View>
       ) : null}
-      <Text className={cn("text-sm leading-5", mine ? "text-white" : "text-slate-800")}>{text}</Text>
-      <Text className={cn("self-end text-[10px]", mine ? "text-white/60" : "text-slate-400")}>{time}</Text>
+      <Text className={cn("text-sm leading-5", mine ? "text-label-dark-primary" : "text-label-primary")}>{text}</Text>
+      <Text className={cn("self-end text-[10px]", mine ? "text-label-dark-tertiary" : "text-label-tertiary")}>{time}</Text>
     </View>
   );
 }
@@ -502,13 +495,9 @@ export function ChatComposer({
   return (
     <View className="flex-row items-center gap-2">
       {onAttach ? (
-        <Pressable
-          accessibilityLabel="Adjuntar archivo"
-          onPress={onAttach}
-          className="h-11 w-11 items-center justify-center rounded-[12px] border border-white/80 bg-white/75"
-        >
-          <Paperclip size={17} color="#1E1E1E" />
-        </Pressable>
+        <GlassIconButton label="Adjuntar archivo" onPress={onAttach}>
+          <Paperclip size={17} color="#004080" />
+        </GlassIconButton>
       ) : null}
       <TextInput
         value={text}
@@ -516,9 +505,9 @@ export function ChatComposer({
         placeholder={placeholder}
         placeholderTextColor="#94a3b8"
         onSubmitEditing={send}
-        className="min-h-11 flex-1 rounded-[12px] border border-slate-900/10 bg-white/85 px-4 text-[15px] text-slate-950"
+        className={cn("min-h-11 flex-1 rounded-[12px]", glassInputClass)}
       />
-      <Pressable accessibilityLabel="Enviar mensaje" onPress={send} className="h-11 w-11 items-center justify-center rounded-[12px] bg-ink active:opacity-80">
+      <Pressable accessibilityLabel="Enviar mensaje" onPress={send} className="h-11 w-11 items-center justify-center rounded-[12px] bg-navy active:opacity-80">
         <Send size={16} color="#fff" />
       </Pressable>
     </View>
@@ -600,7 +589,7 @@ export function StatusDot({ status }: { status: string }) {
   return (
     <View className="flex-row items-center gap-2">
       <View style={{ backgroundColor: statusColors[status] ?? colors.muted }} className="h-2.5 w-2.5 rounded-full" />
-      <Text className="text-[13px] font-bold text-slate-700">{status}</Text>
+      <Text className="text-[13px] font-bold text-label-primary">{status}</Text>
     </View>
   );
 }
@@ -624,7 +613,7 @@ export function FileTile({
 }) {
   const FileIcon = fileIconFor(kind);
   return (
-    <View className="flex-row items-center gap-3 rounded-xl border border-white/80 bg-white/75 p-3 shadow-card">
+    <GlassSurface variant="light" radius={12} className="flex-row items-center gap-3 p-3 shadow-card">
       <View className="h-10 w-10 items-center justify-center rounded-[10px] bg-slate-900/5">
         <FileIcon size={18} color="#475569" strokeWidth={2} />
       </View>
@@ -639,13 +628,14 @@ export function FileTile({
       <Pressable
         accessibilityRole="button"
         onPress={onDownload}
-        className={cn("min-h-9 justify-center rounded-[10px] px-3", downloaded ? "bg-emerald-500/15" : "bg-ink")}
+        style={downloaded ? { borderWidth: 1, borderColor: vibrants.success.border, backgroundColor: "rgba(255, 255, 255, 0.55)" } : undefined}
+        className={cn("min-h-9 justify-center rounded-[10px] px-3", !downloaded && "bg-navy")}
       >
-        <Text className={cn("text-xs font-bold", downloaded ? "text-emerald-700" : "text-white")}>
+        <Text style={downloaded ? { color: vibrants.success.accent } : undefined} className={cn("text-xs font-bold", !downloaded && "text-white")}>
           {downloaded ? "Descargado" : (actionLabel ?? "Descargar")}
         </Text>
       </Pressable>
-    </View>
+    </GlassSurface>
   );
 }
 
@@ -656,20 +646,21 @@ export function SignatureBox({ signed, signerName, onSign }: { signed: boolean; 
     <Pressable
       accessibilityRole="button"
       onPress={onSign}
+      style={signed ? { borderColor: vibrants.success.border, backgroundColor: "rgba(255, 255, 255, 0.55)" } : undefined}
       className={cn(
         "min-h-24 items-center justify-center rounded-xl border-2 border-dashed p-4",
-        signed ? "border-emerald-400/60 bg-emerald-500/10" : "border-slate-900/15 bg-white/50",
+        !signed && "border-slate-900/15 bg-white/50",
       )}
     >
       {signed ? (
         <View className="items-center gap-1">
-          <Text style={{ fontStyle: "italic" }} className="text-2xl font-semibold text-slate-800">
+          <Text style={{ fontStyle: "italic" }} className="text-2xl font-semibold text-label-primary">
             {signerName}
           </Text>
-          <Text className="text-xs font-bold text-emerald-700">Firma capturada</Text>
+          <Text style={{ color: vibrants.success.accent }} className="text-xs font-bold">Firma capturada</Text>
         </View>
       ) : (
-        <Text className="text-sm font-semibold text-slate-500">Toca aquí para estampar tu firma digital</Text>
+        <Text className="text-sm font-semibold text-label-tertiary">Toca aquí para estampar tu firma digital</Text>
       )}
     </Pressable>
   );
@@ -679,17 +670,13 @@ export function SignatureBox({ signed, signerName, onSign }: { signed: boolean; 
 
 export function HelpFab({ onPress }: { onPress: () => void }) {
   return (
-    <Pressable
-      accessibilityLabel="¿Necesitas ayuda?"
-      onPress={onPress}
-      className="absolute right-5 top-14 h-11 w-11 items-center justify-center rounded-[12px] border border-white/80 bg-white/75 shadow-card"
-    >
+    <GlassIconButton label="¿Necesitas ayuda?" onPress={onPress} className="absolute right-5 top-14">
       <View className="flex-row flex-wrap" style={{ width: 16 }}>
         {[0, 1, 2, 3].map((index) => (
-          <View key={index} style={{ margin: 1 }} className="h-1.5 w-1.5 rounded-full bg-ink" />
+          <View key={index} style={{ margin: 1 }} className="h-1.5 w-1.5 rounded-full bg-navy" />
         ))}
       </View>
-    </Pressable>
+    </GlassIconButton>
   );
 }
 
@@ -697,14 +684,14 @@ export function HelpFab({ onPress }: { onPress: () => void }) {
 
 export function AudioPlayer({ name, duration, playing, onToggle, progress }: { name: string; duration: string; playing: boolean; onToggle: () => void; progress: number }) {
   return (
-    <View className="gap-2 rounded-xl border border-white/80 bg-white/75 p-3 shadow-card">
+    <GlassSurface variant="light" radius={12} className="gap-2 p-3 shadow-card">
       <View className="flex-row items-center gap-3">
         <Pressable
           accessibilityLabel={playing ? "Pausar audio" : "Reproducir audio"}
           onPress={onToggle}
         >
           <Pulse active={playing}>
-            <View className="h-10 w-10 items-center justify-center rounded-[12px] bg-ink">
+            <View className="h-10 w-10 items-center justify-center rounded-[12px] bg-navy">
               {playing ? <Pause size={16} color="#fff" /> : <Play size={16} color="#fff" />}
             </View>
           </Pulse>
@@ -719,7 +706,7 @@ export function AudioPlayer({ name, duration, playing, onToggle, progress }: { n
       <View className="h-1.5 overflow-hidden rounded-full bg-slate-900/10">
         <View style={{ width: `${progress}%` }} className="h-full rounded-full bg-brand-500" />
       </View>
-    </View>
+    </GlassSurface>
   );
 }
 

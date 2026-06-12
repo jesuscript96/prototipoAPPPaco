@@ -4,7 +4,9 @@ import { Bell, KeyRound, LogIn, MapPin, Phone } from "@/components/paco/glyphs";
 import { Image, Modal, Pressable, ScrollView, Text, View } from "react-native";
 import { brandAssets, illustrationAssets } from "@/components/paco/assets";
 import { Ambient, Button } from "@/components/paco/layout";
+import { GlassBottomSheet, GlassSheet, GlassSurface } from "@/components/paco/glass";
 import { HelpFab, cn } from "@/components/paco/ui";
+import { vibrants } from "@/theme/tokens";
 import { usePacoStore } from "@/store/paco-store";
 
 type PermissionKind = "notifications" | "location";
@@ -58,7 +60,7 @@ export default function WelcomeScreen() {
 
       <ScrollView contentContainerClassName="flex-grow justify-between px-6 pb-12 pt-24">
         <View className="items-center gap-4">
-          <View className="h-24 w-24 items-center justify-center rounded-[22px] border border-white/90 bg-white/85 shadow-pop">
+          <View className="h-24 w-24 items-center justify-center rounded-[22px] border border-white/90 bg-white/55 shadow-pop">
             <Image source={brandAssets.iconMain} resizeMode="contain" style={{ width: 70, height: 70 }} />
           </View>
           <Image source={brandAssets.textLogo} resizeMode="contain" style={{ width: 132, height: 44 }} />
@@ -70,7 +72,7 @@ export default function WelcomeScreen() {
         </View>
 
         <View className="gap-4">
-          <View className="gap-3 rounded-2xl border border-white/80 bg-white/75 p-4 shadow-card">
+          <GlassSurface variant="light" className="gap-3 p-4 shadow-card">
             <Text className="text-[11px] font-bold uppercase tracking-[1.5px] text-slate-400">Permisos del dispositivo</Text>
             {(
               [
@@ -80,8 +82,12 @@ export default function WelcomeScreen() {
             ).map((item) => (
               <View key={item.kind} className="flex-row items-center justify-between">
                 <Text className="text-[15px] text-slate-700">{item.label}</Text>
-                <View className={cn("rounded-[8px] border px-2 py-0.5", item.granted ? "border-emerald-500/25 bg-emerald-500/10" : "border-slate-900/10 bg-slate-900/5")}>
-                  <Text className={cn("text-[11px] font-bold", item.granted ? "text-emerald-700" : "text-slate-500")}>
+                <View
+                  style={item.granted ? { borderColor: vibrants.success.border, backgroundColor: "rgba(255, 255, 255, 0.55)" } : undefined}
+                  className={cn("flex-row items-center gap-1.5 rounded-[8px] border px-2 py-0.5", !item.granted && "border-slate-900/10 bg-white/40")}
+                >
+                  <View style={{ backgroundColor: item.granted ? vibrants.success.accent : "#94a3b8" }} className="h-1.5 w-1.5 rounded-full" />
+                  <Text className={cn("text-[11px] font-bold", item.granted ? "text-label-primary" : "text-label-tertiary")}>
                     {item.granted ? "Concedido" : "Pendiente"}
                   </Text>
                 </View>
@@ -92,7 +98,7 @@ export default function WelcomeScreen() {
                 Configurar permisos
               </Button>
             ) : null}
-          </View>
+          </GlassSurface>
 
           <View className="gap-2.5">
             <Button icon={LogIn} onPress={() => router.push("/(paco)/login")}>
@@ -116,10 +122,10 @@ export default function WelcomeScreen() {
       <HelpFab onPress={() => router.push("/(paco)/help")} />
 
       <Modal transparent visible={dialog !== null} animationType="fade" onRequestClose={() => setDialog(null)}>
-        <View className="flex-1 items-center justify-center bg-ink/40 px-8">
+        <View className="flex-1 items-center justify-center bg-navy/40 px-8">
           {dialogContent ? (
-            <View className="w-full max-w-sm items-center gap-3 rounded-2xl border border-white/80 bg-white/95 p-6 shadow-pop">
-              <View className="h-14 w-14 items-center justify-center rounded-[14px] bg-brand-50">
+            <GlassSheet className="w-full max-w-sm items-center">
+              <View className="h-14 w-14 items-center justify-center rounded-[14px] border border-separator bg-white/55">
                 <dialogContent.icon size={26} color="#2F42CB" />
               </View>
               <Text className="text-center text-lg font-bold tracking-tight text-slate-950">{dialogContent.title}</Text>
@@ -130,7 +136,7 @@ export default function WelcomeScreen() {
                   No permitir
                 </Button>
               </View>
-            </View>
+            </GlassSheet>
           ) : null}
         </View>
       </Modal>

@@ -51,6 +51,7 @@ export const Square = pick("Stop", "Square");
 export const Mic = pick("Microphone");
 export const Camera = pick("Camera");
 export const Paperclip = pick("Paperclip");
+export const Copy = pick("Copy", "Copy");
 
 // Estado y avisos
 export const AlertTriangle = pick("Warning");

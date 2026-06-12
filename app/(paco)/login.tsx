@@ -3,8 +3,9 @@ import { useRouter } from "expo-router";
 import { AlertTriangle, ArrowLeft, Eye, EyeOff, LogIn } from "@/components/paco/glyphs";
 import { Image, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { brandAssets, illustrationAssets } from "@/components/paco/assets";
-import { Ambient, Button, GlassNavButton } from "@/components/paco/layout";
-import { ShakeView } from "@/components/paco/motion";
+import { Ambient, Button, GlassNavButton, glassInputClass, glassInputRowClass } from "@/components/paco/layout";
+import { GlassSurface } from "@/components/paco/glass";
+import { MorphButton, ShakeView, type MorphStatus } from "@/components/paco/motion";
 import { HelpFab } from "@/components/paco/ui";
 import { mockLogin } from "@/lib/paco-api";
 import { usePacoStore } from "@/store/paco-store";
@@ -16,19 +17,21 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<MorphStatus>("idle");
 
   const submit = async () => {
-    setLoading(true);
+    setStatus("loading");
     setError(null);
     const result = await mockLogin(identifier, password);
-    setLoading(false);
     if (!result.ok) {
+      setStatus("idle");
       setError(result.error);
       return;
     }
+    // El check de exito se muestra antes de entrar al dashboard (plan 10.1).
+    setStatus("success");
     login();
-    router.replace("/(paco)/home");
+    setTimeout(() => router.replace("/(paco)/home"), 700);
   };
 
   return (
@@ -48,7 +51,7 @@ export default function LoginScreen() {
 
       <ScrollView contentContainerClassName="flex-grow justify-center px-6 pb-16">
         <View className="items-center gap-3 pb-7">
-          <View className="h-16 w-16 items-center justify-center rounded-[16px] border border-white/90 bg-white/85 shadow-card">
+          <View className="h-16 w-16 items-center justify-center rounded-[16px] border border-white/90 bg-white/55 shadow-card">
             <Image source={brandAssets.iconMain} resizeMode="contain" style={{ width: 45, height: 45 }} />
           </View>
           <Image source={illustrationAssets.loginConfirm} resizeMode="contain" style={{ width: 168, height: 92 }} />
@@ -58,7 +61,8 @@ export default function LoginScreen() {
           </Text>
         </View>
 
-        <ShakeView trigger={error} className="gap-4 rounded-2xl border border-white/80 bg-white/80 p-5 shadow-pop">
+        <GlassSurface variant="elevated" className="gap-4 p-5 shadow-pop">
+          <ShakeView trigger={error} className="gap-4">
           <View className="gap-1.5">
             <Text className="text-[13px] font-semibold text-slate-600">Teléfono o correo</Text>
             <TextInput
@@ -68,12 +72,12 @@ export default function LoginScreen() {
               keyboardType="email-address"
               placeholder="correo@empresa.mx o 10 dígitos"
               placeholderTextColor="#94a3b8"
-              className="min-h-[50px] rounded-xl border border-slate-900/10 bg-white px-4 text-base text-slate-950"
+              className={glassInputClass}
             />
           </View>
           <View className="gap-1.5">
             <Text className="text-[13px] font-semibold text-slate-600">Contraseña</Text>
-            <View className="flex-row items-center rounded-xl border border-slate-900/10 bg-white pr-2">
+            <View className={glassInputRowClass}>
               <TextInput
                 value={password}
                 onChangeText={setPassword}
@@ -93,9 +97,14 @@ export default function LoginScreen() {
             </View>
           </View>
 
-          <Button icon={LogIn} loading={loading} onPress={submit}>
-            Inicia sesión
-          </Button>
+          <MorphButton
+            label="Inicia sesión"
+            loadingLabel="Validando credenciales…"
+            successLabel="Bienvenido"
+            icon={LogIn}
+            status={status}
+            onPress={submit}
+          />
 
           <View className="flex-row items-center justify-between">
             <Pressable accessibilityRole="button" onPress={() => router.push("/(paco)/recover")} className="min-h-11 justify-center">
@@ -112,7 +121,8 @@ export default function LoginScreen() {
               credenciales incorrectas.
             </Text>
           </View>
-        </ShakeView>
+          </ShakeView>
+        </GlassSurface>
       </ScrollView>
 
       <HelpFab onPress={() => router.push("/(paco)/help")} />

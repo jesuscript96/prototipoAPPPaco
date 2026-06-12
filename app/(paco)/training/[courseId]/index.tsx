@@ -2,11 +2,12 @@ import { useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Award, Check, FileQuestion, Lock, Play } from "@/components/paco/glyphs";
 import { Pressable, Text, TextInput, View } from "react-native";
-import { Badge, Button, Card, EmptyState, Progress, Screen, Section } from "@/components/paco/layout";
+import { Badge, Button, Card, EmptyState, Progress, Screen, Section, glassTextAreaClass } from "@/components/paco/layout";
 import { RadioOption, SuccessCard, cn } from "@/components/paco/ui";
 import { simulate } from "@/lib/paco-api";
 import { completedLessons, courseProgress, isLessonLocked, lessonKey } from "@/lib/paco-training";
 import { courses } from "@/mock/paco";
+import { vibrants } from "@/theme/tokens";
 import { usePacoStore } from "@/store/paco-store";
 
 export default function CourseScreen() {
@@ -118,15 +119,17 @@ export default function CourseScreen() {
                 onPress={() =>
                   router.push({ pathname: "/(paco)/training/[courseId]/[lessonId]", params: { courseId: course.id, lessonId: lesson.id } })
                 }
+                style={completed ? { borderColor: vibrants.success.border, backgroundColor: "rgba(255, 255, 255, 0.55)" } : undefined}
                 className={cn(
                   "flex-row items-center gap-3 rounded-2xl border p-3.5",
-                  completed ? "border-green-200 bg-green-50" : locked ? "border-slate-200 bg-slate-50 opacity-60" : "border-slate-200 bg-white",
+                  !completed && (locked ? "border-slate-200 bg-white/40 opacity-60" : "border-white/80 bg-white/50"),
                 )}
               >
                 <View
+                  style={completed ? { backgroundColor: vibrants.success.accent } : undefined}
                   className={cn(
                     "h-9 w-9 items-center justify-center rounded-full",
-                    completed ? "bg-green-500" : locked ? "bg-slate-300" : "bg-brand-500",
+                    !completed && (locked ? "bg-slate-300" : "bg-brand-500"),
                   )}
                 >
                   {locked ? <Lock size={14} color="#fff" /> : completed ? <Check size={14} color="#fff" strokeWidth={3} /> : <Text className="text-xs font-bold text-white">{index + 1}</Text>}
@@ -165,7 +168,7 @@ export default function CourseScreen() {
                     multiline
                     placeholder="Escribe tu respuesta…"
                     placeholderTextColor="#94a3b8"
-                    className="min-h-20 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-950"
+                    className={cn(glassTextAreaClass, "min-h-20")}
                   />
                 )}
               </Card>
@@ -191,7 +194,7 @@ export default function CourseScreen() {
                       onPress={() => setSatisfactionAnswers((prev) => ({ ...prev, [question.id]: option }))}
                       className={cn(
                         "h-12 w-12 items-center justify-center rounded-2xl border",
-                        satisfactionAnswers[question.id] === option ? "border-brand-500 bg-brand-500" : "border-slate-200 bg-white",
+                        satisfactionAnswers[question.id] === option ? "border-brand-500 bg-brand-500" : "border-white/80 bg-white/50",
                       )}
                     >
                       <Text className={cn("text-base font-bold", satisfactionAnswers[question.id] === option ? "text-white" : "text-slate-700")}>

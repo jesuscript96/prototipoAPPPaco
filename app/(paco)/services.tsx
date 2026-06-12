@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { Camera, ChevronLeft, Receipt } from "@/components/paco/glyphs";
 import { Image, Modal, Pressable, Text, View } from "react-native";
@@ -6,7 +6,8 @@ import { assetForService, serviceAssets } from "@/components/paco/assets";
 import { Button, Card, Checkbox, Divider, Field, InlineAlert, Screen } from "@/components/paco/layout";
 import { MoneyRow, OptionCard, RadioOption, StepHeader, SuccessCard, mxn } from "@/components/paco/ui";
 import { KycFlow } from "@/components/paco/kyc";
-import { ShakeView } from "@/components/paco/motion";
+import { MorphButton, ShakeView, type MorphStatus } from "@/components/paco/motion";
+import { scheduleWizardAdvance } from "@/lib/wizard-flow";
 import { serviceCategoryIcons } from "@/components/paco/icons";
 import { mockValidateCode, simulate } from "@/lib/paco-api";
 import { ServiceCategory, company, serviceCategories } from "@/mock/paco";
@@ -28,7 +29,7 @@ export default function ServicesScreen() {
   const [terms, setTerms] = useState(false);
   const [code, setCode] = useState("");
   const [codeError, setCodeError] = useState<string | null>(null);
-  const [paying, setPaying] = useState(false);
+  const [payStatus, setPayStatus] = useState<MorphStatus>("idle");
   const [detailsError, setDetailsError] = useState<string | null>(null);
 
   const numericAmount = Number(amount.replace(/[^\d.]/g, "")) || 0;
@@ -64,11 +65,11 @@ export default function ServicesScreen() {
       return;
     }
     setCodeError(null);
-    setPaying(true);
+    setPayStatus("loading");
     await simulate(null, 1200);
     if (provider) store.confirmServicePayment(provider.name, numericAmount, commission, reference, method);
-    setPaying(false);
-    setStep("success");
+    setPayStatus("success");
+    setTimeout(() => setStep("success"), 750);
   };
 
   const goBack = () => {
@@ -78,6 +79,11 @@ export default function ServicesScreen() {
     else if (step === "kyc") setStep("method");
     else if (step === "gateway") setStep(store.kycDone ? "method" : "kyc");
   };
+
+  useEffect(() => {
+    if (step !== "method" || !terms) return;
+    scheduleWizardAdvance(() => setStep(store.kycDone ? "gateway" : "kyc"));
+  }, [step, terms, store.kycDone]);
 
   return (
     <Screen>
@@ -153,7 +159,7 @@ export default function ServicesScreen() {
             <Button icon={Camera} variant="outline" loading={scanning} onPress={scan}>
               Escanear código de barras del recibo
             </Button>
-            <View className="items-center rounded-xl bg-brand-50 p-3">
+            <View className="items-center rounded-xl border border-separator bg-white/55 p-3">
               <Image source={serviceAssets.scanner} resizeMode="contain" style={{ width: 58, height: 42 }} />
               <Text className="mt-1 text-xs font-semibold text-brand-700">Escaneo mock con iconografía original Paco</Text>
             </View>
@@ -190,9 +196,6 @@ export default function ServicesScreen() {
           <Card className="gap-2">
             <Checkbox label="He leído y acepto los términos y condiciones del pago de servicios." checked={terms} onPress={() => setTerms((v) => !v)} />
           </Card>
-          <Button disabled={!terms} onPress={() => setStep(store.kycDone ? "gateway" : "kyc")}>
-            Continuar
-          </Button>
           {store.kycDone ? (
             <InlineAlert title="Identidad ya verificada" description="Tu KYC sigue vigente, pasarás directo a la pasarela de pagos." tone="success" />
           ) : null}
@@ -234,9 +237,14 @@ export default function ServicesScreen() {
               error={codeError ?? undefined}
               helper={codeError ? undefined : "Enviado por SMS (demo: escribe 4+ dígitos)."}
             />
-            <Button icon={Receipt} loading={paying} onPress={pay}>
-              Pagar {mxn(total)}
-            </Button>
+            <MorphButton
+              label={`Pagar ${mxn(total)}`}
+              loadingLabel="Procesando con la pasarela…"
+              successLabel="Pago exitoso"
+              icon={Receipt}
+              status={payStatus}
+              onPress={pay}
+            />
           </Card>
           </ShakeView>
         </>
@@ -268,7 +276,7 @@ export default function ServicesScreen() {
       ) : null}
 
       <Modal transparent visible={scanning} animationType="fade">
-        <View className="flex-1 items-center justify-center bg-black/80 px-10">
+        <View className="flex-1 items-center justify-center bg-navy/80 px-10">
           <View className="h-56 w-full max-w-sm items-center justify-center rounded-2xl border-2 border-white/40">
             <View className="h-0.5 w-4/5 bg-red-500" />
             <Text className="mt-4 text-sm font-semibold text-white">Apunta al código de barras del recibo…</Text>

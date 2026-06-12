@@ -28,7 +28,7 @@ Primitivos en `components/paco/motion.tsx`; demos vivas en Storybook → Movimie
 3. **Continuidad de elementos** (shared transitions): la tarjeta del curso se expande hasta ser cabecera del detalle; el avatar del chat viaja a la conversación.
 4. **Skeleton shimmer** en cargas >300 ms (listas de gastos/notificaciones) en lugar de spinner.
 5. **Contador regresivo animado** en código SMS de pasarela; **confetti contenido** (una sola vez) al finalizar curso obligatorio.
-6. **Modo reduce-motion**: respetar `prefers-reduced-motion`/AccessibilityInfo desactivando translates y dejando solo fades.
+6. **Modo reduce-motion**: ✅ hecho (Visual 6.0) — `useReduceMotion` ahora escucha `prefers-reduced-motion` en web **y** `AccessibilityInfo.isReduceMotionEnabled` en nativo. Además se implementó **Reduce Transparency** (`useReduceTransparency` en `components/paco/a11y.ts`): API iOS + media query web + toggle demo en Configuración; el motor glass rinde fallbacks opacos.
 
 ## Reglas de oro del sistema
 
@@ -77,3 +77,76 @@ Especificaciones de movimiento por interacción nueva:
 
 ### Vacíos con presencia
 - `EmptyState` hace pop del icono al montar (mismo spring del sello) para que ni los vacíos sean estáticos.
+
+## Fase 3 implementada · Sistema declarativo del plan de Motion Branding
+
+Tokens en `theme/motion.ts` (duration/spring/scale/distance). Primitivos nuevos en `components/paco/motion.tsx`: `MorphButton`, `LiquidButton`, `MutableContainer`, `TypingIndicator`, `useReduceMotion`.
+
+### Acceso - Login con morph y check previo a la navegación
+- Disparador: press en "Inicia sesión" con credenciales mock válidas.
+- Ruta: `app/(paco)/login.tsx`
+- Primitive: `MorphButton` (controlado) + `ShakeView` para el caso de error.
+- Propiedades animadas: scale del botón, crossfade label/loader, scale del check (spring celebratory).
+- Duración/física: press 110 ms ease-out; loading crossfade 140/180 ms; check spring(speed 14, bounce 12); navegación diferida 700 ms.
+- Estado local afectado: `status: idle→loading→success`; `loggedIn` en store.
+- Feedback textual: "Validando credenciales…" → "Bienvenido".
+- Reduce motion: sin scale de press (hook `useReduceMotion`); crossfade se mantiene.
+- Verificación manual: pwd "error" sacude y vuelve a idle; pwd válida muestra check y entra a home.
+
+### Adelanto - Confirmar con narrativa de dispersión
+- Disparador: press en "Confirmar adelanto" con términos aceptados.
+- Ruta: `app/(paco)/advance.tsx`
+- Primitive: `MorphButton` controlado.
+- Propiedades animadas: ídem login.
+- Duración/física: loading real 1100 ms (simulate); success se asienta 750 ms antes de viajar al comprobante.
+- Estado local afectado: `confirmStatus`; `movements` + push notification en store.
+- Feedback textual: "Dispersando a tu cuenta…" → "Adelanto confirmado".
+- Reduce motion: solo crossfade textual.
+- Verificación manual: confirmar → check → SuccessCard con confetti → movimiento visible en Gastos.
+
+### Recargas y Servicios - Pago en pasarela
+- Disparador: press en "Confirmar pago"/"Pagar $X" con código válido.
+- Rutas: `app/(paco)/topups.tsx`, `app/(paco)/services.tsx`
+- Primitive: `MorphButton`; código inválido dispara `ShakeView` y el morph no inicia.
+- Duración/física: loading 1200 ms; success 750 ms antes del comprobante.
+- Estado local afectado: `payStatus`; movimiento en store.
+- Feedback textual: "Procesando con la pasarela…" → "Pago aprobado"/"Pago exitoso".
+- Verificación manual: código corto sacude; código válido muestra check y comprobante.
+
+### Recargas - Código de confirmación copiable
+- Disparador: press en "Copiar código" del comprobante.
+- Ruta: `app/(paco)/topups.tsx` (paso success)
+- Primitive: `LiquidButton` (icono Copy → check verde, fondo emerald).
+- Duración/física: crossfade 220 ms ease-out; scale del check 0.6→1.
+- Estado local afectado: `codeCopied` (se resetea al iniciar otra recarga).
+- Feedback textual: "Copiar código" → "Código copiado" + toast.
+- Verificación manual: el estado final permanece visible >1.2 s (persistente).
+
+### Encuestas, Voz, Solicitudes, Soporte - Envíos primarios
+- Disparador: press en el CTA final de cada asistente.
+- Rutas: `surveys/[id]`, `voice/index`, `requests/new`, `support`.
+- Primitive: `MorphButton` controlado; en soporte el ticket aparece tras asentarse el check (750 ms).
+- Feedback textual: "Enviando respuestas…/Enviando con confidencialidad…/Registrando en el panel…/Abriendo ticket…" → estado de éxito.
+- Estado local afectado: store correspondiente (`completedSurveyIds`, `voiceReports`+folio, `requests`, `ticketCreated`).
+- Verificación manual: cada envío muestra check antes del comprobante/cambio de vista.
+
+### Legal - Firma sobria
+- Disparador: press en "Aceptar y firmar digitalmente".
+- Ruta: `app/(paco)/legal.tsx`
+- Primitive: `MorphButton` no controlado (800 ms de firma simulada). Sin confetti (regla 3.2).
+- Estado final: caja de conformidad con fecha/hora; firma en `SignatureBox`.
+
+### Chats - Indicador de escritura
+- Disparador: enviar mensaje en voz RH, soporte técnico o chat interno.
+- Rutas: `voice/[id]`, `support`, `chat/[id]` (+ acción `receiveChatMessage` en store).
+- Primitive: `TypingIndicator` (3 puntos, opacidad 0.3→1 y translateY 0→-4, fase 160 ms por punto).
+- Duración/física: typing aparece a los 400-600 ms; respuesta llega a los 1.9-2.2 s y el indicador se desmonta.
+- Feedback textual: la respuesta mock entra como burbuja con su hora.
+- Verificación manual: enviar "hola" en cualquiera de los tres chats → puntos → respuesta.
+
+### Perfil y Recibos - Cargas/descargas líquidas
+- Disparador: "Subir currículum"/"Subir contrato firmado"/"Descargar certificado".
+- Rutas: `profile.tsx`, `receipts.tsx`
+- Primitive: `LiquidButton` con fases busy ("Subiendo archivo…"/"Descargando certificado…").
+- Estado local afectado: `cvUploaded`/`contractUploaded`/`certificateDownloaded` (persistente).
+- Verificación manual: el botón queda en verde con check; reintentar no duplica.

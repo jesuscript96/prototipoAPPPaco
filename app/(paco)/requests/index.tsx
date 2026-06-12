@@ -47,9 +47,9 @@ export default function RequestsScreen() {
                       key={type.id}
                       accessibilityRole="button"
                       onPress={() => router.push({ pathname: "/(paco)/requests/new", params: { type: type.id } })}
-                      className="flex-row items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 active:bg-brand-50"
+                      className="flex-row items-center gap-3 rounded-2xl border border-white/80 bg-white/50 p-4 active:bg-white/80"
                     >
-                      <View className="h-11 w-11 items-center justify-center rounded-[12px] bg-violet-50">
+                      <View className="h-11 w-11 items-center justify-center rounded-[12px] border border-separator bg-white/55">
                         <CalendarRange size={20} color="#674EA7" strokeWidth={2} />
                       </View>
                       <View className="flex-1">
@@ -78,7 +78,6 @@ export default function RequestsScreen() {
                     key={request.id}
                     icon={CalendarRange}
                     iconColor="#674EA7"
-                    iconTint="bg-violet-50"
                     title={request.typeName}
                     subtitle={`${request.startDate}${request.endDate !== request.startDate ? ` → ${request.endDate}` : ""} · creada el ${request.createdAt}`}
                     metaSub={request.status}
@@ -101,7 +100,6 @@ export default function RequestsScreen() {
                     key={request.id}
                     icon={CalendarRange}
                     iconColor="#64748b"
-                    iconTint="bg-slate-100"
                     title={request.typeName}
                     subtitle={`${request.startDate} · resuelta por ${request.stages[request.stages.length - 1]?.replace(/Etapa \d+ · /, "")}`}
                     metaSub={request.status}

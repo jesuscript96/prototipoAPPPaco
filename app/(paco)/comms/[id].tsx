@@ -5,6 +5,7 @@ import { Text, View } from "react-native";
 import { Button, Card, EmptyState, Screen, Section } from "@/components/paco/layout";
 import { FileTile } from "@/components/paco/ui";
 import { communications } from "@/mock/paco";
+import { vibrants } from "@/theme/tokens";
 import { usePacoStore } from "@/store/paco-store";
 
 export default function CommDetailScreen() {
@@ -49,8 +50,9 @@ export default function CommDetailScreen() {
         </Section>
       ) : null}
 
-      <View className="rounded-2xl bg-green-50 p-3">
-        <Text className="text-sm font-semibold text-green-800">Comunicado marcado como leído</Text>
+      <View style={{ borderColor: vibrants.success.border, backgroundColor: vibrants.success.wash }} className="flex-row items-center gap-2 rounded-2xl border p-3">
+        <View style={{ backgroundColor: vibrants.success.accent }} className="h-2 w-2 rounded-full" />
+        <Text className="flex-1 text-sm font-semibold text-label-primary">Comunicado marcado como leído</Text>
       </View>
     </Screen>
   );

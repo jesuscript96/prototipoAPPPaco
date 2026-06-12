@@ -3,10 +3,12 @@ import { MessageCircle, PiggyBank, ReceiptText, Smartphone, Wallet } from "@/com
 import { Image, ScrollView, Text, View } from "react-native";
 import { financeAssets, illustrationAssets, moduleAssets } from "@/components/paco/assets";
 import { Button, Card, EmptyState, Screen, Section } from "@/components/paco/layout";
+import { GlassHero, GlassSurface } from "@/components/paco/glass";
 import { ChatBubble, ChatComposer, ListGroup, Row, Segmented, SelectChip, StackedBar, mxn } from "@/components/paco/ui";
 import { Shimmer, useAnimatedNumber, useFakeLoad } from "@/components/paco/motion";
 import type { Icon } from "@/components/paco/icons";
 import { company, expensePeriods } from "@/mock/paco";
+import { vibrants } from "@/theme/tokens";
 import { nowLabel, usePacoStore } from "@/store/paco-store";
 
 const tabs = ["Adeudos", "Mis gastos", "Soporte"] as const;
@@ -78,18 +80,19 @@ export default function ExpensesScreen() {
       title="Estado de cuenta"
       description="Adeudos por retener en tu siguiente nómina y el historial de movimientos hechos desde Paco."
     >
-      <Card className="gap-1 bg-ink">
+      <GlassHero
+        eyebrow="Total de adeudos"
+        title={mxn(Math.round(animatedDebt))}
+        subtitle={totalDebt > 0 ? "Se retendrá en la nómina del 15 de junio de 2026." : "No tienes adeudos pendientes."}
+      >
         <Image source={financeAssets.cardSent} resizeMode="contain" style={{ alignSelf: "flex-end", width: 150, height: 64 }} />
-        <Text className="text-xs font-bold uppercase tracking-[1px] text-white/70">Total de adeudos</Text>
-        <Text className="text-4xl font-bold tracking-tight text-white">{mxn(Math.round(animatedDebt))}</Text>
-        <Text className="text-sm text-white/80">{totalDebt > 0 ? "Se retendrá en la nómina del 15 de junio de 2026." : "No tienes adeudos pendientes."}</Text>
-      </Card>
+      </GlassHero>
 
       <Segmented options={tabs} value={tab} onChange={setTab} />
 
       {tab === "Adeudos" ? (
         loading ? (
-          <View className="gap-3 rounded-2xl border border-white/80 bg-white/75 p-4 shadow-card">
+          <GlassSurface variant="light" radius={16} className="gap-3 p-4 shadow-card">
             {[0, 1].map((index) => (
               <View key={index} className="flex-row items-center gap-3">
                 <Shimmer width={36} height={36} radius={10} />
@@ -100,7 +103,7 @@ export default function ExpensesScreen() {
                 <Shimmer width={56} />
               </View>
             ))}
-          </View>
+          </GlassSurface>
         ) : debts.length === 0 ? (
           <EmptyState title="$0 en adeudos" description="Cuando solicites un adelanto o pago con cargo a nómina, aparecerá aquí." icon={PiggyBank} image={moduleAssets.expenses} />
         ) : (
@@ -177,7 +180,7 @@ export default function ExpensesScreen() {
         <Section title="Soporte por WhatsApp" description="Es el canal oficial para aclaraciones de tu estado de cuenta.">
           {waMessages.length === 0 ? (
             <Card className="items-center gap-3 py-6">
-              <View className="h-14 w-14 items-center justify-center rounded-[14px] bg-emerald-500/15">
+              <View className="h-14 w-14 items-center justify-center rounded-[14px] border border-separator bg-white/55">
                 <Image source={moduleAssets.support} resizeMode="contain" style={{ width: 36, height: 36 }} />
               </View>
               <Text className="text-center text-sm leading-5 text-slate-600">
@@ -188,8 +191,8 @@ export default function ExpensesScreen() {
               </Button>
             </Card>
           ) : (
-            <Card className="gap-3 bg-emerald-50">
-              <Text className="text-xs font-bold uppercase tracking-[1px] text-emerald-700">WhatsApp · {company.whatsappSupport}</Text>
+            <Card className="gap-3">
+              <Text style={{ color: vibrants.success.accent }} className="text-xs font-bold uppercase tracking-[1px]">WhatsApp · {company.whatsappSupport}</Text>
               <View className="gap-2">
                 {waMessages.map((msg) => (
                   <ChatBubble key={msg.id} {...msg} />

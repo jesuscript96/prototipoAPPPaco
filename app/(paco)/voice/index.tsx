@@ -5,6 +5,7 @@ import { Pressable, Text, View } from "react-native";
 import { Button, Card, Field, InlineAlert, Screen } from "@/components/paco/layout";
 import { OptionCard, StepHeader, SuccessCard, ToggleRow } from "@/components/paco/ui";
 import { voiceCategoryIcons } from "@/components/paco/icons";
+import { MorphButton, type MorphStatus } from "@/components/paco/motion";
 import { simulate } from "@/lib/paco-api";
 import { VoiceCategory, voiceCategories } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
@@ -19,7 +20,7 @@ export default function VoiceScreen() {
   const [attachment, setAttachment] = useState<string | null>(null);
   const [anonymous, setAnonymous] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [sending, setSending] = useState(false);
+  const [sendStatus, setSendStatus] = useState<MorphStatus>("idle");
   const [folio, setFolio] = useState("");
 
   const send = async () => {
@@ -33,12 +34,12 @@ export default function VoiceScreen() {
       return;
     }
     setError(null);
-    setSending(true);
+    setSendStatus("loading");
     await simulate(null, 1000);
     const newFolio = store.submitVoiceReport(category.id, category.name, title.trim(), comment.trim(), anonymous, attachment);
-    setSending(false);
     setFolio(newFolio);
-    setStep("success");
+    setSendStatus("success");
+    setTimeout(() => setStep("success"), 700);
   };
 
   if (step === "success" && category) {
@@ -93,7 +94,6 @@ export default function VoiceScreen() {
                 title={cat.name}
                 icon={voiceCategoryIcons[cat.id]}
                 iconColor="#dc2626"
-                iconTint="bg-red-50"
                 onPress={() => {
                   setCategory(cat);
                   setStep("detail");
@@ -121,7 +121,7 @@ export default function VoiceScreen() {
             />
 
             {attachment ? (
-              <View className="flex-row items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-3">
+              <View className="flex-row items-center gap-3 rounded-2xl border border-separator bg-white/40 p-3">
                 <ImageIcon size={20} color="#475569" />
                 <Text className="flex-1 text-sm font-semibold text-slate-700">{attachment}</Text>
                 <Pressable accessibilityLabel="Quitar imagen" onPress={() => setAttachment(null)} className="h-9 w-9 items-center justify-center rounded-full bg-slate-200">
@@ -149,9 +149,14 @@ export default function VoiceScreen() {
             />
           </Card>
 
-          <Button icon={Send} loading={sending} onPress={send}>
-            Enviar reporte a Recursos Humanos
-          </Button>
+          <MorphButton
+            label="Enviar reporte a Recursos Humanos"
+            loadingLabel="Enviando con confidencialidad…"
+            successLabel="Reporte recibido"
+            icon={Send}
+            status={sendStatus}
+            onPress={send}
+          />
         </>
       ) : null}
     </Screen>

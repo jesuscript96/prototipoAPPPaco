@@ -4,6 +4,7 @@ import { Check, MessageSquarePlus, Paperclip, Plus, Search, Users } from "@/comp
 import { Image, Modal, Pressable, Text, TextInput, View } from "react-native";
 import { illustrationAssets, peopleAssets } from "@/components/paco/assets";
 import { Button, EmptyState, Field, Screen } from "@/components/paco/layout";
+import { GlassBottomSheet, GlassSearchBar } from "@/components/paco/glass";
 import { ListGroup, Row, SheetHeader, cn } from "@/components/paco/ui";
 import { directory } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
@@ -50,7 +51,7 @@ export default function ChatListScreen() {
       title="Chat interno"
       description="Mensajería corporativa segura: conversaciones 1 a 1 y salas grupales con tu equipo."
     >
-      <View className="flex-row items-center gap-2 rounded-2xl border border-slate-200 bg-white px-3">
+      <GlassSearchBar>
         <Search size={18} color="#94a3b8" />
         <TextInput
           value={query}
@@ -59,7 +60,7 @@ export default function ChatListScreen() {
           placeholderTextColor="#94a3b8"
           className="min-h-12 flex-1 text-base text-slate-950"
         />
-      </View>
+      </GlassSearchBar>
 
       {filtered.length === 0 ? (
         <EmptyState
@@ -76,7 +77,7 @@ export default function ChatListScreen() {
               <Row
                 key={room.id}
                 leading={
-                  <View className={cn("h-10 w-10 items-center justify-center rounded-full", room.isGroup ? "bg-violet-50" : "bg-brand-100")}>
+                  <View className="h-10 w-10 items-center justify-center rounded-full border border-separator bg-white/55">
                     {room.isGroup ? (
                       <Users size={17} color="#674EA7" />
                     ) : (
@@ -100,8 +101,8 @@ export default function ChatListScreen() {
       </Button>
 
       <Modal transparent visible={creating} animationType="slide" onRequestClose={() => setCreating(false)}>
-        <View className="flex-1 justify-end bg-black/40">
-          <View className="max-h-[85%] rounded-t-[20px] bg-white p-5 pb-8">
+        <View className="flex-1 justify-end bg-navy/40">
+          <GlassBottomSheet className="max-h-[85%]">
             <SheetHeader title="Nueva conversación" onClose={() => setCreating(false)} />
             <View className="gap-4">
               <View className="gap-2">
@@ -117,10 +118,10 @@ export default function ChatListScreen() {
                         onPress={() => toggleParticipant(coworker.name)}
                         className={cn(
                           "flex-row items-center gap-3 rounded-2xl border p-3",
-                          selected ? "border-brand-500 bg-brand-50" : "border-slate-200 bg-white",
+                          selected ? "border-brand-500 bg-white/70" : "border-white/80 bg-white/50",
                         )}
                       >
-                        <View className={cn("h-9 w-9 items-center justify-center rounded-full", selected ? "bg-brand-500" : "bg-slate-100")}>
+                        <View className={cn("h-9 w-9 items-center justify-center rounded-full", selected ? "bg-brand-500" : "border border-separator bg-white/55")}>
                           <Text className={cn("text-xs font-bold", selected ? "text-white" : "text-slate-600")}>
                             {coworker.name
                               .split(" ")
@@ -150,7 +151,7 @@ export default function ChatListScreen() {
                 {participants.length > 1 ? "Crear sala grupal" : "Iniciar conversación"}
               </Button>
             </View>
-          </View>
+          </GlassBottomSheet>
         </View>
       </Modal>
     </Screen>

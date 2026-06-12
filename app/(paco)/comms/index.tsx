@@ -36,7 +36,7 @@ export default function CommsScreen() {
                 key={comm.id}
                 icon={Newspaper}
                 leading={
-                  <View className="h-10 w-10 items-center justify-center rounded-[12px] bg-brand-50">
+                  <View className="h-10 w-10 items-center justify-center rounded-[12px] border border-separator bg-white/55">
                     <Image source={peopleAssets.docIcon} resizeMode="contain" style={{ width: 25, height: 25 }} />
                   </View>
                 }

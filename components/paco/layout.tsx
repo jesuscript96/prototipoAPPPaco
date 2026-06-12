@@ -4,15 +4,22 @@
 // contenidos (12-16 px), tipografia densa y acentos por dominio.
 
 import { ComponentType, ReactNode, useEffect, useRef } from "react";
-import { ActivityIndicator, Animated, Image, Platform, Pressable, ScrollView, Text, TextInput, TextInputProps, View } from "react-native";
+import { ActivityIndicator, Animated, Image, Platform, Pressable, ScrollView, Text, TextInput, TextInputProps, View, type ViewStyle } from "react-native";
+import { cssInterop } from "nativewind";
 import type { ImageSourcePropType } from "react-native";
 import { useRouter } from "expo-router";
 import { ArrowLeft, Check } from "@/components/paco/glyphs";
+import { GlassNavButton, GlassSurface, glassInputClass, glassInputRowClass, glassTextAreaClass } from "@/components/paco/glass";
+export { glassInputClass, glassTextAreaClass, glassInputRowClass };
 import { FadeSlideIn, PopIn, easeOut } from "@/components/paco/motion";
+import { textClass } from "@/theme/typography";
+import { colors, vibrants, type VibrantTone } from "@/theme/tokens";
 
 type Icon = ComponentType<{ size?: number; color?: string; strokeWidth?: number }>;
 
 const cn = (...classes: Array<string | false | null | undefined>) => classes.filter(Boolean).join(" ");
+
+cssInterop(Animated.View, { className: "style" });
 
 const blur = (px: number) => (Platform.OS === "web" ? ({ filter: `blur(${px}px)` } as object) : null);
 
@@ -21,24 +28,18 @@ const blur = (px: number) => (Platform.OS === "web" ? ({ filter: `blur(${px}px)`
 export function Ambient() {
   return (
     <View style={{ pointerEvents: "none" }} className="absolute inset-0 overflow-hidden">
-      <View style={blur(70)} className="absolute -right-24 -top-28 h-80 w-80 rounded-full bg-brand-300/40" />
-      <View style={blur(70)} className="absolute -left-28 top-44 h-72 w-72 rounded-full bg-brand-200/60" />
-      <View style={blur(80)} className="absolute right-[-70px] top-[420px] h-64 w-64 rounded-full bg-violet-300/30" />
+      <View className="absolute inset-0 bg-brand-300/30" />
+      <View style={blur(72)} className="absolute -right-24 -top-28 h-[420px] w-[420px] rounded-full bg-brand-500/40" />
+      <View style={blur(72)} className="absolute -left-36 top-32 h-96 w-96 rounded-full bg-brand-400/45" />
+      <View style={blur(80)} className="absolute right-[-80px] top-[340px] h-80 w-80 rounded-full bg-violet-500/30" />
+      <View style={blur(64)} className="absolute left-[-40px] top-[520px] h-72 w-72 rounded-full bg-navy/20" />
+      <View style={blur(56)} className="absolute bottom-16 left-0 right-0 h-48 bg-brand-400/28" />
+      <View style={blur(48)} className="absolute -right-12 bottom-32 h-56 w-56 rounded-full bg-navy-soft/25" />
     </View>
   );
 }
 
-export function GlassNavButton({ icon: IconComponent, label, onPress }: { icon: Icon; label: string; onPress: () => void }) {
-  return (
-    <Pressable
-      accessibilityLabel={label}
-      onPress={onPress}
-      className="h-11 w-11 items-center justify-center rounded-full border border-white/80 bg-white/70 shadow-card active:bg-white"
-    >
-      <IconComponent size={19} color="#1E1E1E" strokeWidth={2.2} />
-    </Pressable>
-  );
-}
+export { GlassNavButton };
 
 // ---- Pantalla ----
 
@@ -70,9 +71,9 @@ export function Screen({
       <ScrollView className="flex-1" contentContainerClassName="flex-grow" showsVerticalScrollIndicator={false}>
         {title || description || eyebrow ? (
           <View className="gap-1.5 px-6 pb-5 pt-1">
-            {eyebrow ? <Text className="text-[11px] font-bold uppercase tracking-[1.8px] text-brand-600">{eyebrow}</Text> : null}
-            {title ? <Text className="text-[27px] font-bold leading-9 tracking-tight text-slate-950">{title}</Text> : null}
-            {description ? <Text className="text-sm leading-6 text-slate-500">{description}</Text> : null}
+            {eyebrow ? <Text className={textClass.eyebrow}>{eyebrow}</Text> : null}
+            {title ? <Text className={textClass.hero}>{title}</Text> : null}
+            {description ? <Text className={textClass.subtitle}>{description}</Text> : null}
           </View>
         ) : null}
         <FadeSlideIn className="flex-1">
@@ -89,8 +90,8 @@ export function Section({ title, description, children }: { title: string; descr
   return (
     <View className="gap-2.5 pt-1.5">
       <View className="gap-0.5 px-0.5">
-        <Text className="text-[16px] font-bold tracking-tight text-slate-900">{title}</Text>
-        {description ? <Text className="text-[13px] leading-5 text-slate-500">{description}</Text> : null}
+        <Text className={textClass.section}>{title}</Text>
+        {description ? <Text className={textClass.caption}>{description}</Text> : null}
       </View>
       {children}
     </View>
@@ -98,26 +99,22 @@ export function Section({ title, description, children }: { title: string; descr
 }
 
 export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
-  // NativeWind no resuelve conflictos de utilidades: si quien llama trae su
-  // propio fondo o color de borde, omitimos el default para evitar choques.
-  const hasBg = /\bbg-/.test(className);
-  const hasBorderColor = /\bborder-(?:[a-z]+-\d+|white|transparent|ink)/.test(className);
+  // Bypass del glass solo para fondos de marca explícitos (navy/ink/white).
+  // Los tintes semánticos (bg-emerald-50, bg-amber-50…) ya NO escapan al
+  // material: el color de estado es acento, nunca relleno (Liquid Glass).
+  const hasBrandBg = /\bbg-(?:navy|ink|white)\b|\bbg-(?:navy|ink)\//.test(className);
+  if (hasBrandBg) {
+    return <View className={cn("rounded-2xl border border-transparent p-4 shadow-card", className)}>{children}</View>;
+  }
   return (
-    <View
-      className={cn(
-        "rounded-2xl border p-4 shadow-card",
-        !hasBg && "bg-white/75",
-        !hasBorderColor && "border-white/80",
-        className,
-      )}
-    >
+    <GlassSurface material="regular" radius={16} className={cn("p-4 shadow-card", className)}>
       {children}
-    </View>
+    </GlassSurface>
   );
 }
 
 export function Divider() {
-  return <View className="h-px bg-slate-900/10" />;
+  return <View className="h-px bg-separator" />;
 }
 
 // ---- Acciones ----
@@ -137,21 +134,32 @@ export function Button({
   icon?: Icon;
   onPress?: () => void;
 }) {
+  const solidFill: Partial<Record<typeof variant, ViewStyle>> = {
+    primary: { backgroundColor: colors.navy },
+    destructive: { backgroundColor: colors.danger },
+  };
+  const textColor: Partial<Record<typeof variant, string>> = {
+    primary: "#ffffff",
+    destructive: "#ffffff",
+    secondary: colors.navy,
+    outline: colors.text,
+    ghost: colors.muted,
+  };
   const variants = {
-    primary: "bg-ink shadow-card hover:bg-ink-soft",
-    secondary: "border border-white/80 bg-white/75 shadow-card hover:bg-white",
-    outline: "border border-slate-900/15 bg-white/50 hover:bg-white/80",
+    primary: "shadow-card active:opacity-90",
+    secondary: "border border-white/80 bg-white/50 shadow-card hover:bg-white/70",
+    outline: "border border-slate-900/15 bg-white/50 hover:bg-white/60",
     ghost: "bg-transparent hover:bg-slate-900/5",
-    destructive: "bg-red-500 shadow-card hover:bg-red-600",
+    destructive: "shadow-card active:opacity-90",
   };
   const text = {
     primary: "text-white",
-    secondary: "text-ink",
+    secondary: "text-navy",
     outline: "text-slate-800",
     ghost: "text-slate-500",
     destructive: "text-white",
   };
-  const iconColor = variant === "primary" || variant === "destructive" ? "#fff" : "#1E1E1E";
+  const iconColor = variant === "primary" || variant === "destructive" ? "#fff" : colors.navy;
   const scale = useRef(new Animated.Value(1)).current;
 
   return (
@@ -163,7 +171,7 @@ export function Button({
       onPressOut={() => Animated.spring(scale, { toValue: 1, speed: 30, bounciness: 7, useNativeDriver: true }).start()}
     >
       <Animated.View
-        style={{ transform: [{ scale }] }}
+        style={[{ transform: [{ scale }] }, solidFill[variant]]}
         className={cn(
           "min-h-[50px] flex-row items-center justify-center gap-2 rounded-[14px] px-5",
           variants[variant],
@@ -171,7 +179,14 @@ export function Button({
         )}
       >
         {loading ? <ActivityIndicator color={iconColor} /> : IconComponent ? <IconComponent size={18} color={iconColor} strokeWidth={2.3} /> : null}
-        {children ? <Text className={cn("text-center text-[15px] font-bold", text[variant])}>{children}</Text> : null}
+        {children ? (
+          <Text
+            style={{ color: textColor[variant] }}
+            className={cn("text-center", textClass.button, text[variant])}
+          >
+            {children}
+          </Text>
+        ) : null}
       </Animated.View>
     </Pressable>
   );
@@ -183,7 +198,7 @@ export function Checkbox({ label, checked, onPress }: { label: string; checked: 
       <View
         className={cn(
           "mt-0.5 h-6 w-6 items-center justify-center rounded-[8px] border-2",
-          checked ? "border-ink bg-ink" : "border-slate-300 bg-white/80",
+          checked ? "border-navy bg-navy" : "border-slate-300 bg-white/50",
         )}
       >
         {checked ? (
@@ -192,7 +207,7 @@ export function Checkbox({ label, checked, onPress }: { label: string; checked: 
           </PopIn>
         ) : null}
       </View>
-      <Text className="flex-1 text-sm leading-6 text-slate-700">{label}</Text>
+      <Text className={cn(textClass.bodySm, "flex-1")}>{label}</Text>
     </Pressable>
   );
 }
@@ -208,59 +223,59 @@ export function Field({
 }: TextInputProps & { label: string; helper?: string | undefined; error?: string | undefined; readOnly?: boolean | undefined }) {
   return (
     <View className="gap-1.5">
-      <Text className="text-[13px] font-semibold text-slate-600">{label}</Text>
+      <Text className={textClass.label}>{label}</Text>
       <TextInput
         {...props}
         editable={!readOnly && props.editable !== false}
         placeholderTextColor="#94a3b8"
         className={cn(
-          "min-h-[50px] rounded-xl border bg-white/80 px-4 text-base text-slate-950 focus:border-brand-400",
+          glassInputClass,
+          "focus:border-brand-400",
           props.multiline && "min-h-28 py-3",
-          error ? "border-red-300" : "border-slate-900/10",
+          error ? "border-danger/30" : "",
           (readOnly || props.editable === false) && "bg-slate-100/70 text-slate-500",
         )}
       />
       {error ? (
-        <Text className="text-[13px] font-semibold text-red-600">{error}</Text>
+        <Text className="text-[13px] font-semibold text-danger">{error}</Text>
       ) : helper ? (
-        <Text className="text-[13px] text-slate-400">{helper}</Text>
+        <Text className="text-[13px] text-label-tertiary">{helper}</Text>
       ) : null}
     </View>
   );
 }
 
 // ---- Estado y feedback ----
+//
+// Liquid Glass: el estatus se comunica con dot/icono + borde + texto sobre
+// material glass. El color semántico nunca es relleno; `vibrants[tone].wash`
+// (≤8% alpha) es el único tinte de fondo permitido y vive dentro del vidrio.
 
-const tones = {
-  success: { bg: "bg-emerald-500/10", border: "border-emerald-500/20", text: "text-emerald-900", sub: "text-emerald-700", dot: "#6AA84F" },
-  warning: { bg: "bg-amber-400/15", border: "border-amber-400/30", text: "text-amber-900", sub: "text-amber-700", dot: "#F1C232" },
-  danger: { bg: "bg-red-500/10", border: "border-red-500/20", text: "text-red-900", sub: "text-red-700", dot: "#CC0000" },
-  info: { bg: "bg-brand-400/10", border: "border-brand-400/25", text: "text-brand-700", sub: "text-brand-600", dot: "#5176F3" },
-  neutral: { bg: "bg-slate-500/10", border: "border-slate-500/20", text: "text-slate-800", sub: "text-slate-600", dot: "#64748b" },
-} as const;
-
-export type Tone = keyof typeof tones;
+export type Tone = VibrantTone;
 
 export function Badge({ children, tone = "neutral" }: { children: ReactNode; tone?: Tone }) {
-  const t = tones[tone];
+  const v = vibrants[tone];
   return (
-    <View className={cn("flex-row items-center gap-1.5 self-start rounded-[8px] border px-2 py-1", t.bg, t.border)}>
-      <View style={{ backgroundColor: t.dot }} className="h-1.5 w-1.5 rounded-full" />
-      <Text className={cn("text-[11px] font-bold", t.text)}>{children}</Text>
+    <View
+      style={{ borderColor: v.border, backgroundColor: "rgba(255, 255, 255, 0.55)" }}
+      className="flex-row items-center gap-1.5 self-start rounded-[8px] border px-2 py-1"
+    >
+      <View style={{ backgroundColor: v.accent }} className="h-1.5 w-1.5 rounded-full" />
+      <Text className={cn(textClass.badge, "text-label-primary")}>{children}</Text>
     </View>
   );
 }
 
 export function InlineAlert({ title, description, tone = "info" }: { title: string; description: string; tone?: Tone }) {
-  const t = tones[tone];
+  const v = vibrants[tone];
   return (
-    <View className={cn("gap-0.5 rounded-xl border p-3.5", t.bg, t.border)}>
+    <GlassSurface material="thick" tint={tone} radius={12} className="gap-0.5 p-3.5">
       <View className="flex-row items-center gap-2">
-        <View style={{ backgroundColor: t.dot }} className="h-2 w-2 rounded-full" />
-        <Text className={cn("flex-1 text-sm font-bold", t.text)}>{title}</Text>
+        <View style={{ backgroundColor: v.accent }} className="h-2 w-2 rounded-full" />
+        <Text className="flex-1 font-sans text-sm font-semibold leading-relaxed text-label-primary">{title}</Text>
       </View>
-      <Text className={cn("pl-4 text-[13px] leading-5", t.sub)}>{description}</Text>
-    </View>
+      <Text className="pl-4 font-sans text-xs leading-normal text-label-secondary">{description}</Text>
+    </GlassSurface>
   );
 }
 
@@ -276,15 +291,15 @@ export function EmptyState({
   image?: ImageSourcePropType;
 }) {
   return (
-    <View className="items-center gap-3 rounded-2xl border border-dashed border-slate-900/15 bg-white/40 px-6 py-10">
+    <GlassSurface variant="light" className="items-center gap-3 border-dashed border-slate-900/15 px-6 py-10">
       <PopIn>
         <View className="h-20 w-20 items-center justify-center rounded-[18px] border border-white/80 bg-white/70">
           {image ? <Image source={image} resizeMode="contain" style={{ width: 58, height: 58 }} /> : <IconComponent size={28} color="#94a3b8" />}
         </View>
       </PopIn>
-      <Text className="text-center text-base font-bold text-slate-800">{title}</Text>
-      <Text className="text-center text-[13px] leading-5 text-slate-500">{description}</Text>
-    </View>
+      <Text className={cn(textClass.h3, "text-center")}>{title}</Text>
+      <Text className={cn(textClass.caption, "text-center")}>{description}</Text>
+    </GlassSurface>
   );
 }
 
@@ -304,7 +319,7 @@ export function Progress({ value }: { value: number }) {
           className="h-full rounded-full bg-brand-500"
         />
       </View>
-      <Text className="text-[11px] font-bold text-slate-400">{clamped}% completado</Text>
+      <Text className={cn(textClass.caption, "font-medium text-slate-400")}>{clamped}% completado</Text>
     </View>
   );
 }

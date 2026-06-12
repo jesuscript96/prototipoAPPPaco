@@ -6,6 +6,7 @@ import { Badge, Button, Card, InlineAlert, Screen, Section } from "@/components/
 import { ConfirmSheet, SignatureBox, cn } from "@/components/paco/ui";
 import { simulate } from "@/lib/paco-api";
 import { DocumentTemplate, documentFolders, documentTemplates, employee } from "@/mock/paco";
+import { vibrants } from "@/theme/tokens";
 import { usePacoStore } from "@/store/paco-store";
 
 type Phase = "idle" | "confirm" | "generating" | "preview" | "saving";
@@ -102,9 +103,9 @@ export default function DocumentRequestsScreen() {
       title="Solicitud de documentos"
       description="Genera constancias y formatos oficiales parametrizados por tu empresa, fírmalos y se suben solos al panel."
     >
-      <Card className="items-center gap-2 bg-brand-50">
+      <Card className="items-center gap-2">
         <Image source={illustrationAssets.documents} resizeMode="contain" style={{ width: 142, height: 92 }} />
-        <Text className="text-center text-sm font-semibold text-brand-700">Generación PDF mock con firma visible y guardado en expediente.</Text>
+        <Text className="text-center text-sm font-semibold text-label-secondary">Generación PDF mock con firma visible y guardado en expediente.</Text>
       </Card>
       {phase === "generating" ? (
         <Card className="items-center gap-3 py-8">
@@ -121,7 +122,7 @@ export default function DocumentRequestsScreen() {
               {docs.map((doc) => {
                 const status = docStatus[doc.id];
                 return (
-                  <Card key={doc.id} className={cn("gap-2", status === "Subido" && "border-green-200")}>
+                  <Card key={doc.id} className="gap-2">
                     <View className="flex-row items-start justify-between gap-2">
                       <Text className="flex-1 text-base font-bold text-slate-950">{doc.name}</Text>
                       <Badge tone={status === "Subido" ? "success" : status === "Generado" ? "info" : "neutral"}>
@@ -133,8 +134,9 @@ export default function DocumentRequestsScreen() {
                       {doc.requiresSignature ? "Requiere tu firma digital" : "No requiere firma"}
                     </Text>
                     {status === "Subido" ? (
-                      <View className="rounded-2xl bg-green-50 p-3">
-                        <Text className="text-sm font-semibold text-green-800">Firmado y subido al panel de tu empresa</Text>
+                      <View style={{ borderColor: vibrants.success.border, backgroundColor: vibrants.success.wash }} className="flex-row items-center gap-2 rounded-2xl border p-3">
+                        <View style={{ backgroundColor: vibrants.success.accent }} className="h-2 w-2 rounded-full" />
+                        <Text className="flex-1 text-sm font-semibold text-label-primary">Firmado y subido al panel de tu empresa</Text>
                       </View>
                     ) : (
                       <Button icon={FileSignature} variant="outline" onPress={() => open(doc)}>

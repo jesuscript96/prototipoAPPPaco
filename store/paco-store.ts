@@ -106,6 +106,8 @@ export type PacoState = {
   // legal
   legalAccepted: boolean;
   legalAcceptedAt: string | null;
+  // accesibilidad · Liquid Glass (override manual de Reduce Transparency)
+  reduceTransparency: boolean;
   // toast global
   toast: string | null;
   toastStamp: number;
@@ -175,7 +177,9 @@ export type PacoState = {
   escalateTicket: () => void;
   createChatRoom: (name: string, participants: string[]) => string;
   sendChatMessage: (roomId: string, text: string, attachment?: string) => void;
+  receiveChatMessage: (roomId: string, from: string, text: string) => void;
   acceptLegal: () => void;
+  setReduceTransparency: (value: boolean) => void;
   resetDemo: () => void;
 };
 
@@ -227,6 +231,7 @@ const initialState = () => ({
   chatRooms: seedChatRooms.map((r) => ({ ...r, messages: [...r.messages] })),
   legalAccepted: false,
   legalAcceptedAt: null as string | null,
+  reduceTransparency: false,
   toast: null as string | null,
   toastStamp: 0,
 });
@@ -629,8 +634,24 @@ export const usePacoStore = create<PacoState>((set, get) => ({
       ),
     })),
 
+  receiveChatMessage: (roomId, from, text) =>
+    set((s) => ({
+      chatRooms: s.chatRooms.map((room) =>
+        room.id === roomId
+          ? { ...room, messages: [...room.messages, { id: uid("cm"), from, text, mine: false, time: nowLabel() }] }
+          : room,
+      ),
+    })),
+
   acceptLegal: () =>
     set({ legalAccepted: true, legalAcceptedAt: "10 de junio de 2026 · " + nowLabel().replace("Hoy · ", ""), toast: "Términos firmados digitalmente.", toastStamp: Date.now() }),
+
+  setReduceTransparency: (value) =>
+    set({
+      reduceTransparency: value,
+      toast: value ? "Transparencia reducida: superficies sólidas activadas." : "Transparencia restaurada: efecto vidrio activado.",
+      toastStamp: Date.now(),
+    }),
 
   resetDemo: () => set({ ...initialState(), toast: "Demo reiniciada.", toastStamp: Date.now() }),
 }));

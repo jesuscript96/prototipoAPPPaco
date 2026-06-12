@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ChevronLeft, FileQuestion } from "@/components/paco/glyphs";
 import { Image, Pressable, Text, TextInput, View } from "react-native";
 import { peopleAssets } from "@/components/paco/assets";
-import { Button, Card, EmptyState, Screen } from "@/components/paco/layout";
+import { Button, Card, EmptyState, Screen, glassTextAreaClass } from "@/components/paco/layout";
+import { WizardStep } from "@/components/paco/wizard-step";
 import { RadioOption, SelectChip, StepHeader, SuccessCard, cn } from "@/components/paco/ui";
+import { MorphButton, type MorphStatus } from "@/components/paco/motion";
 import { simulate } from "@/lib/paco-api";
+import { scheduleWizardAdvance } from "@/lib/wizard-flow";
 import { surveys } from "@/mock/paco";
+import { colors } from "@/theme/tokens";
 import { usePacoStore } from "@/store/paco-store";
 
 export default function SurveyRunnerScreen() {
@@ -18,8 +22,9 @@ export default function SurveyRunnerScreen() {
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [multiSelection, setMultiSelection] = useState<string[]>([]);
-  const [sending, setSending] = useState(false);
+  const [sendStatus, setSendStatus] = useState<MorphStatus>("idle");
   const [finished, setFinished] = useState(false);
+  const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   if (!survey) {
     return (
@@ -54,9 +59,54 @@ export default function SurveyRunnerScreen() {
   if (!question) return null;
   const total = survey.questions.length;
   const currentAnswer = question.kind === "multi" ? multiSelection.join(", ") : (answers[question.id] ?? "");
-  const canContinue = question.kind === "open" ? true : currentAnswer.length > 0;
 
-  const setAnswer = (value: string) => setAnswers((prev) => ({ ...prev, [question.id]: value }));
+  const setAnswer = (value: string) => {
+    setAnswers((prev) => ({ ...prev, [question.id]: value }));
+    if (question.kind === "open" || question.kind === "multi") return;
+    if (advanceTimer.current) clearTimeout(advanceTimer.current);
+    advanceTimer.current = scheduleWizardAdvance(() => {
+      const finalAnswers = { ...answers, [question.id]: value };
+      if (index < total - 1) {
+        setAnswers(finalAnswers);
+        setMultiSelection([]);
+        setIndex(index + 1);
+      } else {
+        void (async () => {
+          setSendStatus("loading");
+          await simulate(null, 900);
+          completeSurvey(survey.id, finalAnswers);
+          setSendStatus("success");
+          setTimeout(() => setFinished(true), 650);
+        })();
+      }
+    });
+  };
+
+  const toggleMulti = (option: string) => {
+    setMultiSelection((prev) => {
+      const next = prev.includes(option) ? prev.filter((x) => x !== option) : [...prev, option];
+      if (advanceTimer.current) clearTimeout(advanceTimer.current);
+      if (next.length > 0) {
+        advanceTimer.current = scheduleWizardAdvance(() => {
+          const finalAnswers = { ...answers, [question.id]: next.join(", ") };
+          if (index < total - 1) {
+            setAnswers(finalAnswers);
+            setMultiSelection([]);
+            setIndex(index + 1);
+          } else {
+            void (async () => {
+              setSendStatus("loading");
+              await simulate(null, 900);
+              completeSurvey(survey.id, finalAnswers);
+              setSendStatus("success");
+              setTimeout(() => setFinished(true), 650);
+            })();
+          }
+        }, 480);
+      }
+      return next;
+    });
+  };
 
   const next = async () => {
     const finalAnswers = question.kind === "multi" ? { ...answers, [question.id]: multiSelection.join(", ") } : answers;
@@ -66,11 +116,11 @@ export default function SurveyRunnerScreen() {
       setIndex(index + 1);
       return;
     }
-    setSending(true);
+    setSendStatus("loading");
     await simulate(null, 900);
     completeSurvey(survey.id, finalAnswers);
-    setSending(false);
-    setFinished(true);
+    setSendStatus("success");
+    setTimeout(() => setFinished(true), 650);
   };
 
   return (
@@ -82,11 +132,12 @@ export default function SurveyRunnerScreen() {
         </Pressable>
       ) : null}
 
+      <WizardStep stepKey={`${survey.id}-${index}`}>
       <StepHeader step={index + 1} total={total} title={`Pregunta ${index + 1} de ${total}`} subtitle={survey.title} />
 
       <Card className="gap-4">
         <Image source={question.kind === "scale" ? peopleAssets.surveyWink : peopleAssets.surveyWelcome} resizeMode="contain" style={{ alignSelf: "center", width: 110, height: 70 }} />
-        <Text className="text-lg font-bold leading-7 text-slate-950">{question.text}</Text>
+        <Text className="text-lg font-bold leading-7 text-ink-body">{question.text}</Text>
 
         {question.kind === "yesno" ? (
           <View className="gap-2">
@@ -111,9 +162,7 @@ export default function SurveyRunnerScreen() {
                 key={option}
                 label={option}
                 active={multiSelection.includes(option)}
-                onPress={() =>
-                  setMultiSelection((prev) => (prev.includes(option) ? prev.filter((x) => x !== option) : [...prev, option]))
-                }
+                onPress={() => toggleMulti(option)}
               />
             ))}
           </View>
@@ -121,37 +170,49 @@ export default function SurveyRunnerScreen() {
 
         {question.kind === "scale" && question.options ? (
           <View className="flex-row justify-between">
-            {question.options.map((option) => (
-              <Pressable
-                key={option}
-                accessibilityRole="button"
-                onPress={() => setAnswer(option)}
-                className={cn(
-                  "h-14 w-14 items-center justify-center rounded-2xl border",
-                  currentAnswer === option ? "border-ink bg-ink" : "border-white/80 bg-white/70",
-                )}
-              >
-                <Text className={cn("text-lg font-bold", currentAnswer === option ? "text-white" : "text-slate-700")}>{option}</Text>
-              </Pressable>
-            ))}
+            {question.options.map((option) => {
+              const selected = currentAnswer === option;
+              return (
+                <Pressable
+                  key={option}
+                  accessibilityRole="button"
+                  onPress={() => setAnswer(option)}
+                  className={cn("h-14 w-14 items-center justify-center rounded-2xl border", selected ? "border-navy" : "border-white/80 bg-white/70")}
+                  style={selected ? { backgroundColor: colors.navy } : undefined}
+                >
+                  <Text className={cn("text-lg font-bold", selected ? "text-white" : "text-ink-body")}>{option}</Text>
+                </Pressable>
+              );
+            })}
           </View>
         ) : null}
 
         {question.kind === "open" ? (
           <TextInput
             value={answers[question.id] ?? ""}
-            onChangeText={setAnswer}
+            onChangeText={(text) => setAnswers((prev) => ({ ...prev, [question.id]: text }))}
             multiline
             placeholder="Escribe tu respuesta (opcional)…"
             placeholderTextColor="#94a3b8"
-            className="min-h-28 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-950"
+            className={cn(glassTextAreaClass, "min-h-28")}
           />
         ) : null}
       </Card>
 
-      <Button disabled={!canContinue} loading={sending} onPress={next}>
-        {index < total - 1 ? "Continuar" : "Enviar encuesta"}
-      </Button>
+      {question.kind === "open" ? (
+        index < total - 1 ? (
+          <Button onPress={next}>Continuar</Button>
+        ) : (
+          <MorphButton
+            label="Enviar encuesta"
+            loadingLabel="Enviando respuestas…"
+            successLabel="Encuesta enviada"
+            status={sendStatus}
+            onPress={next}
+          />
+        )
+      ) : null}
+      </WizardStep>
 
       {survey.mandatory ? (
         <Text className="text-center text-xs text-slate-400">Encuesta obligatoria: no podrás usar la app hasta enviarla.</Text>

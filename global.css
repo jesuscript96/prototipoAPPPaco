@@ -1,7 +1,7 @@
-/* Tipografia de marca (web): Lato para cuerpo segun brand guidelines.
-   Gordita (titulos) requiere licencia; el stack font-display cae en Lato Bold
-   hasta que se agreguen los archivos de fuente. En nativo aplica el sistema. */
-@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap");
+/* Tipografia neogrotesca premium: Inter (web) + SF Pro Display en iOS nativo.
+   Jerarquia: Black/Bold con tracking negativo en titulos; Medium en botones;
+   Regular/Light antracita en cuerpo y legales con line-height amplio. */
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,700;0,14..32,900;1,14..32,400&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -15,6 +15,8 @@
   button,
   div,
   span {
-    font-family: "Lato", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-family: "Inter", "SF Pro Display", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }

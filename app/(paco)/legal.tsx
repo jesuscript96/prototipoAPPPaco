@@ -2,8 +2,11 @@ import { ShieldCheck } from "@/components/paco/glyphs";
 import { Text, View } from "react-native";
 import { Badge, Button, Card, Checkbox, Screen, Section } from "@/components/paco/layout";
 import { SignatureBox } from "@/components/paco/ui";
+import { MorphButton } from "@/components/paco/motion";
 import { employee, legalDocument } from "@/mock/paco";
+import { vibrants } from "@/theme/tokens";
 import { usePacoStore } from "@/store/paco-store";
+import { textClass } from "@/theme/typography";
 
 export default function LegalScreen() {
   const { legalAccepted, legalAcceptedAt, acceptLegal } = usePacoStore();
@@ -22,8 +25,8 @@ export default function LegalScreen() {
         <Card className="gap-4">
           {legalDocument.sections.map((section) => (
             <View key={section.heading} className="gap-1">
-              <Text className="text-sm font-bold text-slate-900">{section.heading}</Text>
-              <Text className="text-sm leading-6 text-slate-600">{section.body}</Text>
+              <Text className={textClass.label}>{section.heading}</Text>
+              <Text className={textClass.legal}>{section.body}</Text>
             </View>
           ))}
         </Card>
@@ -32,14 +35,14 @@ export default function LegalScreen() {
       <Section title="Firma de conformidad" description="Tu aceptación queda registrada con nombre, carácter, fecha y hora.">
         <Card className="gap-4">
           <View className="gap-1">
-            <Text className="text-xs font-bold text-slate-500">Firmante</Text>
-            <Text className="text-sm text-slate-800">{employee.name}</Text>
-            <Text className="text-xs font-bold text-slate-500">Carácter</Text>
-            <Text className="text-sm text-slate-800">{legalDocument.signerRole}</Text>
+            <Text className={textClass.caption}>Firmante</Text>
+            <Text className={textClass.bodySm}>{employee.name}</Text>
+            <Text className={textClass.caption}>Carácter</Text>
+            <Text className={textClass.bodySm}>{legalDocument.signerRole}</Text>
             {legalAccepted && legalAcceptedAt ? (
               <>
-                <Text className="text-xs font-bold text-slate-500">Fecha y hora de aceptación</Text>
-                <Text className="text-sm text-slate-800">{legalAcceptedAt}</Text>
+                <Text className={textClass.caption}>Fecha y hora de aceptación</Text>
+                <Text className={textClass.bodySm}>{legalAcceptedAt}</Text>
               </>
             ) : null}
           </View>
@@ -53,12 +56,20 @@ export default function LegalScreen() {
           <SignatureBox signed={legalAccepted} signerName={employee.name} onSign={() => !legalAccepted && acceptLegal()} />
 
           {!legalAccepted ? (
-            <Button icon={ShieldCheck} onPress={acceptLegal}>
-              Aceptar y firmar digitalmente
-            </Button>
+            <MorphButton
+              label="Aceptar y firmar digitalmente"
+              loadingLabel="Firmando…"
+              successLabel="Aceptado"
+              icon={ShieldCheck}
+              onPress={async () => {
+                await new Promise((resolve) => setTimeout(resolve, 800));
+                acceptLegal();
+              }}
+            />
           ) : (
-            <View className="rounded-2xl bg-green-50 p-3">
-              <Text className="text-sm font-semibold text-green-800">
+            <View style={{ borderColor: vibrants.success.border, backgroundColor: vibrants.success.wash }} className="flex-row items-center gap-2 rounded-2xl border p-3">
+              <View style={{ backgroundColor: vibrants.success.accent }} className="h-2 w-2 rounded-full" />
+              <Text className="flex-1 text-sm font-semibold text-label-primary">
                 Documento firmado digitalmente · el registro se envió al panel de tu empresa.
               </Text>
             </View>

@@ -47,8 +47,8 @@ export const company = {
 export type Banner = { id: string; title: string; subtitle: string; href: Href };
 
 export const banners: Banner[] = [
-  { id: "b1", title: "Happy Hug Day", subtitle: "Hoy celebramos la cultura de equipo. Reconoce a un compañero.", href: "/(paco)/recognitions" },
-  { id: "b2", title: "Adelanto disponible", subtitle: "Tienes hasta $2,500 listos para esta quincena.", href: "/(paco)/advance" },
+  { id: "b1", title: "Celebrate the World Cup", subtitle: "World Cup 2026", href: "/(paco)/recognitions" },
+  { id: "b2", title: "Paco's Amazing Goal", subtitle: "Celebremos el Mundial 2026", href: "/(paco)/recognitions" },
   { id: "b3", title: "Convenio De Toño", subtitle: "2x1 en menú ejecutivo presentando tu tarjeta digital.", href: "/(paco)/pin" },
 ];
 

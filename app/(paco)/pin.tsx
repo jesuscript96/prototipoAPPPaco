@@ -21,7 +21,7 @@ export default function PinScreen() {
     return (
       <Screen title="Club de Descuentos PiN" description="Promociones y cupones de comercios cercanos, operados por nuestro aliado PiN.">
         <Card className="items-center gap-3 py-8">
-          <View className="h-16 w-16 items-center justify-center rounded-2xl bg-amber-100">
+          <View className="h-16 w-16 items-center justify-center rounded-2xl border border-separator bg-white/55">
             <Image source={moduleAssets.pin} resizeMode="contain" style={{ width: 42, height: 42 }} />
           </View>
           <Text className="text-center text-lg font-bold text-slate-950">Activa tu ubicación</Text>
@@ -63,7 +63,7 @@ export default function PinScreen() {
               return (
                 <Card key={coupon.id} className="gap-3">
                   <View className="flex-row items-start gap-3">
-                    <View className="h-11 w-11 items-center justify-center rounded-[12px] bg-brand-50">
+                    <View className="h-11 w-11 items-center justify-center rounded-[12px] border border-separator bg-white/55">
                       <Image source={moduleAssets.pin} resizeMode="contain" style={{ width: 26, height: 26 }} />
                     </View>
                     <View className="flex-1">
@@ -76,7 +76,7 @@ export default function PinScreen() {
                     <Badge tone={coupon.expires.includes("hoy") ? "warning" : "neutral"}>{coupon.expires}</Badge>
                   </View>
                   {opened ? (
-                    <View className="items-center gap-1 rounded-2xl border-2 border-dashed border-brand-300 bg-brand-50 p-4">
+                    <View className="items-center gap-1 rounded-2xl border-2 border-dashed border-brand-300 bg-white/55 p-4">
                       <Text className="text-xs font-bold uppercase tracking-[2px] text-brand-700">Cupón PiN</Text>
                       <Text className="text-2xl font-bold tracking-[4px] text-slate-950">PIN-{coupon.id.toUpperCase()}26</Text>
                       <Text className="text-xs text-slate-500">Muéstralo en caja antes de pagar</Text>

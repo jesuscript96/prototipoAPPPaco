@@ -8,6 +8,7 @@ import { Blink } from "@/components/paco/motion";
 import { simulate } from "@/lib/paco-api";
 import { isLessonLocked, lessonKey } from "@/lib/paco-training";
 import { courses } from "@/mock/paco";
+import { vibrants } from "@/theme/tokens";
 import { usePacoStore } from "@/store/paco-store";
 
 function useMockPlayback() {
@@ -195,9 +196,9 @@ export default function LessonScreen() {
               <View className="gap-2">
                 <Text className="text-sm font-bold text-slate-700">Graba tu respuesta en audio (.wav)</Text>
                 {recording ? (
-                  <View className="flex-row items-center gap-3 rounded-2xl border border-red-200 bg-red-50 p-3">
+                  <View style={{ borderColor: vibrants.danger.border, backgroundColor: "rgba(255, 255, 255, 0.55)" }} className="flex-row items-center gap-3 rounded-2xl border p-3">
                     <Blink><View className="h-3 w-3 rounded-full bg-red-500" /></Blink>
-                    <Text className="flex-1 text-sm font-bold text-red-700">
+                    <Text style={{ color: vibrants.danger.accent }} className="flex-1 text-sm font-bold">
                       Grabando… 0:{String(recordSeconds).padStart(2, "0")}
                     </Text>
                     <Pressable accessibilityLabel="Detener grabación" onPress={stopRecording} className="h-11 w-11 items-center justify-center rounded-full bg-red-500">
@@ -229,9 +230,9 @@ export default function LessonScreen() {
               <View className="gap-2">
                 <Text className="text-sm font-bold text-slate-700">Sube tu entregable (PDF, imagen o documento)</Text>
                 {uploadedFile || state?.uploadDone ? (
-                  <View className="flex-row items-center gap-3 rounded-2xl border border-green-200 bg-green-50 p-3">
-                    <FileText size={18} color="#059669" strokeWidth={2.1} />
-                    <Text className="flex-1 text-sm font-bold text-green-800">{uploadedFile ?? "evidencia-recorrido.pdf"}</Text>
+                  <View style={{ borderColor: vibrants.success.border, backgroundColor: "rgba(255, 255, 255, 0.55)" }} className="flex-row items-center gap-3 rounded-2xl border p-3">
+                    <FileText size={18} color={vibrants.success.accent} strokeWidth={2.1} />
+                    <Text className="flex-1 text-sm font-bold text-label-primary">{uploadedFile ?? "evidencia-recorrido.pdf"}</Text>
                     <Pressable accessibilityRole="button" onPress={uploadDeliverable} className="min-h-10 justify-center">
                       <Text className="text-xs font-bold text-slate-500">Reemplazar</Text>
                     </Pressable>
@@ -251,7 +252,7 @@ export default function LessonScreen() {
         </Section>
       ) : null}
 
-      <Card className={cn("gap-3", completed && "border-green-200 bg-green-50")}>
+      <Card className="gap-3">
         <Pressable
           accessibilityRole="checkbox"
           accessibilityState={{ checked: completed }}
@@ -259,11 +260,14 @@ export default function LessonScreen() {
           onPress={finishLesson}
           className="flex-row items-center gap-3"
         >
-          <View className={cn("h-7 w-7 items-center justify-center rounded-lg border-2", completed ? "border-green-500 bg-green-500" : "border-slate-300 bg-white")}>
+          <View
+            style={completed ? { borderColor: vibrants.success.accent, backgroundColor: vibrants.success.accent } : undefined}
+            className={cn("h-7 w-7 items-center justify-center rounded-lg border-2", !completed && "border-slate-300 bg-white")}
+          >
             {completed ? <CheckCircle2 size={16} color="#fff" /> : null}
           </View>
           <View className="flex-1">
-            <Text className={cn("text-base font-bold", completed ? "text-green-800" : "text-slate-900")}>Lección finalizada</Text>
+            <Text className="text-base font-bold text-label-primary">Lección finalizada</Text>
             <Text className="text-xs text-slate-500">
               {completed
                 ? "Avance guardado en el dispositivo."

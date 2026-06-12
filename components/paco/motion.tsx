@@ -4,9 +4,10 @@
 // - Micro feedback tactil 100-160 ms con ligero overshoot al soltar.
 // - Nada decorativo: cada animacion confirma una accion o guia la vista.
 
-import { ReactNode, useEffect, useRef, useState } from "react";
-import { Animated, Easing, Pressable, ViewStyle } from "react-native";
+import { ComponentType, ReactNode, useEffect, useRef, useState } from "react";
+import { AccessibilityInfo, Animated, Easing, Pressable, View, ViewStyle } from "react-native";
 import { cssInterop } from "nativewind";
+import { colors } from "@/theme/tokens";
 
 // NativeWind no registra los componentes Animated por defecto: sin esto,
 // className en Animated.View se ignora silenciosamente.
@@ -57,10 +58,10 @@ export function PressableScale({
       onPressOut={pressOut}
       {...(onPress ? { onPress } : {})}
       {...(onLongPress ? { onLongPress } : {})}
+      className={className ?? ""}
+      style={style}
     >
-      <Animated.View className={className ?? ""} style={[style ?? {}, { transform: [{ scale }] }]}>
-        {children}
-      </Animated.View>
+      <Animated.View style={{ transform: [{ scale }], width: "100%" }}>{children}</Animated.View>
     </Pressable>
   );
 }
@@ -295,4 +296,289 @@ export function useFakeLoad(ms = 380) {
     return () => clearTimeout(timer);
   }, [ms]);
   return loading;
+}
+
+// ============================================================================
+// Primitivos premium (plan de motion branding, fase 1)
+// ============================================================================
+
+import { ActivityIndicator, Platform, Text } from "react-native";
+import { Check } from "@/components/paco/glyphs";
+import { motion } from "@/theme/motion";
+
+type GlyphIcon = ComponentType<{ size?: number; color?: string; strokeWidth?: number }>;
+
+const cx = (...c: Array<string | false | null | undefined>) => c.filter(Boolean).join(" ");
+
+// Hook de accesibilidad: en web respeta prefers-reduced-motion y en nativo
+// la preferencia del sistema vía AccessibilityInfo.
+export function useReduceMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    if (Platform.OS === "web") {
+      if (typeof window === "undefined" || !window.matchMedia) return;
+      const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+      setReduced(mq.matches);
+      const handler = (event: MediaQueryListEvent) => setReduced(event.matches);
+      mq.addEventListener?.("change", handler);
+      return () => mq.removeEventListener?.("change", handler);
+    }
+    let mounted = true;
+    AccessibilityInfo.isReduceMotionEnabled()
+      .then((value) => mounted && setReduced(value))
+      .catch(() => undefined);
+    const subscription = AccessibilityInfo.addEventListener("reduceMotionChanged", setReduced);
+    return () => {
+      mounted = false;
+      subscription.remove();
+    };
+  }, []);
+  return reduced;
+}
+
+export type MorphStatus = "idle" | "loading" | "success";
+
+// MorphButton: accion primaria con narrativa idle -> loading -> success.
+// El ancho se mantiene (estabilidad financiera), el label hace crossfade con
+// el loader y al exito aparece un check con pop. La navegacion/cierre la
+// decide el llamador tras `onPress` (que puede ser async).
+export function MorphButton({
+  label,
+  successLabel,
+  loadingLabel,
+  icon: IconComponent,
+  onPress,
+  disabled,
+  variant = "primary",
+  status: controlledStatus,
+  autoReset = false,
+}: {
+  label: string;
+  successLabel?: string;
+  loadingLabel?: string;
+  icon?: GlyphIcon;
+  onPress: () => void | Promise<void>;
+  disabled?: boolean;
+  variant?: "primary" | "destructive" | "secondary";
+  status?: MorphStatus;
+  autoReset?: boolean;
+}) {
+  const [internal, setInternal] = useState<MorphStatus>("idle");
+  const status = controlledStatus ?? internal;
+  const reduce = useReduceMotion();
+
+  const scale = useRef(new Animated.Value(1)).current;
+  const labelOpacity = useRef(new Animated.Value(1)).current;
+  const loaderOpacity = useRef(new Animated.Value(0)).current;
+  const checkScale = useRef(new Animated.Value(0)).current;
+  const mounted = useRef(true);
+  useEffect(() => () => { mounted.current = false; }, []);
+
+  useEffect(() => {
+    if (status === "loading") {
+      Animated.parallel([
+        Animated.timing(labelOpacity, { toValue: 0, duration: 140, useNativeDriver: true }),
+        Animated.timing(loaderOpacity, { toValue: 1, duration: 180, useNativeDriver: true }),
+      ]).start();
+      checkScale.setValue(0);
+    } else if (status === "success") {
+      Animated.parallel([
+        Animated.timing(labelOpacity, { toValue: 1, duration: 200, easing: easeOut, useNativeDriver: true }),
+        Animated.timing(loaderOpacity, { toValue: 0, duration: 120, useNativeDriver: true }),
+        Animated.spring(checkScale, { toValue: 1, ...motion.spring.celebratory, useNativeDriver: true }),
+      ]).start();
+      if (autoReset) {
+        const t = setTimeout(() => mounted.current && setInternal("idle"), 1400);
+        return () => clearTimeout(t);
+      }
+    } else {
+      Animated.parallel([
+        Animated.timing(labelOpacity, { toValue: 1, duration: 160, useNativeDriver: true }),
+        Animated.timing(loaderOpacity, { toValue: 0, duration: 120, useNativeDriver: true }),
+      ]).start();
+      checkScale.setValue(0);
+    }
+  }, [status, labelOpacity, loaderOpacity, checkScale, autoReset]);
+
+  const bg = variant === "destructive" ? "shadow-card" : variant === "secondary" ? "bg-white/50 border border-white/80" : "shadow-card";
+  const fillStyle: ViewStyle | undefined =
+    variant === "destructive"
+      ? { backgroundColor: colors.danger }
+      : variant === "secondary"
+        ? undefined
+        : { backgroundColor: colors.navy };
+  const fg = variant === "secondary" ? colors.text : "#fff";
+  const busy = status !== "idle";
+
+  const run = () => {
+    if (controlledStatus === undefined) {
+      setInternal("loading");
+      Promise.resolve(onPress()).then(() => {
+        if (mounted.current) setInternal("success");
+      });
+    } else {
+      onPress();
+    }
+  };
+
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityState={{ disabled: !!disabled, busy: status === "loading" }}
+      disabled={disabled || busy}
+      onPressIn={() => !reduce && Animated.timing(scale, { toValue: motion.scale.press, duration: 110, easing: easeOut, useNativeDriver: true }).start()}
+      onPressOut={() => Animated.spring(scale, { toValue: 1, ...motion.spring.press, useNativeDriver: true }).start()}
+      onPress={run}
+    >
+      <Animated.View
+        style={[{ transform: reduce ? [] : [{ scale }] }, fillStyle]}
+        className={cx("min-h-[50px] flex-row items-center justify-center gap-2 rounded-[14px] px-5 shadow-card", bg, disabled && "opacity-40")}
+      >
+        <Animated.View style={{ position: "absolute", opacity: loaderOpacity }}>
+          <ActivityIndicator color={fg} />
+        </Animated.View>
+        {status === "success" ? (
+          <Animated.View style={{ transform: [{ scale: checkScale }] }}>
+            <Check size={18} color={fg} strokeWidth={3.2} />
+          </Animated.View>
+        ) : IconComponent && status === "idle" ? (
+          <IconComponent size={18} color={fg} strokeWidth={2.3} />
+        ) : null}
+        <Animated.Text
+          style={{ opacity: labelOpacity, color: variant === "secondary" ? colors.text : "#ffffff" }}
+          className={cx("text-center text-[15px] font-medium tracking-normal", variant === "secondary" ? "text-ink" : "text-white")}
+        >
+          {status === "loading" ? (loadingLabel ?? label) : status === "success" ? (successLabel ?? label) : label}
+        </Animated.Text>
+      </Animated.View>
+    </Pressable>
+  );
+}
+
+// LiquidButton: accion secundaria que cambia de estado (descargar, copiar,
+// marcar leido...). El contenedor hace crossfade de icono+texto entre estados;
+// el estado final queda visible. No navega por si solo.
+export function LiquidButton({
+  idleLabel,
+  busyLabel,
+  doneLabel,
+  idleIcon,
+  doneIcon,
+  done,
+  onPress,
+  tone = "neutral",
+}: {
+  idleLabel: string;
+  busyLabel?: string;
+  doneLabel: string;
+  idleIcon?: GlyphIcon;
+  doneIcon?: GlyphIcon;
+  done: boolean;
+  onPress: () => void | Promise<void>;
+  tone?: "neutral" | "brand";
+}) {
+  const [busy, setBusy] = useState(false);
+  const fade = useRef(new Animated.Value(done ? 1 : 0)).current;
+  const mounted = useRef(true);
+  useEffect(() => () => { mounted.current = false; }, []);
+
+  useEffect(() => {
+    Animated.timing(fade, { toValue: done ? 1 : 0, duration: 220, easing: easeOut, useNativeDriver: true }).start();
+  }, [done, fade]);
+
+  const DoneIcon = doneIcon ?? Check;
+  const label = busy ? (busyLabel ?? idleLabel) : done ? doneLabel : idleLabel;
+  const activeColor = done ? "#2E8B57" : tone === "brand" ? "#2F42CB" : "#475569";
+
+  const run = () => {
+    if (done || busy) {
+      onPress();
+      return;
+    }
+    setBusy(true);
+    Promise.resolve(onPress()).then(() => mounted.current && setBusy(false));
+  };
+
+  return (
+    <PressableScale
+      onPress={run}
+      {...(done ? { style: { borderColor: "rgba(46, 139, 87, 0.30)", backgroundColor: "rgba(255, 255, 255, 0.55)" } } : {})}
+      className={cx(
+        "min-h-[44px] flex-row items-center justify-center gap-2 rounded-[12px] border px-4",
+        !done && "border-white/80 bg-white/50",
+      )}
+    >
+      {busy ? (
+        <ActivityIndicator size="small" color={activeColor} />
+      ) : done ? (
+        <Animated.View style={{ opacity: fade, transform: [{ scale: fade.interpolate({ inputRange: [0, 1], outputRange: [0.6, 1] }) }] }}>
+          <DoneIcon size={16} color={activeColor} strokeWidth={2.6} />
+        </Animated.View>
+      ) : idleIcon ? (
+        (() => { const I = idleIcon; return <I size={16} color={activeColor} strokeWidth={2.4} />; })()
+      ) : null}
+      <Text style={{ color: activeColor }} className="text-[13px] font-bold">{label}</Text>
+    </PressableScale>
+  );
+}
+
+// MutableContainer: revela/oculta contenido con fade + slide y un overshoot
+// leve, sin animar height (evita reflow). El contenido entra desde arriba.
+export function MutableContainer({ open, children }: { open: boolean; children: ReactNode }) {
+  const progress = useRef(new Animated.Value(open ? 1 : 0)).current;
+  const [render, setRender] = useState(open);
+
+  useEffect(() => {
+    if (open) setRender(true);
+    Animated.timing(progress, { toValue: open ? 1 : 0, duration: open ? 280 : 180, easing: easeOut, useNativeDriver: true }).start(({ finished }) => {
+      if (finished && !open) setRender(false);
+    });
+  }, [open, progress]);
+
+  if (!render) return null;
+  return (
+    <Animated.View
+      style={{
+        opacity: progress,
+        transform: [{ translateY: progress.interpolate({ inputRange: [0, 1], outputRange: [-8, 0] }) }],
+      }}
+    >
+      {children}
+    </Animated.View>
+  );
+}
+
+// TypingIndicator: tres puntos que suben/bajan en secuencia. Para soporte,
+// voz RH y chat interno mientras "el otro" escribe.
+export function TypingIndicator() {
+  const dots = [useRef(new Animated.Value(0)).current, useRef(new Animated.Value(0)).current, useRef(new Animated.Value(0)).current];
+  useEffect(() => {
+    const loops = dots.map((dot, index) =>
+      Animated.loop(
+        Animated.sequence([
+          Animated.delay(index * 160),
+          Animated.timing(dot, { toValue: 1, duration: 320, easing: Easing.inOut(Easing.ease), useNativeDriver: true }),
+          Animated.timing(dot, { toValue: 0, duration: 320, easing: Easing.inOut(Easing.ease), useNativeDriver: true }),
+          Animated.delay((2 - index) * 160),
+        ]),
+      ),
+    );
+    loops.forEach((l) => l.start());
+    return () => loops.forEach((l) => l.stop());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return (
+    <View className="flex-row items-center gap-1 self-start rounded-2xl rounded-bl-[4px] border border-white/80 bg-white/85 px-3.5 py-3 shadow-card">
+      {dots.map((dot, index) => (
+        <Animated.View
+          key={index}
+          style={{
+            opacity: dot.interpolate({ inputRange: [0, 1], outputRange: [0.3, 1] }),
+            transform: [{ translateY: dot.interpolate({ inputRange: [0, 1], outputRange: [0, -4] }) }],
+          }}
+          className="h-2 w-2 rounded-full bg-slate-400"
+        />
+      ))}
+    </View>
+  );
 }

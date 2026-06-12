@@ -3,6 +3,7 @@ import { Search } from "@/components/paco/glyphs";
 import { Image, Pressable, Text, TextInput, View } from "react-native";
 import { illustrationAssets } from "@/components/paco/assets";
 import { Card, EmptyState, Screen, Section } from "@/components/paco/layout";
+import { GlassSearchBar } from "@/components/paco/glass";
 import { FileTile, cn } from "@/components/paco/ui";
 import { corporateFolders } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
@@ -26,7 +27,7 @@ export default function CorporateDocsScreen() {
       title="Documentos corporativos"
       description="Políticas, reglamentos y manuales asignados por tu empresa, organizados por carpetas."
     >
-      <View className="flex-row items-center gap-2 rounded-2xl border border-slate-200 bg-white px-3">
+      <GlassSearchBar>
         <Search size={18} color="#94a3b8" />
         <TextInput
           value={query}
@@ -35,7 +36,7 @@ export default function CorporateDocsScreen() {
           placeholderTextColor="#94a3b8"
           className="min-h-12 flex-1 text-base text-slate-950"
         />
-      </View>
+      </GlassSearchBar>
 
       {searching ? (
         searchResults.length === 0 ? (
@@ -69,7 +70,7 @@ export default function CorporateDocsScreen() {
                   onPress={() => setOpenFolder(open ? null : folder.id)}
                   className="min-h-11 flex-row items-center gap-3"
                 >
-                  <View className="h-10 w-10 items-center justify-center rounded-[10px] bg-amber-50">
+                  <View className="h-10 w-10 items-center justify-center rounded-[10px] border border-separator bg-white/55">
                     <Image source={illustrationAssets.documents} resizeMode="contain" style={{ width: 28, height: 28 }} />
                   </View>
                   <View className="flex-1">
@@ -83,7 +84,7 @@ export default function CorporateDocsScreen() {
 
                 {open ? (
                   folder.documents.length === 0 ? (
-                    <View className="items-center gap-2 rounded-2xl bg-slate-50 py-6">
+                    <View className="items-center gap-2 rounded-2xl border border-separator bg-white/40 py-6">
                       <Image source={illustrationAssets.empty} resizeMode="contain" style={{ width: 42, height: 42 }} />
                       <Text className="text-sm font-semibold text-slate-500">Por el momento no hay ningún documento disponible</Text>
                     </View>

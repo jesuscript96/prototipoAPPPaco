@@ -16,20 +16,23 @@ import {
 } from "@/components/paco/glyphs";
 import { Pressable, View } from "react-native";
 import { Button, EmptyState, Screen } from "@/components/paco/layout";
+import { GlassSurface } from "@/components/paco/glass";
 import { ListGroup, Row } from "@/components/paco/ui";
 import type { Icon } from "@/components/paco/icons";
 import { Shimmer, useFakeLoad } from "@/components/paco/motion";
 import { usePacoStore } from "@/store/paco-store";
 
-const typeStyles: Record<string, { icon: Icon; color: string; tint: string }> = {
-  Encuesta: { icon: ClipboardList, color: "#674EA7", tint: "bg-violet-50" },
-  Curso: { icon: GraduationCap, color: "#B8860B", tint: "bg-amber-50" },
-  Onboarding: { icon: Rocket, color: "#5176F3", tint: "bg-brand-100" },
-  "Cumpleaños": { icon: Cake, color: "#A64D79", tint: "bg-pink-50" },
-  Voz: { icon: Megaphone, color: "#CC0000", tint: "bg-red-50" },
-  Reconocimiento: { icon: Medal, color: "#B8860B", tint: "bg-amber-50" },
-  Comunicado: { icon: Newspaper, color: "#2F42CB", tint: "bg-brand-100" },
-  Finanzas: { icon: Wallet, color: "#2F42CB", tint: "bg-brand-100" },
+// Liquid Glass: el tipo se distingue por el color del glifo (acento vibrante);
+// la burbuja es vidrio neutro en todos los casos.
+const typeStyles: Record<string, { icon: Icon; color: string }> = {
+  Encuesta: { icon: ClipboardList, color: "#674EA7" },
+  Curso: { icon: GraduationCap, color: "#B8860B" },
+  Onboarding: { icon: Rocket, color: "#5176F3" },
+  "Cumpleaños": { icon: Cake, color: "#A64D79" },
+  Voz: { icon: Megaphone, color: "#CC0000" },
+  Reconocimiento: { icon: Medal, color: "#B8860B" },
+  Comunicado: { icon: Newspaper, color: "#2F42CB" },
+  Finanzas: { icon: Wallet, color: "#2F42CB" },
 };
 
 export default function NotificationsScreen() {
@@ -48,7 +51,7 @@ export default function NotificationsScreen() {
       }
     >
       {loading ? (
-        <View className="gap-3 rounded-2xl border border-white/80 bg-white/75 p-4 shadow-card">
+        <GlassSurface variant="light" className="gap-3 p-4 shadow-card">
           {[0, 1, 2, 3].map((index) => (
             <View key={index} className="flex-row items-center gap-3">
               <Shimmer width={36} height={36} radius={10} />
@@ -59,7 +62,7 @@ export default function NotificationsScreen() {
               <Shimmer width={34} height={10} />
             </View>
           ))}
-        </View>
+        </GlassSurface>
       ) : notifications.length === 0 ? (
         <EmptyState
           title="Bandeja vacía"
@@ -70,13 +73,12 @@ export default function NotificationsScreen() {
         <>
           <ListGroup>
             {notifications.map((item) => {
-              const style = typeStyles[item.type] ?? { icon: Bell, color: "#2F42CB", tint: "bg-brand-100" };
+              const style = typeStyles[item.type] ?? { icon: Bell, color: "#2F42CB" };
               return (
                 <Row
                   key={item.id}
                   icon={style.icon}
                   iconColor={style.color}
-                  iconTint={style.tint}
                   title={item.title}
                   subtitle={item.body}
                   meta={item.time.replace("Hoy · ", "").replace("Ayer · ", "Ayer ")}
@@ -89,7 +91,7 @@ export default function NotificationsScreen() {
                     <Pressable
                       accessibilityLabel="Borrar notificación"
                       onPress={() => deleteNotification(item.id)}
-                      className="h-8 w-8 items-center justify-center rounded-full active:bg-slate-100"
+                      className="h-8 w-8 items-center justify-center rounded-full active:bg-white/70"
                     >
                       <X size={13} color="#94a3b8" />
                     </Pressable>

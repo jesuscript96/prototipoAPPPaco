@@ -1,8 +1,9 @@
 import { useMemo, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowDownAZ, FileQuestion, FolderOpen, Search } from "@/components/paco/glyphs";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Text, TextInput, View } from "react-native";
 import { Button, EmptyState, Screen } from "@/components/paco/layout";
+import { GlassIconButton, GlassSearchBar } from "@/components/paco/glass";
 import { FileTile } from "@/components/paco/ui";
 import { wellnessCategories } from "@/mock/paco";
 import { usePacoStore } from "@/store/paco-store";
@@ -43,7 +44,7 @@ export default function WellnessCategoryScreen() {
       ) : (
         <>
           <View className="flex-row items-center gap-2">
-            <View className="flex-1 flex-row items-center gap-2 rounded-2xl border border-slate-200 bg-white px-3">
+            <GlassSearchBar className="flex-1">
               <Search size={18} color="#94a3b8" />
               <TextInput
                 value={query}
@@ -52,14 +53,10 @@ export default function WellnessCategoryScreen() {
                 placeholderTextColor="#94a3b8"
                 className="min-h-12 flex-1 text-base text-slate-950"
               />
-            </View>
-            <Pressable
-              accessibilityLabel="Ordenar"
-              onPress={() => setSortAsc((v) => !v)}
-              className="h-12 w-12 items-center justify-center rounded-2xl border border-slate-200 bg-white"
-            >
+            </GlassSearchBar>
+            <GlassIconButton label="Ordenar" onPress={() => setSortAsc((v) => !v)} className="h-12 w-12">
               <ArrowDownAZ size={18} color="#2F42CB" />
-            </Pressable>
+            </GlassIconButton>
           </View>
 
           {resources.length === 0 ? (
