@@ -14,6 +14,13 @@ La app de referencia se usa como contrato funcional, no como plantilla visual. E
 - Copy: se moderniza para ser directo, humano y corporativo, manteniendo terminologia Paco.
 - Simulaciones: KYC, camara, audio, archivos, firma, pagos, WhatsApp y push se representan visualmente sin dependencias nativas.
 
+## Reglas De Espaciado (jun 2026)
+
+- Entre bloques de pantalla: gap-4 (16 px), provisto por `Screen`. Dentro de grupos: gap-2/gap-3.
+- Bug sistemico corregido: `WizardStep` aplicaba el gap en el View externo, pero los hijos viven dentro del `FadeSlideIn` (Animated.View), por lo que todos los wizards (encuestas, recargas, mood, nueva solicitud) renderizaban StepHeader y contenido pegados. El gap ahora vive dentro del wrapper animado.
+- Regla general: si algo queda pegado, se corrige en el contenedor compartido, no con margenes sueltos por pantalla.
+- Los principios UX/UI del sistema quedaron documentados con ejemplos en `app/(storybook)/principios.tsx`.
+
 ## Flujos Redisenados
 
 ### Home Bento Grid (rediseno jun 2026)

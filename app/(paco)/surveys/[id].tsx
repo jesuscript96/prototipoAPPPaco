@@ -138,7 +138,7 @@ export default function SurveyRunnerScreen() {
 
       {/* La pregunta va transparente sobre el canvas: solo el StepHeader lleva
           fondo; las opciones (radio/chips/escala) sostienen su propio contraste. */}
-      <View style={{ marginTop: 28 }} className="gap-4 px-1">
+      <View style={{ marginTop: 8 }} className="gap-4 px-1">
         <Image source={question.kind === "scale" ? peopleAssets.surveyWink : peopleAssets.surveyWelcome} resizeMode="contain" style={{ alignSelf: "center", width: 150, height: 96 }} />
         <Text className="text-lg font-bold leading-7 text-ink-body">{question.text}</Text>
 

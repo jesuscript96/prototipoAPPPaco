@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { GridFour, ListDashes, PencilRuler, Sparkle, SquaresFour, StackSimple } from "phosphor-react-native";
+import { Compass, GridFour, ListDashes, PencilRuler, Sparkle, SquaresFour, StackSimple } from "phosphor-react-native";
 import { Screen } from "@/components/paco/layout";
 import { ListGroup, Row } from "@/components/paco/ui";
 
@@ -12,6 +12,13 @@ export default function StorybookIndex() {
       description="Fuente de verdad visual del prototipo: tokens de marca, componentes, patrones de lista, formularios y movimiento. Todo lo que ves aquí es lo que usa la app."
     >
       <ListGroup>
+        <Row
+          leading={<Compass size={22} color="#0E7490" weight="bold" />}
+          title="Principios UX/UI"
+          subtitle="Espaciado, transparencia y contraste, feedback, bento y copy"
+          chevron
+          onPress={() => router.push("/(storybook)/principios")}
+        />
         <Row
           leading={<PencilRuler size={22} color="#2F42CB" weight="bold" />}
           title="Fundamentos"
