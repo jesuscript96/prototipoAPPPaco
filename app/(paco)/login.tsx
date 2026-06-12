@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
-import { AlertTriangle, ArrowLeft, Eye, EyeOff, LogIn } from "@/components/paco/glyphs";
+import { AlertTriangle, Eye, EyeOff, LogIn } from "@/components/paco/glyphs";
 import { Image, Pressable, ScrollView, Text, TextInput, View } from "react-native";
-import { brandAssets, illustrationAssets } from "@/components/paco/assets";
-import { Ambient, Button, GlassNavButton, glassInputClass, glassInputRowClass } from "@/components/paco/layout";
+import { brandAssets } from "@/components/paco/assets";
+import { Ambient, glassInputClass, glassInputRowClass } from "@/components/paco/layout";
 import { GlassSurface } from "@/components/paco/glass";
 import { MorphButton, ShakeView, type MorphStatus } from "@/components/paco/motion";
 import { HelpFab } from "@/components/paco/ui";
@@ -45,16 +45,12 @@ export default function LoginScreen() {
         </View>
       ) : null}
 
-      <View className="flex-row items-center px-5 pt-14">
-        <GlassNavButton icon={ArrowLeft} label="Regresar" onPress={() => router.back()} />
-      </View>
-
-      <ScrollView contentContainerClassName="flex-grow justify-center px-6 pb-16">
+      <ScrollView contentContainerClassName="flex-grow justify-center px-6 pb-16 pt-14">
         <View className="items-center gap-3 pb-7">
-          <View className="h-16 w-16 items-center justify-center rounded-[16px] border border-white/90 bg-white/55 shadow-card">
-            <Image source={brandAssets.iconMain} resizeMode="contain" style={{ width: 45, height: 45 }} />
+          <View className="h-20 w-20 items-center justify-center rounded-[20px] border border-white/90 bg-white/55 shadow-card">
+            <Image source={brandAssets.iconMain} resizeMode="contain" style={{ width: 58, height: 58 }} />
           </View>
-          <Image source={illustrationAssets.loginConfirm} resizeMode="contain" style={{ width: 168, height: 92 }} />
+          <Image source={brandAssets.textLogo} resizeMode="contain" style={{ width: 110, height: 36 }} />
           <Text className="text-[27px] font-bold tracking-tight text-slate-950">Inicia sesión</Text>
           <Text className="text-center text-sm leading-6 text-slate-500">
             Acceso exclusivo para colaboradores registrados por tu empresa en el panel Paco.

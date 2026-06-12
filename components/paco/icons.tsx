@@ -85,6 +85,17 @@ const join = (...classes: Array<string | false | null | undefined>) => classes.f
 // compatibilidad pero ya no pinta rellenos semánticos.
 const bubbleGlassClass = "items-center justify-center rounded-[12px] border border-separator bg-white/55";
 
+// ---- Manchita (estilo Bento) ----
+// Formas orgánicas para el fondo de iconos libres: radios desiguales por
+// esquina + desplazamiento determinista por seed. Calibradas para icono 48px;
+// los offsets se escalan al tamaño real.
+export const iconBlobShapes = [
+  { tl: 0.62, tr: 0.48, br: 0.56, bl: 0.5, dx: -7, dy: -5, scale: 1.22, alt: { dx: 0.72, dy: 0.66, size: 0.34 } },
+  { tl: 0.5, tr: 0.6, br: 0.46, bl: 0.58, dx: 5, dy: -7, scale: 1.16, alt: { dx: -0.18, dy: 0.7, size: 0.3 } },
+  { tl: 0.56, tr: 0.5, br: 0.62, bl: 0.44, dx: -4, dy: 6, scale: 1.2, alt: { dx: 0.74, dy: -0.12, size: 0.32 } },
+  { tl: 0.46, tr: 0.58, br: 0.5, bl: 0.6, dx: 7, dy: 4, scale: 1.14, alt: { dx: -0.16, dy: -0.1, size: 0.28 } },
+] as const;
+
 export function IconBubble({
   icon: IconComponent,
   color,
@@ -107,21 +118,62 @@ export function IconBubble({
   );
 }
 
+// Icono de asset libre sobre manchita (estilo Bento): sin caja, sin borde.
+// El prop `tint` se mantiene por compatibilidad pero ya no se usa.
 export function AssetIconBubble({
   source,
   tint: _tint,
   size = 44,
   imageSize = 24,
+  seed = 0,
+  blobColor = "rgba(47, 66, 203, 0.12)",
+  blobAltColor = "rgba(81, 118, 243, 0.10)",
   className = "",
 }: {
   source: ImageSourcePropType;
   tint?: string;
   size?: number;
   imageSize?: number;
+  seed?: number;
+  blobColor?: string;
+  blobAltColor?: string;
   className?: string;
 }) {
+  const shape = iconBlobShapes[seed % iconBlobShapes.length] ?? iconBlobShapes[0];
+  const blob = Math.min(size, imageSize * shape.scale + 8);
+  const altSize = blob * shape.alt.size;
+  const k = imageSize / 48;
+  const pad = (size - blob) / 2;
+
   return (
-    <View style={{ width: size, height: size }} className={join(bubbleGlassClass, "overflow-hidden", className)}>
+    <View style={{ width: size, height: size }} className={join("items-center justify-center", className)}>
+      <View
+        pointerEvents="none"
+        style={{
+          position: "absolute",
+          width: blob,
+          height: blob,
+          left: pad + shape.dx * k,
+          top: pad + shape.dy * k,
+          backgroundColor: blobColor,
+          borderTopLeftRadius: blob * shape.tl,
+          borderTopRightRadius: blob * shape.tr,
+          borderBottomRightRadius: blob * shape.br,
+          borderBottomLeftRadius: blob * shape.bl,
+        }}
+      />
+      <View
+        pointerEvents="none"
+        style={{
+          position: "absolute",
+          width: altSize,
+          height: altSize,
+          left: pad + blob * shape.alt.dx,
+          top: pad + blob * shape.alt.dy,
+          borderRadius: altSize / 2,
+          backgroundColor: blobAltColor,
+        }}
+      />
       <Image source={source} resizeMode="contain" style={{ width: imageSize, height: imageSize }} />
     </View>
   );

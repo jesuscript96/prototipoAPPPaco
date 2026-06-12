@@ -16,10 +16,21 @@ La app de referencia se usa como contrato funcional, no como plantilla visual. E
 
 ## Flujos Redisenados
 
+### Home Bento Grid (rediseno jun 2026)
+- Friccion detectada: el grid de modulos era una rejilla uniforme (misma tarjeta 48.5% x 136px para los 24 modulos), sin jerarquia ni descanso visual, con iconos encerrados en cajas con borde.
+- Decision: adoptar Bento Grid con tres niveles por dominio: tarjeta hero horizontal con dato vivo y accion directa (Adelanto con CTA "Solicitar", Estado de animo con caritas que registran en un toque, Recibos con chip "Firmar ahora"), tarjetas medias 48.5% para modulos frecuentes y pastillas mini para secundarios.
+- Iconos: sin contenedor rigido; flotan sobre una "manchita" organica (blob sin borde, alpha bajo, descentrado determinista por seed) con color de categoria: Finanzas verde/petroleo, Personas y cultura coral/salmon, Documentos violeta/gris.
+- Soporte y cuenta: deja de ser grid; es lista de gestion (ListGroup/Row, icono libre a la izquierda + chevron) con la estetica de "Hoy en Paco".
+- Hero financiero: se elimina la fila de 4 quick actions porque el bento de Finanzas la absorbe con mas jerarquia; el hero queda como tarjeta de saldo y estado de adeudo.
+- Funcionalidad preservada: los 24 modulos siguen navegables desde Home; las acciones directas reutilizan `registerMood` y `signReceipt` del store con feedback inline + toast global.
+- Componentes: `components/paco/bento.tsx` (BentoIcon, BentoHeroTile, BentoHalfTile, BentoMini, BentoActionChip, bentoAccents). `GlassModuleTile` se conserva para otras pantallas.
+- Criterio de uso documentado con ejemplos vivos en el storybook: `app/(storybook)/bento.tsx` (jerarquia, manchita, accion directa, listas de gestion y checklist de reglas).
+
 ### Onboarding Y Login
-- Friccion detectada: permisos y login aparecen como pasos tecnicos aislados.
-- Decision: convertirlos en onboarding progresivo con permisos, cuenta y ayuda contextual.
-- Funcionalidad preservada: notificaciones, ubicacion, activacion, login, recuperar contrasena y ayuda.
+- Friccion detectada: la pantalla de bienvenida (permisos + 3 CTAs) agregaba un paso antes de lo que el usuario realmente quiere: entrar.
+- Decision (jun 2026): eliminar `welcome.tsx`; la app abre directo en `login.tsx` con logo Paco + formulario. Los enlaces "No tengo cuenta" y "Olvide mi contrasena" dentro del form cubren activacion y recuperacion. Logout y eliminar cuenta redirigen a login.
+- Permisos: la ubicacion se concede contextualmente desde Ofertas PiN; el permiso de notificaciones queda como simulacion intencional sin pantalla propia.
+- Funcionalidad preservada: activacion, login, recuperar contrasena y ayuda (HelpFab).
 
 ### Encuesta Obligatoria
 - Friccion detectada: bloqueo puede sentirse como error si no se explica.
@@ -140,8 +151,8 @@ Overhaul completo según `docs/paco-glass-visual-overhaul-plan.md`: navy corpora
 
 | # | Módulo / ruta | Glass | Navy | Dock N/A | Funcional | Notas |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | `welcome.tsx` | ✅ | ✅ | N/A | ✅ | Permisos + modal glass |
-| 2 | `login.tsx` | ✅ | ✅ | N/A | ✅ | Form GlassSurface |
+| 1 | `welcome.tsx` | — | — | — | — | Eliminada (jun 2026): entrada directa a login |
+| 2 | `login.tsx` | ✅ | ✅ | N/A | ✅ | Form GlassSurface · pantalla de entrada |
 | 3 | `activate.tsx` | ✅ | ✅ | N/A | ✅ | Capa automática |
 | 4 | `recover.tsx` | ✅ | ✅ | N/A | ✅ | Capa automática |
 | 5 | `help.tsx` | ✅ | ✅ | N/A | ✅ | GlassHero navy |
@@ -212,7 +223,7 @@ Sistema de materiales estilo Apple aplicado globalmente: 5 grosores de vidrio, c
 - `GlassSurface material="ultraThin|thin|regular|thick|ultraThick" tint="none|success|…"`; mapeo legacy `light→regular`, `info→regular+info`, `elevated→thick`.
 - Asignación por superficie: dock=`thick`, sheets/modales=`ultraThick`, search/inputs=`thin`, cards=`regular`, hero/toast=`materialsDark`.
 - `GlassDarkSurface` nuevo para superficies navy (hero, ToastHost).
-- Burbujas de icono (`IconBubble`, `AssetIconBubble`, `Row`, `OptionCard`): vidrio thin neutro (`border-separator` + `bg-white/55`); el color del dominio vive en el glifo, no en el fondo.
+- Burbujas de icono: `IconBubble` (glifos lucide) sigue en vidrio thin neutro (`border-separator` + `bg-white/55`). `AssetIconBubble` (assets PNG) migró al estilo Bento (jun 2026): icono libre sin caja ni borde sobre manchita orgánica (`iconBlobShapes` en `icons.tsx`); el color por defecto es azul marca suave y acepta `blobColor`/`blobAltColor` para teñirse por categoría (p. ej. coral de Personas en "Hoy en Paco").
 
 ### Reduce Transparency (`components/paco/a11y.ts`)
 

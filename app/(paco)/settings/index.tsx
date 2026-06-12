@@ -127,7 +127,7 @@ export default function SettingsScreen() {
         onConfirm={() => {
           setConfirm(null);
           store.logout();
-          router.replace("/(paco)/welcome");
+          router.replace("/(paco)/login");
         }}
         onCancel={() => setConfirm(null)}
       />
@@ -139,7 +139,7 @@ export default function SettingsScreen() {
         onConfirm={() => {
           setConfirm(null);
           store.logoutAll();
-          router.replace("/(paco)/welcome");
+          router.replace("/(paco)/login");
         }}
         onCancel={() => setConfirm(null)}
       />

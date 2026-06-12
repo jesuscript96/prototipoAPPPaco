@@ -139,7 +139,7 @@ export default function MenuScreen() {
         onConfirm={() => {
           setConfirmLogout(false);
           logout();
-          router.replace("/(paco)/welcome");
+          router.replace("/(paco)/login");
         }}
         onCancel={() => setConfirmLogout(false)}
       />

@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { ListDashes, PencilRuler, Sparkle, SquaresFour, StackSimple } from "phosphor-react-native";
+import { GridFour, ListDashes, PencilRuler, Sparkle, SquaresFour, StackSimple } from "phosphor-react-native";
 import { Screen } from "@/components/paco/layout";
 import { ListGroup, Row } from "@/components/paco/ui";
 
@@ -25,6 +25,13 @@ export default function StorybookIndex() {
           subtitle="Botones, badges, alertas, chips, tabs animadas y controles"
           chevron
           onPress={() => router.push("/(storybook)/componentes")}
+        />
+        <Row
+          leading={<GridFour size={22} color="#0E7490" weight="bold" />}
+          title="Bento Grid"
+          subtitle="Jerarquía hero/half/mini, manchitas por categoría y listas de gestión"
+          chevron
+          onPress={() => router.push("/(storybook)/bento")}
         />
         <Row
           leading={<ListDashes size={22} color="#B8860B" weight="bold" />}

@@ -1,17 +1,16 @@
 import { Link, useRouter } from "expo-router";
 import { Bell, ChevronRight, Lock } from "@/components/paco/glyphs";
 import { Image, Pressable, ScrollView, Text, View } from "react-native";
-import { assetForModule, bannerAssets, brandAssets, moduleAssets, peopleAssets, quickActionAssets } from "@/components/paco/assets";
+import { bannerAssets, brandAssets, moduleAssets, peopleAssets, quickActionAssets } from "@/components/paco/assets";
 import { Ambient, Button, GlassNavButton, Progress } from "@/components/paco/layout";
-import { GlassModuleTile, GlassSurface } from "@/components/paco/glass";
+import { GlassSurface } from "@/components/paco/glass";
+import { BentoActionChip, BentoHalfTile, BentoHeroTile, BentoIcon, BentoMini, bentoAccents } from "@/components/paco/bento";
 import { FadeSlideIn, PressableScale, useAnimatedNumber } from "@/components/paco/motion";
-import { cn, ListGroup, mxn, Row } from "@/components/paco/ui";
-import { AssetIconBubble, domainStyles } from "@/components/paco/icons";
-import { banners, celebrations, courses, employee, moduleRegistry, onboardingTasks, surveys } from "@/mock/paco";
+import { ListGroup, mxn, Row } from "@/components/paco/ui";
+import { AssetIconBubble, moduleIcons } from "@/components/paco/icons";
+import { banners, celebrations, communications, courses, employee, moduleRegistry, onboardingTasks, seedReceipts, surveys } from "@/mock/paco";
 import { vibrants } from "@/theme/tokens";
 import { usePacoStore } from "@/store/paco-store";
-
-const domains = ["Finanzas", "Personas y cultura", "Documentos", "Soporte"] as const;
 
 const BANNER_WIDTH = 300;
 const BANNER_ASPECT = 1024 / 571;
@@ -93,6 +92,11 @@ export default function HomeScreen() {
   const pendingCourse = courses.find((c) => c.mandatory && !store.finishedCourses.includes(c.id));
   const optionalSurveyPending = surveys.some((s) => !s.mandatory && !store.completedSurveyIds.includes(s.id));
   const todayCelebrations = celebrations.filter((c) => c.dayOffset === 0);
+  const pendingReceipts = seedReceipts.filter((r) => !store.signedReceiptIds.includes(r.id));
+  const nextReceipt = pendingReceipts[0];
+  const unreadComms = communications.filter((c) => !store.readCommIds.includes(c.id)).length;
+  const activeRequests = store.requests.filter((r) => r.status === "No iniciada" || r.status === "En evaluación").length;
+  const supportModules = moduleRegistry.filter((m) => m.domain === "Soporte");
 
   const pendings: { id: string; asset: (typeof moduleAssets)[keyof typeof moduleAssets]; title: string; meta: string; done: boolean; onPress: () => void }[] = [
     {
@@ -162,21 +166,6 @@ export default function HomeScreen() {
               </Text>
             </View>
           </View>
-          <View className="mt-4 flex-row justify-between border-t border-slate-900/10 pt-4">
-            {(
-              [
-                { label: "Adelanto", asset: quickActionAssets.advance, href: "/(paco)/advance" },
-                { label: "Recargas", asset: quickActionAssets.topups, href: "/(paco)/topups" },
-                { label: "Servicios", asset: quickActionAssets.services, href: "/(paco)/services" },
-                { label: "Gastos", asset: quickActionAssets.expenses, href: "/(paco)/expenses" },
-              ] as const
-            ).map((action) => (
-              <PressableScale key={action.label} onPress={() => router.push(action.href)} className="items-center gap-1.5">
-                <AssetIconBubble source={action.asset} tint="bg-navy" size={56} imageSize={34} />
-                <Text className="text-[11px] font-bold text-ink-muted">{action.label}</Text>
-              </PressableScale>
-            ))}
-          </View>
         </GlassSurface>
         </FadeSlideIn>
 
@@ -209,10 +198,19 @@ export default function HomeScreen() {
             <Text className="text-xs font-bold text-ink-muted">{pendings.filter((p) => !p.done).length} pendiente(s)</Text>
           </View>
           <ListGroup>
-            {pendings.map((item) => (
+            {pendings.map((item, index) => (
               <Row
                 key={item.id}
-                leading={<AssetIconBubble source={item.asset} size={42} imageSize={24} />}
+                leading={
+                  <AssetIconBubble
+                    source={item.asset}
+                    size={42}
+                    imageSize={26}
+                    seed={index}
+                    blobColor={bentoAccents.people.blob}
+                    blobAltColor={bentoAccents.people.blobAlt}
+                  />
+                }
                 title={item.title}
                 subtitle={item.meta}
                 onPress={item.onPress}
@@ -240,7 +238,14 @@ export default function HomeScreen() {
         {todayCelebrations.length > 0 ? (
           <Pressable accessibilityRole="button" onPress={() => router.push("/(paco)/celebrations")} className="active:opacity-90">
             <GlassSurface material="regular" className="flex-row items-center gap-3 p-4">
-              <AssetIconBubble source={moduleAssets.celebrations} size={42} imageSize={24} />
+              <AssetIconBubble
+                source={moduleAssets.celebrations}
+                size={42}
+                imageSize={26}
+                seed={2}
+                blobColor={bentoAccents.people.blob}
+                blobAltColor={bentoAccents.people.blobAlt}
+              />
               <View className="flex-1">
                 <Text className="text-[11px] font-bold uppercase tracking-[1.5px] text-violet-600">Celebraciones de hoy</Text>
                 {todayCelebrations.map((item) => (
@@ -259,34 +264,180 @@ export default function HomeScreen() {
           </Pressable>
         ) : null}
 
-        {/* Modulos por dominio */}
-        {domains.map((domain) => {
-          const style = domainStyles[domain] ?? { tint: "bg-white/55", color: "#475569" };
-          return (
-            <View key={domain} className="gap-2.5">
-              <Text className="px-0.5 text-[18px] font-bold tracking-tight text-ink-body">{domain}</Text>
-              <View className="flex-row flex-wrap justify-between">
-                {moduleRegistry
-                  .filter((m) => m.domain === domain)
-                  .map((module, index) => {
-                    const moduleAsset = assetForModule(module.id);
-                    return (
-                      <FadeSlideIn key={module.id} delay={index * 40} className="mb-3 w-[48.5%]">
-                        <GlassModuleTile
-                          title={module.title}
-                          {...(moduleAsset ? { icon: moduleAsset } : {})}
-                          iconTint={style.tint}
-                          href={module.href}
-                          {...(module.core ? { core: true } : {})}
-                          accessibilityLabel={`${module.title}. ${module.subtitle}`}
-                        />
-                      </FadeSlideIn>
-                    );
-                  })}
+        {/* Bento · Finanzas */}
+        <FadeSlideIn delay={160}>
+          <View className="gap-2.5">
+            <Text className="px-0.5 text-[18px] font-bold tracking-tight text-ink-body">Finanzas</Text>
+            <BentoHeroTile
+              icon={moduleAssets.advance}
+              domain="finance"
+              seed={0}
+              title="Adelanto de nómina"
+              subtitle="Hasta $2,500 disponibles esta quincena"
+              onPress={() => router.push("/(paco)/advance")}
+              accessibilityLabel="Adelanto de nómina. Hasta $2,500 disponibles esta quincena"
+              trailing={<BentoActionChip label="Solicitar" onPress={() => router.push("/(paco)/advance")} />}
+            />
+            <View className="flex-row justify-between">
+              <View className="w-[48.5%]">
+                <BentoHalfTile icon={moduleAssets.topups} domain="finance" seed={1} title="Recargas" meta="Tiempo aire y datos" href="/(paco)/topups" />
+              </View>
+              <View className="w-[48.5%]">
+                <BentoHalfTile icon={moduleAssets.services} domain="finance" seed={2} title="Pago de servicios" meta="CFE, Telmex y más" href="/(paco)/services" />
               </View>
             </View>
-          );
-        })}
+            <View className="flex-row flex-wrap gap-2">
+              <BentoMini icon={moduleAssets.expenses} domain="finance" seed={3} label="Reporte de gastos" href="/(paco)/expenses" />
+              <BentoMini icon={moduleAssets.pin} domain="finance" seed={0} label="Club PiN" href="/(paco)/pin" />
+            </View>
+          </View>
+        </FadeSlideIn>
+
+        {/* Bento · Personas y cultura */}
+        <FadeSlideIn delay={200}>
+          <View className="gap-2.5">
+            <Text className="px-0.5 text-[18px] font-bold tracking-tight text-ink-body">Personas y cultura</Text>
+            <BentoHeroTile
+              icon={moduleAssets.mood}
+              domain="people"
+              seed={1}
+              title="¿Cómo te sientes hoy?"
+              subtitle={store.moodRegisteredToday ? "Listo por hoy · vuelve mañana" : "Registra tu ánimo en un toque"}
+              onPress={() => router.push(store.moodRegisteredToday ? "/(paco)/mood-charts" : "/(paco)/mood")}
+              accessibilityLabel="Estado de ánimo. Registro diario y gráficas"
+            >
+              {store.moodRegisteredToday ? (
+                <View className="flex-row items-center justify-between">
+                  <BentoActionChip label="Registrado hoy" tone="done" />
+                  <View className="flex-row items-center gap-0.5">
+                    <Text style={{ color: bentoAccents.people.accent }} className="text-[12px] font-bold">Ver gráficas</Text>
+                    <ChevronRight size={14} color={bentoAccents.people.accent} />
+                  </View>
+                </View>
+              ) : (
+                <View className="flex-row items-center justify-around border-t border-slate-900/10 pt-2.5">
+                  {(
+                    [
+                      { asset: peopleAssets.smiley1, score: 25, label: "Mal" },
+                      { asset: peopleAssets.smiley2, score: 60, label: "Normal" },
+                      { asset: peopleAssets.smiley3, score: 95, label: "Bien" },
+                    ] as const
+                  ).map((option) => (
+                    <PressableScale
+                      key={option.label}
+                      onPress={() => store.registerMood(option.score, [], [])}
+                      accessibilityLabel={`Registrar ánimo: ${option.label}`}
+                      className="items-center gap-1 px-4 py-1"
+                    >
+                      <Image source={option.asset} resizeMode="contain" style={{ width: 36, height: 36 }} />
+                      <Text className="text-[10px] font-bold text-ink-muted">{option.label}</Text>
+                    </PressableScale>
+                  ))}
+                </View>
+              )}
+            </BentoHeroTile>
+            <View className="flex-row justify-between">
+              <View className="w-[48.5%]">
+                <BentoHalfTile
+                  icon={moduleAssets.requests}
+                  domain="people"
+                  seed={2}
+                  title="Solicitudes"
+                  meta={activeRequests > 0 ? `${activeRequests} en curso` : "Vacaciones y permisos"}
+                  href="/(paco)/requests"
+                />
+              </View>
+              <View className="w-[48.5%]">
+                <BentoHalfTile
+                  icon={moduleAssets.training}
+                  domain="people"
+                  seed={3}
+                  title="Capacitaciones"
+                  meta={pendingCourse ? "1 curso obligatorio" : "Estás al día"}
+                  href="/(paco)/training"
+                />
+              </View>
+            </View>
+            <View className="flex-row flex-wrap gap-2">
+              <BentoMini icon={moduleAssets.celebrations} domain="people" seed={0} label="Cumpleaños" href="/(paco)/celebrations" />
+              <BentoMini icon={moduleAssets.recognitions} domain="people" seed={1} label="Reconocer" href="/(paco)/recognitions" />
+              <BentoMini icon={moduleAssets.surveys} domain="people" seed={2} label="Encuestas" href="/(paco)/surveys" />
+              <BentoMini icon={moduleAssets.voice} domain="people" seed={3} label="Voz" href="/(paco)/voice" />
+              <BentoMini icon={moduleAssets.wellness} domain="people" seed={0} label="Bienestar" href="/(paco)/wellness" />
+              <BentoMini icon={moduleAssets["onboarding-tasks"]} domain="people" seed={1} label="Onboarding" href="/(paco)/onboarding-tasks" />
+            </View>
+          </View>
+        </FadeSlideIn>
+
+        {/* Bento · Documentos */}
+        <FadeSlideIn delay={240}>
+          <View className="gap-2.5">
+            <Text className="px-0.5 text-[18px] font-bold tracking-tight text-ink-body">Documentos</Text>
+            <BentoHeroTile
+              icon={moduleAssets.receipts}
+              domain="docs"
+              seed={2}
+              title="Recibos de nómina"
+              subtitle={nextReceipt ? `${nextReceipt.period} · neto ${nextReceipt.net}` : "Todos tus recibos están firmados"}
+              onPress={() => router.push("/(paco)/receipts")}
+              accessibilityLabel="Recibos de nómina. PDF, XML y firma"
+            >
+              <View className="flex-row items-center justify-between">
+                {nextReceipt ? (
+                  <>
+                    <Text className="text-[11px] font-semibold text-ink-muted">
+                      {pendingReceipts.length} {pendingReceipts.length === 1 ? "recibo pendiente" : "recibos pendientes"} de firma
+                    </Text>
+                    <BentoActionChip label="Firmar ahora" onPress={() => store.signReceipt(nextReceipt.id)} />
+                  </>
+                ) : (
+                  <BentoActionChip label="Todo firmado" tone="done" />
+                )}
+              </View>
+            </BentoHeroTile>
+            <View className="flex-row justify-between">
+              <View className="w-[48.5%]">
+                <BentoHalfTile
+                  icon={moduleAssets.comms}
+                  domain="docs"
+                  seed={3}
+                  title="Comunicación"
+                  meta={unreadComms > 0 ? `${unreadComms} sin leer` : "Estás al día"}
+                  href="/(paco)/comms"
+                />
+              </View>
+              <View className="w-[48.5%]">
+                <BentoHalfTile icon={moduleAssets["document-requests"]} domain="docs" seed={0} title="Solicitud de documentos" meta="Genera, firma y sube" href="/(paco)/document-requests" />
+              </View>
+            </View>
+            <View className="flex-row flex-wrap gap-2">
+              <BentoMini icon={moduleAssets["corporate-docs"]} domain="docs" seed={1} label="Corporativos" href="/(paco)/corporate-docs" />
+              <BentoMini icon={moduleAssets.sua} domain="docs" seed={2} label="Cartas SUA" href="/(paco)/sua" />
+            </View>
+          </View>
+        </FadeSlideIn>
+
+        {/* Soporte y cuenta · lista de gestión */}
+        <FadeSlideIn delay={280}>
+          <View className="gap-2.5">
+            <Text className="px-0.5 text-[18px] font-bold tracking-tight text-ink-body">Soporte y cuenta</Text>
+            <ListGroup>
+              {supportModules.map((module, index) => {
+                const Glyph = moduleIcons[module.id];
+                return (
+                  <Row
+                    key={module.id}
+                    leading={Glyph ? <BentoIcon glyph={Glyph} domain="support" size={30} seed={index} /> : undefined}
+                    title={module.title}
+                    subtitle={module.subtitle}
+                    onPress={() => router.push(module.href)}
+                    trailing={<ChevronRight size={17} color="#cbd5e1" />}
+                  />
+                );
+              })}
+            </ListGroup>
+          </View>
+        </FadeSlideIn>
       </ScrollView>
     </View>
   );

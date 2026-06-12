@@ -30,7 +30,7 @@ const tabs: TabItem[] = [
   { id: "more", label: "Más", icon: tabAssets.more, href: "/(paco)/menu", match: (p) => p === "/menu" || p.startsWith("/settings") || p === "/profile" },
 ];
 
-const hiddenExact = ["/", "/welcome", "/login", "/activate", "/recover", "/help"];
+const hiddenExact = ["/", "/login", "/activate", "/recover", "/help"];
 
 const isConversation = (path: string) =>
   (path.startsWith("/chat/") && path !== "/chat") || (path.startsWith("/voice/") && path !== "/voice" && path !== "/voice/status");

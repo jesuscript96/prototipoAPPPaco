@@ -28,6 +28,7 @@ export function PressableScale({
   accessibilityRole = "button",
   accessibilityLabel,
   accessibilityState,
+  fluid = true,
 }: {
   children: ReactNode;
   onPress?: (() => void) | undefined;
@@ -38,6 +39,8 @@ export function PressableScale({
   accessibilityRole?: "button" | "radio" | "checkbox" | "switch" | "tab";
   accessibilityLabel?: string | undefined;
   accessibilityState?: { checked?: boolean; selected?: boolean } | undefined;
+  /** false: el contenido conserva su ancho intrínseco (pills, chips inline). */
+  fluid?: boolean;
 }) {
   const scale = useRef(new Animated.Value(1)).current;
 
@@ -61,7 +64,7 @@ export function PressableScale({
       className={className ?? ""}
       style={style}
     >
-      <Animated.View style={{ transform: [{ scale }], width: "100%" }}>{children}</Animated.View>
+      <Animated.View style={{ transform: [{ scale }], ...(fluid ? { width: "100%" as const } : null) }}>{children}</Animated.View>
     </Pressable>
   );
 }

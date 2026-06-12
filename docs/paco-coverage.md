@@ -4,8 +4,8 @@ Trazabilidad entre `funcionalidadvideo.md` + videos de referencia (verificados c
 
 | Funcionalidad | Ruta | Mock data | Acciones vivas | Estados | Conexiones | Verificación |
 | --- | --- | --- | --- | --- | --- | --- |
-| Permisos (notificaciones/ubicación) | `/(paco)/welcome` | — | Diálogos secuenciales estilo OS, permitir/denegar | pendiente, concedido, denegado | PiN bloqueado sin ubicación | Smoke test web: diálogos y estados ✓ |
-| Login | `/(paco)/login` | `employee` | Inicia sesión (mockLogin), ojo contraseña | error credenciales (barra roja), cargando, éxito | → home o bloqueo encuesta | Probado con pwd "error" y válida ✓ |
+| Permisos (notificaciones/ubicación) | `/(paco)/pin` (ubicación) | — | CTA conceder ubicación en PiN | pendiente, concedido | PiN bloqueado sin ubicación. Pantalla `welcome` eliminada por decisión de producto (jun 2026): la app entra directo a login; el permiso de notificaciones queda como simulación intencional sin pantalla propia | Pendiente re-verificación manual |
+| Login | `/(paco)/login` | `employee` | Inicia sesión (mockLogin), ojo contraseña | error credenciales (barra roja), cargando, éxito | Entrada directa de la app (sin welcome) → home o bloqueo encuesta | Probado con pwd "error" y válida ✓ |
 | Activación con celular | `/(paco)/activate` | — | Validación 10 dígitos, enviar solicitud | error, enviando, enviada | → login | Validación y éxito ✓ |
 | Recuperar contraseña | `/(paco)/recover` | — | Validación email, enviar liga | error, enviada | → login | ✓ |
 | Ayuda externa (4 círculos) | `/(paco)/help` + HelpFab | `faqTopics`, `company` | Acordeones FAQ, abrir portal/WhatsApp (toast), ticket | abierto/cerrado | → support | ✓ |
